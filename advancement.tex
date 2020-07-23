@@ -1,0 +1,47 @@
+\documentclass{article}
+\usepackage[margin=4cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{lipsum}
+
+
+\title{Anomaly Detection using Extreme Value Theory}
+\author{Peter Trubey}
+\date{}
+
+\newcommand{\findcite}{{\color{red} [Find Citation]}}
+\newcommand{\makenote}[1]{{\color{red} #1}}
+\newcommand{\Chi}{\mbox{\Large$\chi$}}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\inorm}[1]{\norm{#1}_{\infty}}
+\newcommand{\pnorm}[2]{\norm{#1}_{#2}}
+
+\begin{document}
+
+\maketitle
+\begin{abstract}
+  \lipsum[1-4]
+\end{abstract}
+
+\newpage
+
+\tableofcontents
+
+\newpage
+
+\input{introduction}
+\input{background}
+\input{review}
+\input{problem}
+\input{methodology}
+\input{results}
+\input{conclusion}
+
+\newpage
+
+\bibliographystyle{plain}
+\bibliography{./refs}
+
+\end{document}

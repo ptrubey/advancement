@@ -1,0 +1,71 @@
+
+\section{Review of State of the Art}
+\subsection{Extreme Value Theory}
+\subsubsection{Asymptotic Dependence}
+A simple measure of asymptotic dependence between two variables sharing the same
+  marginal distribution is the coefficient of asymptotic dependence, $\Chi$
+\begin{equation}
+    \Chi_{ij} = \lim_{z\rightarrow\infty}\text{Pr}(Z_i > z \mid Z_j > z)
+\end{equation}
+\cite{rootzen2006} defines the multivariate Generalized Pareto distribution,
+which is expanded on in \cite{ferreira2014}, introducing the multivariate
+Generalized Pareto process.\makenote{need to go through rootzen 2018}
+
+
+
+\subsubsection{Generalized Pareto Process}
+
+
+
+
+\subsection{Anomaly Detection}
+Anomaly detection is a broadly defined term, but in this context we choose it to
+  mean finding observations that are \emph{different} in some capacity from the
+  rest of the observations in the data.  The lion's share of anomaly detection
+  algorithms can be summarized into two main categories: distance based methods,
+  and density based methods.
+
+\subsection{Distance based methods}
+Distance based methods work with some notion of distance to define how unique an
+  observation is by how far it is from other observations in the data.  A simple
+  illustrative example might be minimum distance to neighbor, for each
+  observation.  The algorithm would proceed as follows: first scale the data,
+  then calculate pairwise distances between each observation. Those observations
+  with the highest minimum distance to a neighbor are the most unique, and
+  therefore seem the most anomalous.  \makenote{Insert summaries and citations
+  of distance methods} This basic idea is extended in several ways through
+  clustering methods \makenote{insert citation of k-means}, decision
+  trees\makenote{insert citation of isolation forests}, and so on.  A basic
+  assumption required we can gather from this example is that we expect
+  non-anomalous data to behave in a consistent manner, and anomalous data to
+  behave in unique and different manners.  These methods generally make little
+  to no assumptions regarding the underlying distribution of the data.
+
+\makenote{isolation forests, DBSCAN, }
+
+\subsection{Density based methods}
+\makenote{complete rewrite of this paragraph.  it sucked.}
+
+\makenote{Local outlier factor--both camps}
+
+\subsubsection{Observation Density}
+Under this approach, an illustrative example would be to look at the
+  contribution to the marginal likelihood for each observation, and identify as
+  anomalies those observations which are least likely.
+\makenote{expand}
+
+\makenote{something something posterior probability of observation,
+          lowest contribution to log-likelihood, etc.}
+
+The defining characteristic of this category is we model all the data, and don't
+  model anomalous data as having come from a separate distribution.  Then, we
+  look at how likely is that observation.  The observations that are least
+  likely given the model are considered anomalous.  We might consider
+  studentized residuals from linear regression as being something akin to this.
+
+Our method falls somewhat into the density based method idea.  We are asserting
+  a parametric model upon the data, but our method requires one additional
+  assumption as to what it means to be anomalous: we assert that anomalies must
+  be \emph{extreme} in at least one marginal.
+
+% EOF
