@@ -223,44 +223,57 @@ prior on top of the Projected Gamma distribution.
 \begin{equation}
   \label{eqn:nppg}
   \begin{aligned}
-    \theta_i &\sim \text{PG}(\theta_i\mid \psi_i) \hspace{3cm}\psi_i = ({\bf \alpha}_i, {\bf \beta}_i)\\
-    \psi_i &\sim G_i\\
-    G_i &\sim \text{DP}\left(\eta, G_0(\psi\mid\phi)\right)\hspace{3cm}\phi = ({\bf a}_{\alpha}, {\bf b}_{\alpha}, {\bf a}_{\beta}, {\bf b}_{\beta})\\
-    &\hspace{2cm}G_0(\psi) = \text{Ga}(\alpha_1\mid a_{\alpha_1},b_{\alpha_1})\prod_{j = 2}^d\text{Ga}(\alpha_j\mid a_{\alpha_j}, b_{\alpha_j})\text{Ga}(\beta_j\mid a_{\beta_j}, b_{\beta_j})\\
-    \phi &\sim p(\phi) = \text{Ga}(a_{\alpha_1})\text{Ga}(b_{\alpha_1})\prod_{j = 2}^d\text{Ga}(a_{\alpha_j})\text{Ga}(b_{\alpha_j})\text{Ga}(a_{\beta_j})\text{Ga}(b_{\beta_j})\\
+    \theta_i &\sim \text{PG}\left(\theta_i\mid ({\bf \alpha}_i, {\bf \beta}_i) \right)\\
+    ({\bf \alpha}_i, {\bf \beta}_i) &\sim G_i\\
+    G_i &\sim \text{DP}\left(\eta, G_0\left(({\bf \alpha}_i, {\bf \beta}_i)\mid ({\bf a}_{\alpha}, {\bf b}_{\alpha}, {\bf a}_{\beta}, {\bf b}_{\beta}) \right)\right)\\
+     ({\bf a}_{\alpha}, {\bf b}_{\alpha}, {\bf a}_{\beta}, {\bf b}_{\beta}) &\sim P\left(({\bf a}_{\alpha}, {\bf b}_{\alpha}, {\bf a}_{\beta}, {\bf b}_{\beta})\right)
   \end{aligned}
 \end{equation}
-where $\pi(\alpha,\beta) = \prod_{j = 1}^d\text{Ga}(\alpha_j\mid a_0,b_0)\prod_{j = 2}^d\text{Ga}(\beta_j\mid c_0,d_0)$.
-  That is, treat the Projected Gamma distribution as the kernel, with a
-  Dirichlet process prior and a product of indepdendent gamma densities as the
+with 
+\begin{equation*}
+    \begin{aligned}
+    G_0\left(({\bf \alpha}_i, {\bf \beta}_i)\right) &= \text{Ga}(\alpha_1\mid a_{\alpha_1},b_{\alpha_1})\prod_{j = 2}^d\text{Ga}(\alpha_j\mid a_{\alpha_j}, b_{\alpha_j})\text{Ga}(\beta_j\mid a_{\beta_j}, b_{\beta_j})\\
+    P(({\bf a}_{\alpha}, {\bf b}_{\alpha}, {\bf a}_{\beta}, {\bf b}_{\beta})) &= \text{Ga}(a_{\alpha_1})\text{Ga}(b_{\alpha_1})\prod_{j = 2}^d\text{Ga}(a_{\alpha_j})\text{Ga}(b_{\alpha_j})\text{Ga}(a_{\beta_j})\text{Ga}(b_{\beta_j})
+    \end{aligned}
+\end{equation*}
+That is, treat the Projected Gamma distribution as the kernel, with a
+  Dirichlet process prior and a product of independent gamma densities as the
   centering distribution.  This has the advantage that the potential number of
-  clusters is infinite, the de-facto number of clusters is random and we avoid
-  the mess of reversible-jump mcmc.
+  clusters is infinite, the de-facto number of clusters is random.
 
 An obstacle to fitting this model is calculating the prior predictive density,
   which is not available in closed form.  Another obstacle to fitting this
   model, is drawing new random samples for $\alpha_{ij}$.  That is, $\alpha_j$
-  for observation $i$.  Posterior samples for $\alpha_j$ are sampled via
-  Metropolis Hastings.  This process takes time to reach convergence--there is
-  no assurance that the first draw from the sampler for an otherwise empty
-  cluster will be \emph{from the distribution}.  As such, these draws will have
-  to be perfomed in some other way--as it only requires a one-dimensional,
-  we may be able to use Gaussian quadrature to approximate the CDF and use
-  probability integral transformation to generate random samples of $\alpha_j$.
-
+  for observation $i$.  Posterior samples for $\alpha_j$ in the other finite
+  mixture model could be sampled via Metropolis Hastings.  This process takes 
+  time to reach convergence--there is no assurance that the first draw from 
+  the sampler for an otherwise empty cluster will be \emph{from the distribution}.
+  Every update to the cluster effectively changes the distribution.  As such, 
+  these draws will have to be perfomed in some other way.  As, after sampling the
+  latent radius, we are dealing with independent gammas, we may treat each dimension
+  independently.  One solution we might consider would be to use Gaussian quadrature
+  approximate the CDF of the distribution, and then sample from it using probability
+  integral transform.  This is computationally wasteful, so another idea we
+  consider is slice sampling.  The slice sampler is a fair amount slower than
+  Metropolis Hastings, but we achieve significantly less correlated draws with no
+  tuning of a proposal density.  There is still a starting point that the next draw
+  upon, but by some logic we can find a good starting point, and by successively
+  sampling some iterations, we can arrive at a draw from the posterior that is
+  (effectively) independent of the starting point.
+ 
 \subsection{Spatial Threshold Modeling}
 Following the work of \cite{ferreira2014}, any of the above methods can be
-extended to the spatial domain by modification of the marginalization process.
-Assume a spatial process $X({\bf s})$, ${\bf s}\in {\bf S}$.  Then take the
-transformation
+  extended to the spatial domain by modification of the marginalization process.
+  Assume a spatial process $X({\bf s})$, ${\bf s}\in {\bf S}$.  Then take the
+  transformation
 \begin{equation}
   \label{eqn:spatial}
   Z({\bf s}) = \left(1 + \gamma({\bf s})\frac{X({\bf s}) - b_t({\bf s})}{a_t({\bf s})}\right)_{+}^{1/{\gamma({\bf s})}}
 \end{equation}
-where $b_t({\bf s})$ is a function corresponding to a high threshold at location
-${\bf s}$, analogous to the role $b_t$ played previously. $a_t({\bf s})$
-corresponds to a scaling function, and $\gamma({\bf s})$ an extremal value index
- function.
+  where $b_t({\bf s})$ is a function corresponding to a high threshold at location
+  ${\bf s}$, analogous to the role $b_t$ played previously. $a_t({\bf s})$
+  corresponds to a scaling function, and $\gamma({\bf s})$ an extremal value index
+  function.
 
 
 
