@@ -223,8 +223,11 @@ prior on top of the Projected Gamma distribution.
 \begin{equation}
   \label{eqn:nppg}
   \begin{aligned}
-    \theta_i\mid{\bf \alpha}_i,{\bf \beta}_i &\sim \text{PG}(\theta_i\mid{\bf \alpha}_i,{\bf \beta}_i)\\
-    (\alpha_i,\beta_i) &\sim \text{DP}\left(\gamma,\pi(\alpha,\beta)\right)\\
+    \theta_i &\sim \text{PG}(\theta_i\mid \psi_i) \hspace{3cm}\psi_i = ({\bf \alpha}_i, {\bf \beta}_i)\\
+    \psi_i &\sim G_i\\
+    G_i &\sim \text{DP}\left(\eta, G_0(\psi\mid\phi)\right)\hspace{3cm}\phi = ({\bf a}_{\alpha}, {\bf b}_{\alpha}, {\bf a}_{\beta}, {\bf b}_{\beta})\\
+    &\hspace{2cm}G_0(\psi) = \text{Ga}(\alpha_1\mid a_{\alpha_1},b_{\alpha_1})\prod_{j = 2}^d\text{Ga}(\alpha_j\mid a_{\alpha_j}, b_{\alpha_j})\text{Ga}(\beta_j\mid a_{\beta_j}, b_{\beta_j})\\
+    \phi &\sim p(\phi) = \text{Ga}(a_{\alpha_1})\text{Ga}(b_{\alpha_1})\prod_{j = 2}^d\text{Ga}(a_{\alpha_j})\text{Ga}(b_{\alpha_j})\text{Ga}(a_{\beta_j})\text{Ga}(b_{\beta_j})\\
   \end{aligned}
 \end{equation}
 where $\pi(\alpha,\beta) = \prod_{j = 1}^d\text{Ga}(\alpha_j\mid a_0,b_0)\prod_{j = 2}^d\text{Ga}(\beta_j\mid c_0,d_0)$.
