@@ -1,0 +1,85 @@
+
+\subsection{Projected Mixture of Gammas (PMG) Model}
+\label{method:pmg}
+One shortcoming of the vanilla method is there could be multiple
+  generating distributions for the extreme events.  Indeed, if we attempt to
+  model real data and observe the marginal empirical distributions of $\theta$
+  versus the marginal predicted, we observe a disconnect: the marginal predicted
+  on some axes looks very different from the marginal empirical.  We attempt to
+  solve this problem by creating a two-component mixture model for each gamma.
+
+A justification for this model is that, while more complex than the vanilla model,
+  it is significantly less complex than the mixtures of projected gamma, whether
+  finite or non-finite.  If we can represent the nuances of real data using a more
+  parsimonious model, then that would be preferred.
+
+As previously stated, ${\bf y}$ represents a an array of latent gamma variates.
+  This model considers each marginal gamma as a 2-component mixture model.
+  I.e., ${\bf y} = r{\bf y^{\prime}}$, where ${\bf y^{\prime}}$ is a function of
+  the data; considering only the $j$th column of ${\bf y}$, considering only a
+  single observation:
+\begin{equation*}
+  f(y_j\mid {\bf \alpha}_j, {\bf \beta}_j, \lambda_j) = \lambda_j\text{Ga}(y_j\mid\alpha_{j1},\beta_{j1}) + (1 - \lambda_j)\text{Ga}(y_j\mid\alpha_{j2}, \beta_{j2})
+\end{equation*}
+To make this Gibbs-able, we add a latent flag,
+  $\gamma_j \in \lbrace 0, 1\rbrace$ which indicates which part of the mixture
+  the observation $y_j$ is coming from.  That is,
+\begin{equation*}
+f(y_j, \gamma_j \mid{\bf \alpha}_j, {\bf \beta}_j, \lambda_j) = \left(\lambda_j\text{Ga}(y_j\mid\alpha_{j1},\beta_{j1})\right)^{\gamma_j}\left((1-\lambda_j)\text{Ga}(y_j\mid\alpha_{j2},\beta_{j2})\right)^{1-\gamma_j}
+\end{equation*}
+Then, considering the likelihood of ${\bf y}_j$:
+\begin{equation*}
+  \begin{aligned}
+    L({\bf y}_j,{\bf \gamma}_j\mid{\bf\alpha}_j,{\bf \beta}_j, \lambda_j) &= \prod_{i = 1}^n\left(\lambda_j\text{Ga}(y_{ij}\mid\alpha_{j1},\beta_{j1})\right)^{\gamma_{ij}}\left((1-\lambda_j)\text{Ga}(y_{ij}\mid\alpha_{j2},\beta_{j2})\right)^{1-\gamma_{ij}}\\
+    &= \frac{(\lambda_j)^{n_j}\beta_{j,1}^{\alpha_{j,1}n_{j}}}{\Gamma(\alpha_{j,1})^{n_{j}}}\left(\prod_{i:\gamma_{ij} = 1}y_{ij}\right)^{\alpha_{j1} - 1}\exp\left\lbrace-\beta_{j1}\sum_{i:\gamma_{ij} = 1}y_{ij}\right\rbrace\\
+    &\hspace{0.5cm}\times\frac{(1 - \lambda_j)^{n - n_j}\beta_{j2}^{\alpha_{j2}(n - n_j)}}{\Gamma(\alpha_{j2})^{n - n_j}}\left(\prod_{i:\gamma_{ij} \neq 1}y_{ij}\right)^{\alpha_{j2} - 1}\exp\left\lbrace-\beta_{j2}\sum_{i:\gamma_{ij}\neq 1}y_{ij}\right\rbrace
+  \end{aligned}
+\end{equation*}
+where $n_j = \sum_{i:\gamma_{i,j} = 1} 1$.  Then extracting the full conditional
+  for $\gamma_{ij}\mid {\bf y}_j$, we have:
+\begin{equation*}
+\pi(\gamma_{ij}\mid \ldots) = \text{Ber}\left(\gamma_j\mid \frac{\lambda_j\text{Ga}(y_{ij}\mid\alpha_{j1}, \beta_{j1})}{\lambda_j\text{Ga}(y_{ij}\mid\alpha_{j1}, \beta_{j1}) + (1 - \lambda_j)\text{Ga}(y_{ij}\mid\alpha_{j2}, \beta_{j2})}\right).
+\end{equation*}
+With a prior on $\lambda$ such that $\pi(\lambda) = \text{Beta}(a_0,b_0)$, we
+  have a Beta posterior:
+\begin{equation*}
+\pi(\lambda_j\mid\ldots) = \text{Beta}\left(a_0 + \sum_i\gamma_{ij}, b_0 + \sum_i(1 - \gamma_{ij})\right)
+\end{equation*}
+Finally, we have the $\alpha$ and $\beta$ parameters.  We constrain the model
+  such that $\beta_{jl} = 1$ for $j = 1$, for $l \in \lbrace 1, 2\rbrace$.  Then
+  the full conditionals for $\alpha_{j,l}$, $\beta_{j,l}$ are updated as follows:
+\begin{equation*}
+  \begin{aligned}
+    \pi(\beta_{jl}\mid\alpha_{jl},{\bf \gamma}_j,{\bf y}_j) &\propto \beta_{jl}^{n_j\alpha_{jl}}\exp\left\lbrace-\beta_{jl}\sum_{i:\gamma_{ijl} = 1}y_{ij}\right\rbrace\times\text{Ga}(\beta\mid c,d)\\
+    &\propto \text{Ga}\left(n_{jl}\alpha_{jl} + c, \sum_{i:\gamma_{ijl} = 1}y_{ij} + d\right)
+  \end{aligned}
+\end{equation*}
+where $\gamma_{ij2} = 1 - \gamma_{ij1}$, and $\gamma_{ij1} = \gamma_{ij}$
+  previously referenced.  The full conditional for $\alpha_{jl}$ where the
+  prior for $\alpha_{jl}$ is $\text{Ga}(a,b)$ and $\beta_{jl}$  has been
+  marginalized out is thus:
+\begin{equation*}
+  \pi(\alpha_{j,l}\mid{\bf \gamma}_j,{\bf y}_j) \propto \frac{\alpha^{a - 1}(\prod_{i:\gamma_{ijl} = 1}y_{ij})^{\alpha_{jl} - 1}}{\left(\sum_{i:\gamma_{ijl} = 1}y_{ij} + d\right)^{n_{jl}\alpha_{jl} + c}}\frac{\Gamma(n_{jl}\alpha_{jl} + c)}{\Gamma(\alpha_{jl})^{n_{jl}}}\exp\left\lbrace-b\alpha_{jl}\right\rbrace
+\end{equation*}
+Sampling $\alpha_{jl}$ proceeds using a Metropolis Hastings algorithm on the
+  transformed parameter $\log(\alpha_{jl})$.
+
+As previously stated, the \emph{appeal} of this model arises from its comparative
+  simplicity relative to the more complex mixtures of projected gamma.  However,
+  that advantage is contingent on its ability to represent the nuances of data.
+  As we can see from \makenote{need to make plot}, this method by design ignores
+  information between dimensions, and as a result we see the posterior predictive
+  distribution generated from our fitted model looks startlingly different to the
+  empirical distribution of the data.  A more complicated model will be needed.
+
+
+
+
+
+
+
+
+
+
+
+% EOF
