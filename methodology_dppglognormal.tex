@@ -1,0 +1,16 @@
+
+\subsection{Non-parametric Mixture of Projected Gammas with Lognormal Prior}
+\label{method:npprobitnorm}
+
+\begin{equation}
+  \begin{aligned}
+    \theta_i &\sim \text{PG}(\theta_i\mid \alpha_i,\beta_i)\\
+    r_i &\sim \text{Ga}(r_i\mid \alpha_i,\beta_i)\\
+    (\alpha_i,\beta_i) &\sim \text{DP}\left((\alpha_i,\beta_i)\mid \eta, G_0\right)\\
+    G_0 &= \text{Log}\mathcal{N}(\alpha_i\mid\mu,\Sigma)\prod_{j = 2}^d\text{Ga}(\beta_{ij}\mid a, b)\\
+    \mu &\sim \mathcal{N}(\mu\mid\mu_0,\Sigma_0)\\
+    \Sigma &\sim \text{IG}(\Sigma\mid\nu,\psi)
+  \end{aligned}
+\end{equation}
+
+% EOF
