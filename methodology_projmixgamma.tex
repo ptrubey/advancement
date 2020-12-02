@@ -64,9 +64,19 @@ where $\gamma_{ij2} = 1 - \gamma_{ij1}$, and $\gamma_{ij1} = \gamma_{ij}$
 Sampling $\alpha_{jl}$ proceeds using a Metropolis Hastings algorithm on the
   transformed parameter $\log(\alpha_{jl})$.
 
+\begin{figure}[ht]
+  \centering
+  \caption{Projected Mixture of Gammas Model}
+
+
 As previously stated, the \emph{appeal} of this model arises from its comparative
   simplicity relative to the more complex mixtures of projected gamma.  However,
   that advantage is contingent on its ability to represent the nuances of data.
+  In Figure~\ref{fig:pmg_fail}, we see
+
+
+
+
   As we can see from \makenote{need to make plot}, this method by design ignores
   information between dimensions, and as a result we see the posterior predictive
   distribution generated from our fitted model looks startlingly different to the

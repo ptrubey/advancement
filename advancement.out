@@ -1,0 +1,27 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.2}{Background Information}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{Univariate EVT - Maxima}{section.2}% 3
+\BOOKMARK [2][-]{subsection.2.2}{Univariate EVT - Thresholding}{section.2}% 4
+\BOOKMARK [2][-]{subsection.2.3}{Multivariate EVT}{section.2}% 5
+\BOOKMARK [3][-]{subsubsection.2.3.1}{Limit Measures}{subsection.2.3}% 6
+\BOOKMARK [1][-]{section.3}{Review of State of the Art}{}% 7
+\BOOKMARK [2][-]{subsection.3.1}{Extreme Value Theory}{section.3}% 8
+\BOOKMARK [3][-]{subsubsection.3.1.1}{Asymptotic Dependence}{subsection.3.1}% 9
+\BOOKMARK [3][-]{subsubsection.3.1.2}{Generalized Pareto Process}{subsection.3.1}% 10
+\BOOKMARK [2][-]{subsection.3.2}{Anomaly Detection}{section.3}% 11
+\BOOKMARK [2][-]{subsection.3.3}{Distance based methods}{section.3}% 12
+\BOOKMARK [2][-]{subsection.3.4}{Density based methods}{section.3}% 13
+\BOOKMARK [3][-]{subsubsection.3.4.1}{Observation Density}{subsection.3.4}% 14
+\BOOKMARK [1][-]{section.4}{The Problem}{}% 15
+\BOOKMARK [1][-]{section.5}{Methodology}{}% 16
+\BOOKMARK [2][-]{subsection.5.1}{Projected Gamma}{section.5}% 17
+\BOOKMARK [2][-]{subsection.5.2}{Projected Mixture of Gammas \(PMG\) Model}{section.5}% 18
+\BOOKMARK [2][-]{subsection.5.3}{Mixture of Projected Gammas \(MPG\) Model}{section.5}% 19
+\BOOKMARK [2][-]{subsection.5.4}{Non-parametric Mixture of Projected Gammas \(NPPG\) Model}{section.5}% 20
+\BOOKMARK [2][-]{subsection.5.5}{Implications of the distribution}{section.5}% 21
+\BOOKMARK [2][-]{subsection.5.6}{Non-parametric Mixture of Multivariate Normals}{section.5}% 22
+\BOOKMARK [3][-]{subsubsection.5.6.1}{Casting \040to Probit space directly}{subsection.5.6}% 23
+\BOOKMARK [2][-]{subsection.5.7}{Non-parametric Mixture of Projected Gammas with Lognormal Prior}{section.5}% 24
+\BOOKMARK [2][-]{subsection.5.8}{Spatial Threshold Modeling}{section.5}% 25
+\BOOKMARK [1][-]{section.6}{Results}{}% 26
+\BOOKMARK [1][-]{section.7}{Conclusion}{}% 27

@@ -1,0 +1,20 @@
+\begin{thebibliography}{1}
+
+\bibitem{ferreira2014}
+Ana Ferreira and Laurens de~Haan.
+\newblock The generalized pareto process; with a view towards application and
+  simulation.
+\newblock {\em Bernoulli}, 20(4):1717--1737, 11 2014.
+
+\bibitem{nunez2019}
+Gabriel N{\'u}{\~n}ez-Antonio and Emiliano Geneyro.
+\newblock A multivariate projected gamma model for directional data.
+\newblock {\em Communications in Statistics - Simulation and Computation},
+  pages 1--22, 05 2019.
+
+\bibitem{rootzen2006}
+Holger Rootz{\'e}n and Nader Tajvidi.
+\newblock Multivariate generalized pareto distributions.
+\newblock {\em Bernoulli}, 12(5):917--930, 2006.
+
+\end{thebibliography}

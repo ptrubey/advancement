@@ -1,0 +1,27 @@
+\contentsline {section}{\numberline {1}Introduction}{3}{section.1}%
+\contentsline {section}{\numberline {2}Background Information}{3}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Univariate EVT - Maxima}{3}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Univariate EVT - Thresholding}{4}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Multivariate EVT}{4}{subsection.2.3}%
+\contentsline {subsubsection}{\numberline {2.3.1}Limit Measures}{4}{subsubsection.2.3.1}%
+\contentsline {section}{\numberline {3}Review of State of the Art}{5}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Extreme Value Theory}{5}{subsection.3.1}%
+\contentsline {subsubsection}{\numberline {3.1.1}Asymptotic Dependence}{5}{subsubsection.3.1.1}%
+\contentsline {subsubsection}{\numberline {3.1.2}Generalized Pareto Process}{6}{subsubsection.3.1.2}%
+\contentsline {subsection}{\numberline {3.2}Anomaly Detection}{6}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Distance based methods}{6}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Density based methods}{6}{subsection.3.4}%
+\contentsline {subsubsection}{\numberline {3.4.1}Observation Density}{6}{subsubsection.3.4.1}%
+\contentsline {section}{\numberline {4}The Problem}{7}{section.4}%
+\contentsline {section}{\numberline {5}Methodology}{7}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Projected Gamma}{7}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Projected Mixture of Gammas (PMG) Model}{10}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Mixture of Projected Gammas (MPG) Model}{11}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}Non-parametric Mixture of Projected Gammas (NPPG) Model}{12}{subsection.5.4}%
+\contentsline {subsection}{\numberline {5.5}Implications of the distribution}{15}{subsection.5.5}%
+\contentsline {subsection}{\numberline {5.6}Non-parametric Mixture of Multivariate Normals}{16}{subsection.5.6}%
+\contentsline {subsubsection}{\numberline {5.6.1}Casting ${\bf \theta }$ to Probit space directly}{17}{subsubsection.5.6.1}%
+\contentsline {subsection}{\numberline {5.7}Non-parametric Mixture of Projected Gammas with Lognormal Prior}{17}{subsection.5.7}%
+\contentsline {subsection}{\numberline {5.8}Spatial Threshold Modeling}{17}{subsection.5.8}%
+\contentsline {section}{\numberline {6}Results}{18}{section.6}%
+\contentsline {section}{\numberline {7}Conclusion}{18}{section.7}%
