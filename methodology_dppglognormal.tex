@@ -2,6 +2,16 @@
 \subsection{Non-parametric Mixture of Projected Gammas with Lognormal Prior}
 \label{method:npprobitnorm}
 
+For the mixture of projected gammas , as we're not using a conjugate model for $\alpha$, we are
+  forced to use an alternative update strategy--in that case, Metropolis Hastings. In the DP case,
+  in addition to the alternative update strategy for updating existing clusters, following algorithm
+  8 of~\cite{neal2000} we are forced to sample from the prior for generating new clusters.
+
+In the case of DP Mixture of Projected Gammas, that means sampling from independent alphas and betas.
+  This induces a strong independence from the prior, potentially making it difficult for new
+  clusters to spawn in an area with any real density.  To that end, this model attempts to allow
+  dependence in the cluster generation process.
+
 \begin{equation}
   \begin{aligned}
     \theta_i &\sim \text{PG}(\theta_i\mid \alpha_i,\beta_i)\\
@@ -12,5 +22,45 @@
     \Sigma &\sim \text{IG}(\Sigma\mid\nu,\psi)
   \end{aligned}
 \end{equation}
+
+We impose a multivariate log-normal prior on $\alpha_j$, the cluster's shape parameter vector.
+  Cluster shape parameters are descended from a global mean.  Let $y_i = r_iy_i^{\prime}$.  The
+  posterior then becomes:
+
+\begin{equation}
+  \begin{aligned}
+    \pi(\alpha_j\mid r,\gamma,\mu,\Sigma) &\propto
+      \prod_{l = 1}^d\left[\frac{(\prod_{\{i:\gamma_i = j\}}y_{il})^{\alpha_jl - 1}}{\Gamma^{n_j}(\alpha_{jl})}
+        \frac{\Gamma(n_j\alpha_{jl} + a)}{\left(\sum_{\{i:\gamma_i = j\}}y_{il} + b\right)^{n_j\alpha_{jl} + a}}\right]
+        \lvert\Sigma\rvert^{-1/2}
+        \exp\left\lbrace -\frac{1}{2}(\log\alpha_{j} - \mu)^T\Sigma^{-1}(\log\alpha_j - \mu)\right\rbrace\\
+    \pi(\beta_{jl}\mid\alpha_{jl}, r, \gamma) &= \text{Ga}\left(n_j\alpha_{jl} + a,
+                                                    \sum_{\{i : \gamma_i = j\}}y_{il} + b\right)
+    \pi(\mu\mid\Sigma, \alpha) &= \mathcal{N}\left(
+      (n^{*}\Sigma^{-1} + S^{-1})^{-1}
+      (n^{*}\bar{\log\alpha}^{T}\Sigma^{-1} + \mu_0^{T}S^{-1}),
+      (n^{*}\Sigma^{-1} + S^{-1})^{-1}
+      \right)
+    \pi(\Sigma\mid\mu,\alpha,\gamma) &= \text{IW}\left(n^{*} + \nu,
+        \sum_{j = 1}^{n^{*}}(\log(\alpha_j) - \mu)(\log(\alpha_j) - \mu)^T + \psi\right)
+  \end{aligned}
+\end{equation}
+
+\begin{figure}[h!]
+  \centering
+  \label{fig:dppgln}
+  \caption{DP-MPG with Lognormal Prior on $\alpha$, fitted to IVT data.}
+  \includegraphics[width=6in]{./images/dppgln_emp_v_pred_decluster.pdf}
+\end{figure}
+
+In the end, this results in a slightly better fit than compared to DP-MPG,
+
+
+
+
+
+
+
+
 
 % EOF
