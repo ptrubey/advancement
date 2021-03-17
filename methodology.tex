@@ -27,9 +27,21 @@ Thus ${\bf V}$ is the projection of the ${\bf Z}$ vector onto the unit
   construction.
 
 We are interested in the angular distribution of ${\bf V}$, the projection of
-  the standardized observations ${\bf Z}$ onto the unit hypersphere. To
-  construct a parametric model on that angular distribution, we employ the
-  projected gamma distribution.
+  the standardized observations ${\bf Z}$ onto the unit hypercube.  As we are
+  unaware of any distribution that operates natively this space (the positive
+  orthant of the unit hypercube), or can be effectively coerced into this space,
+  we construct distributions on other spaces for which there exists a one to
+  one mapping from the distribution space to the target space.  That means,
+  the space $S_{\infty}^{d-1}$ can be projected onto some other $S_p^{d-1}$
+  using another norm $p$.  We project onto the unit simplex using the $L_1$
+  norm, and onto the unit hypersphere using the $L_2$ norm.  There exists a
+  one-to-one mapping between these spaces and the unit hypercube.
+
+For model comparison, as the projection induces its own distortion, we will
+  conduct model comparison in $S_{\infty}^{d-1}$, using a distance metric
+  appropriate to that space.
+
+\input{methodology_fdirichlet}
 
 \input{methodology_projgamma}
 

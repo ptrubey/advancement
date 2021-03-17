@@ -1,0 +1,121 @@
+\subsection{Dirichlet}
+As a distribution defined on the unit hypersphere using the $L_1$ norm, or simplex, Dirichlet is a
+  natural choice for our purpose.  The dirichlet random variable can be decomposed as a vector of
+  independent gamma random variables with a constant rate parameter, divided by their sum
+  (or $L_1$ norm). That is,
+  \begin{equation}
+    \label{eq:dirichletrv}
+    {\bf x} \sim \text{Dir}({\bf x} \mid \zeta) = \int_0^{\infty}\prod_{l = 1}^d\text{Ga(rx_l \mid zeta_l, 1)}\text{d}r
+  \end{equation}
+  The value of the rate parameter is irrelevant to the distribution of ${\bf x}$, so we set it to 1
+  for convenience.
+
+We consider two mixture models under this family; a finite mixture model of fixed dimension, and an
+  infinite mixture model using a Dirichlet process prior for $\zeta$.
+
+\subsubsection{Finite Mixture of Dirichlets}
+The finite dirichlet mixture model attempts to represent the distribution of data, projected onto
+  the simplex, using a finite mixture of Dirichlet parameters $\zeta$.  That is, for each mixture
+  component $j$, we have a vector $\zeta$ detailing the parameters of the Dirichlet distribution
+  under which observations under that component are distributed.
+  \begin{equation}
+    \begin{aligned}
+      (r_i, x_i) \mid \delta_i &\sim \prod{l = 1}^d\text{Ga}(rx_{il}\mid \zeta_{jl}, 1)\\
+            \zeta_{jl} \mid \alpha_l,\beta_l &\sim \text{Ga}(\zeta_{jl}\mid \alpha_l, \beta_l)
+            \alpha_l &\sim \text{Ga}(\alpha_l \mid 0.5, 0.5)\\
+            \beta_l &\sim \text{Ga}(\beta_l \mid 2, 2)\\
+            \lambda &\sim \text{Dir}(0.5)
+    \end{aligned}
+  \end{equation}
+  Let $i$ denote indexing over the data set.  Let $j$ denote indexing over mixture components.  Let
+  Let $l$ denote indexing over columns. Thus, $\delta_i$ denotes the mixture component associated
+  with the $i$'th observation.  $\zeta_{jl}$ denotes the shape parameter of the Dirichlet
+  distribution associated with mixture component $j$, and column $l$.
+
+We perform data augmentation, recovering the original product of independent gammas interpretation
+  of the Dirichlet RV, enabling us to do posterior learning about $\zeta_{jl_1}$ independent of
+  $\zeta_{jl_2}$.  The augmented variable, $r_i$, can be generated as
+  \begin{equation}
+    \label{eq:L1augmentation}
+    r_i\mid x, \delta, \zeta \sim \text{Ga}(r_i \mid \sum_{l = 1}^d \zeta_{jl}, 1)
+  \end{equation}
+  We assign a prior distribution for probability of mixture component membership, $\lambda$, as a
+  Dirichlet RV with a relatively weak 0.5 symmetric shape parameter.
+
+The full conditional distribution for $\zeta_{jl}$ is not available in a known form, so sampling
+  will require some flavor of MCMC.  We employ a Metropolis-Hastings sampler on $\log\zeta_{jl}$
+  using a normal proposal distribution with a standard deviation of 0.3.  This is also employed in
+  the posterior sampling for $\alpha_l$. The full conditional for $\beta_l$ arrives in known form
+  as a Gamma,
+  \begin{equation}
+    \label{eq:betafc}
+    \beta_l\mid \alpha_l, \zeta \sim \text{Ga}(\beta_l \mid J\alpha + 2, \sum_{j = 1}^J\zeta_{jl} + 2)
+  \end{equation}
+  The full conditionals for $\zeta_{jl}$ and $\alpha_l$ \makenote{are yet to be inserted, but they
+  are simple gamma/gamma models.}
+
+We construct the finite mixture using data augmentation, introducing the mixture component
+  identifier $\delta_i$. The posterior probability that $\delta_i = j$ is constructed as:
+  \begin{equation}
+    \label{eq:finitemix}
+    p(\delta_i = j \mid r, x, \pi, \zeta) \propto \pi_j\prod_{l = 1}^d\text{Ga}(rx_{il}\mid\zeta_{jl},1)
+  \end{equation}
+  Then the posterior distribution for $\pi$ is formed from the cluster membership identifiers.  Let
+  $n_j = \sum 1_{\delta_i = j}$, then $\pi$ is distributed as
+  \begin{equation}
+    \pi \mid \delta \sim \text{Dir}(n_1 + 0.5, \ldots, n_J + 0.5).
+  \end{equation}
+  This comprises the simplest model we present for comparison.
+
+A natural extension to this model would be to assume the data coming from a generalized Dirichlet
+  distrubution, where the values for the rate parameter are no longer constant.  In practice, the
+  ambiguity in cluster membership that results from the additional variability in cluster parameters
+  seems to result in a less powerful model.
+
+\subsubsection{Dirichlet Process Mixture of Dirichlets}
+The other natural extension to the finite mixture of Dirichlets would be to assume the cluster
+  parameters, $\zeta_j$, as descending from an infinite mixture.  As we are simply attempting to
+  represent the data, and do not have a compelling interest in controlling the number of clusters,
+  a natural choice of prior is the Dirichlet process.  This model will share a great deal of
+  construction, posterior inference, and indeed code, with the finite mixture model.
+  \begin{equation}
+    \label{eq:dpsimplex}
+    \begin{aligned}
+      (r_i, {\bf x}_i) \mid \zeta_i &\sim \prod_{l = 1}^d\text{Ga}(r_ix_{il}\mid \zeta_{il}, 1)\\
+      \zeta_i &\sim \text{DP}(\eta, G)\hspace{2cm}G = \prod_{l = 1}^d \text{Ga}(\zeta_{il}\mid \alpha_l,\beta_l)
+      \alpha_l &\sim \text{Ga}(\alpha_l \mid 0.5, 0.5)
+      \beta_l &\sim \text{Ga}(\beta_l \mid 2, 2)
+      \eta &\sim \text{Ga}(\eta \mid 2, \kappa) \hspace{2cm}\kappa \in \lbrace 0.1, 1, 10\rbrace
+    \end{aligned}
+  \end{equation}
+We denote cluster membership using $\delta_i$, as in the previous case.  Let
+  $n_j = \sum 1_{\delta_i = j}$ denote the cluster size.  In the DP literature terminology, we
+  are using what is referred to as the collapsed sampler, where for existing clusters,
+  \begin{equation}
+    p(\delta_i = j \mid r, \zeta, \eta) \propto \frac{n_j}{\sum_j n_j + \eta}
+                \prod_{l = 1}^d\text{Ga}(r_ix_{il}\mid\zeta_{jl})
+  \end{equation}
+  For new clusters, ostensibly we would integrate out the cluster parameters to get a true
+  posterior predictive density.  However, doing so is not straitforward.  Instead, we employ
+  algorithm 8 from \cite{neal2000}, which introduces another parameter $m$.  We generate $m$ new
+  candidate clusters given $\alpha,\beta$, then the probability of $x_i$ belonging to any
+  particular cluster from the candidate clusters is given as:
+  \begin{equation}
+    p(\delta_i = j \mid r, \zeta^{\prime}, \eta) \propto \frac{\eta / m}{\sum_j n_j + \eta}
+                \prod_{l = 1}^d\text{Ga}(r_ix_{il}\mid\zeta_{jl}^{\prime})
+  \end{equation}
+  where $\zeta_j^{\prime}$ indicates the cluster parameters from a candidate cluster.  If a new
+  cluster is selected, then we append the new cluster parameters to the stack, and continue.
+
+This model is slightly more complex than the finite mixture of Dirichlets, but at its core it
+  employs the same assumption--that the individual columns descend from independent gamma random
+  variables, with a fixed rate parameter.
+
+\makenote{Maybe add generalized dirichlet?}
+
+
+
+
+
+
+% EOF
