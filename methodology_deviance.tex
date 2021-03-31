@@ -1,0 +1,26 @@
+\subsection{Proper Scoring Rules on the Hypercube}
+It is not immediately obvious which criteria to use to judge these models and decide which best
+  represents the data.  We have opted to use the \emph{posterior predictive loss} criterion of
+  \cite{gelfand1998} and the \emph{energy score} criterion of \cite{gneiting2007}.  Both of these
+  metrics require calculating some approximation of distance in the target space, and this
+  section will be devoted to that.
+
+We are not aware of any standardized distance metrics developed on the positive orthant of the
+  unit hypercube.  In the unit simplex, we can assume the use of Euclidean norm.  on the unit
+  hypersphere, our task would be slightly more difficult as Euclidean norm would under-report
+  the actual distance required for travel between points a and b.  On the hypercube, assuming
+  points $a$ and $b$ lie on different faces, the distortion between Euclidean norm and the
+  actual distance required for travel will be even greater.
+
+The positive orthant of the unit hypercube, defined in Euclidean geometry, is that structure for
+  which, in a given point on the hypercube, all dimensions of that point are between 0 and 1, and
+  at least one dimension must be 1.  Developing terminology, we can consider observations for which
+  the $j$th dimension is equal to 1, to be on the $j$th \emph{face}.  The intersection of the $i$th
+  and $j$th face is the $d-2$ dimensional hypercube for which observations in this space have
+  dimensions $i,j$ equal to 1.
+
+The \emph{shortest path} in this space will be the projection of the straight line defined 
+
+
+
+% EOF

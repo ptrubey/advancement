@@ -2,29 +2,14 @@
 \label{method:pg}
 Another $d-1$ dimension reduction we can use is instead of projecting onto the unit simplex,
   $S_{1}^{d-1}$, we can project onto the unit hypersphere formed on the Euclidean norm,
-  $S_{2}^{d-1}$. \cite{nunez2019} develops this idea fully into the projected gamma distribution.
-  Again, we form the distribution as the product of $d$ independent gammas.  That is,
+  $S_{2}^{d-1}$. \cite{nunez2019} develops this idea into the projected gamma distribution.  Again,
+  we form the distribution as the product of $d$ independent gammas.  That is,
   ${\bf y} = (y_1,\ldots,y_d)^t$, and $y_i\sim\text{Ga}(\alpha_i,\beta_i)$.  We define our
   starting point:
   \begin{equation}
     f({\bf y}\mid{\bf \alpha},{\bf \beta}) = \prod_{j = 1}^d\text{Ga}(y_j\mid\alpha_j,\beta_j),
   \end{equation}
-  where $\beta$ is specified as a rate parameter.  \cite{nunez2019} proceeds through a full
-  spherical coordinate transformation, where $\theta_i = \cos^{-1}(y_i / \lVert y_{i:d})$,
-  for $i\in\lbrace1,\ldots,d-1$.  Then $y_i = r\prod_{j=1}^{i-1}\sin\theta_j\cos\theta_i$.
-  This results in a true $d-1$ dimensional distribution, with $\theta_i \in [0, \pi/2)$ for all
-  $i\in\lbrace1,\ldots,d-1$.
-
-  
-
-
-
-
-
-
-
-
-
+  where $\beta$ is specified as a rate parameter.  From that, we transform to
   $d$-dimensional spherical coordinates ${\bf y} \rightarrow (r,{\bf \theta})$ as
   \begin{equation}
     \label{eqn:transform}
