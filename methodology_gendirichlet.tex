@@ -1,0 +1,62 @@
+\subsection{Generalized Dirichlet}
+The other natural extension we can form from the Dirichlet model would be to assume data as
+  descending from a Generalized Dirichlet distribution.  This model has the same support as the
+  Dirichlet, but it is more general in that the rate parameters are not assumed to be the same.
+  That is,
+  \begin{equation}
+    \label{eq:gendirichletrv}
+    {\bf x} \sim \text{GD}({\bf x}\mid \zeta, \sigma) =
+        \int_0^{\infty}\prod_{l = 1}^d\text{Ga}(rx_l\mid \zeta_l, \sigma_l)\lvert J\rvert\text{d}r
+  \end{equation}
+Again, the Jacobian is $r^{d-1}$.  As the model is not identifiable otherwise, some restriction
+  must be placed on the rate parameters $\sigma$, and the restriction most often used is that the
+  first rate parameter $\sigma_1$ is set to 1.
+
+We again consider 2 models under this family: A finite mixture model, and a dirichlet process
+  mixture model.
+
+\subsubsection{Finite Mixture of Generalized Dirichlets}
+We extend the finite mixture of Dirichlets by, for $l > 1$, allowing $\sigma_{jl}$ to vary, and
+  placing Gamma hyperpriors for its generating shape and rate parameters.
+  \begin{equation}
+    \label{eq:fm_gendirichlet}
+    \begin{aligned}
+    (r_i, x_i) \mid \delta_i=j &\sim \prod{l = 1}^d\text{Ga}(rx_{il}\mid \zeta_{jl}, \sigma_{jl})\\
+        \zeta_{jl} \mid \alpha_l,\beta_l &\sim \text{Ga}(\zeta_{jl}\mid \alpha_l, \beta_l)
+        \sigma_{jl} \mid \xi_l, \tau_l &=\sim \text{Ga}(\sigma_{jl}\mid \xi_l, \tau_l)
+                                                                  \text{ for }j = 2,\ldots,d
+        \alpha_l &\sim \text{Ga}(\alpha_l \mid 0.5, 0.5)\\
+        \beta_l &\sim \text{Ga}(\beta_l \mid 2, 2)\\
+        \xi_l &\sim \text{Ga}(\xi_l\mid 0.5, 0.5)\\
+        \tau_l &\sim \text{Ga}(\tau_l\mid 2, 2)\\
+        \lambda &\sim \text{Dir}(0.5)
+    \end{aligned}
+  \end{equation}
+Again, $i$ denotes indexing over observed data, $j$ denotes indexing over clusters, and $l$ denotes
+  indexing over dimensions.  Inference conducted on this model is very similar to that of the
+  Dirichlet--we augment the data $x_i$ with $r_i$, the latent sum of the independent gammas.
+  Doing so allows us to conduct inference on each dimension $l$ independently of the other
+  dimensions.  The latent $r$ is generated as
+  \begin{equation}
+    r_i\mid \zeta, \sigma, \delta_i=j \sim
+        \text{Ga}\left(\sum_{l = 1}^d\zeta_{jl},\sum_{l=1}^d\sigma_{jl}x_l\right),
+  \end{equation}
+This results in a more flexible model as compared to the Dirichlet.  The choice of somewhat
+  informative hyperparameters for the rate hyperpriors is to ensure that, for numerical stability's
+  sake, rate parameters do not approach 0.
+
+\subsubsection{Dirichlet Process Mixture of Generalized Dirichlets}
+This is the final extension to the Dirichlet model, placing a Dirichlet process prior on the
+  cluster parameters $\zeta_i,\sigma_i$.  Analogous to the Dirichlet process of Dirichlets, and
+  the change made from the finite mixture of Dirichlets to the finite mixture of Generalized
+  Dirichlets, this model allows $\sigma_i$ to vary, and places a Gamma hyperprior on its generating
+  shape and rate parameters.  We use the same hyperparameters as the finite mixture of generalized
+  Dirichlets, assuming that shape parameters descend from a Gamma$(0.5, 0.5)$, and rate parameters
+  descend from a Gamma$(2,2)$.
+
+
+
+
+
+
+  % EOF
