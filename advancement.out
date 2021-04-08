@@ -14,14 +14,13 @@
 \BOOKMARK [3][-]{subsubsection.3.4.1}{Observation Density}{subsection.3.4}% 14
 \BOOKMARK [1][-]{section.4}{The Problem}{}% 15
 \BOOKMARK [1][-]{section.5}{Methodology}{}% 16
-\BOOKMARK [2][-]{subsection.5.1}{Projected Gamma}{section.5}% 17
-\BOOKMARK [2][-]{subsection.5.2}{Projected Mixture of Gammas \(PMG\) Model}{section.5}% 18
-\BOOKMARK [2][-]{subsection.5.3}{Mixture of Projected Gammas \(MPG\) Model}{section.5}% 19
-\BOOKMARK [2][-]{subsection.5.4}{Non-parametric Mixture of Projected Gammas \(NPPG\) Model}{section.5}% 20
-\BOOKMARK [2][-]{subsection.5.5}{Implications of the distribution}{section.5}% 21
-\BOOKMARK [2][-]{subsection.5.6}{Non-parametric Mixture of Multivariate Normals}{section.5}% 22
-\BOOKMARK [3][-]{subsubsection.5.6.1}{Casting \040to Probit space directly}{subsection.5.6}% 23
-\BOOKMARK [2][-]{subsection.5.7}{Non-parametric Mixture of Projected Gammas with Lognormal Prior}{section.5}% 24
-\BOOKMARK [2][-]{subsection.5.8}{Spatial Threshold Modeling}{section.5}% 25
-\BOOKMARK [1][-]{section.6}{Results}{}% 26
-\BOOKMARK [1][-]{section.7}{Conclusion}{}% 27
+\BOOKMARK [2][-]{subsection.5.1}{Dirichlet}{section.5}% 17
+\BOOKMARK [3][-]{subsubsection.5.1.1}{Finite Mixture of Dirichlets}{subsection.5.1}% 18
+\BOOKMARK [3][-]{subsubsection.5.1.2}{Dirichlet Process Mixture of Dirichlets}{subsection.5.1}% 19
+\BOOKMARK [2][-]{subsection.5.2}{Projected Gamma}{section.5}% 20
+\BOOKMARK [2][-]{subsection.5.3}{Model Comparison on the Hypercube}{section.5}% 21
+\BOOKMARK [3][-]{subsubsection.5.3.1}{Posterior Predictive Loss Criterion}{subsection.5.3}% 22
+\BOOKMARK [3][-]{subsubsection.5.3.2}{Energy Score}{subsection.5.3}% 23
+\BOOKMARK [2][-]{subsection.5.4}{Spatial Threshold Modeling}{section.5}% 24
+\BOOKMARK [1][-]{section.6}{Results}{}% 25
+\BOOKMARK [1][-]{section.7}{Conclusion}{}% 26

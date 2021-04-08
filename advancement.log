@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2020.2.19)  2 DEC 2020 13:03
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2020.12.17)  6 APR 2021 22:54
 entering extended mode
 **./advancement.tex
 (advancement.tex
@@ -638,145 +638,52 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 \openout4 = `advancement.toc'.
 
  [2] (introduction.tex) (background.tex [3] [4]) (review.tex
-[5]) (problem.tex [6]) (methodology.tex (methodology_projgamma.tex [7]
-<./images/justification_for_more_complex_models.pdf, id=203, 505.89pt x 505.89p
+[5]) (problem.tex [6]) (methodology.tex (methodology_dirichlet.tex [7]
+Overfull \hbox (8.34114pt too wide) in paragraph at lines 57--60
+\OT1/cmr/m/n/10 The full con-di-tion-als for $\OML/cmm/m/it/10 []$ \OT1/cmr/m/
+n/10 and $\OML/cmm/m/it/10 []$ []\OT1/cmr/m/n/10 are yet to be in-serted, but 
+they are sim-ple gamma/gamma
+ []
+
+[8]
+Overfull \hbox (235.98499pt too wide) detected at line 89
+[][][]
+ []
+
+) (methodology_projgamma.tex [9] [10]
+<./images/justification_for_more_complex_models.pdf, id=232, 505.89pt x 505.89p
 t>
 File: ./images/justification_for_more_complex_models.pdf Graphic file (type pdf
 )
 <use ./images/justification_for_more_complex_models.pdf>
 Package pdftex.def Info: ./images/justification_for_more_complex_models.pdf  us
-ed on input line 81.
+ed on input line 97.
 (pdftex.def)             Requested size: 361.34999pt x 361.35352pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[8]) (methodology_projmixgamma.tex [9 <./images/justification_for_more_complex_
-models.pdf>]
-Overfull \hbox (9.9889pt too wide) detected at line 37
-[][]
- []
-
-[10]) (methodology_mixprojgamma.tex [11]
-<./images/mpg_15_emp_v_pred_decluster.pdf, id=236, 505.89pt x 505.89pt>
-File: ./images/mpg_15_emp_v_pred_decluster.pdf Graphic file (type pdf)
-<use ./images/mpg_15_emp_v_pred_decluster.pdf>
-Package pdftex.def Info: ./images/mpg_15_emp_v_pred_decluster.pdf  used on inpu
-t line 62.
-(pdftex.def)             Requested size: 433.62pt x 433.62885pt.
-
-Overfull \hbox (46.94704pt too wide) in paragraph at lines 62--63
- [][] 
- []
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-) (methodology_npmpg.tex
-Overfull \hbox (10.8659pt too wide) in paragraph at lines 1--1
-[]\OT1/cmr/bx/n/12 Non-parametric Mix-ture of Pro-jected Gam-mas (NPPG) Model 
- []
-
-[12] [13 <./images/mpg_15_emp_v_pred_decluster.pdf>]
-<./images/dpmpg_emp_v_pred_decluster.pdf, id=259, 505.89pt x 505.89pt>
-File: ./images/dpmpg_emp_v_pred_decluster.pdf Graphic file (type pdf)
-<use ./images/dpmpg_emp_v_pred_decluster.pdf>
-Package pdftex.def Info: ./images/dpmpg_emp_v_pred_decluster.pdf  used on input
- line 59.
-(pdftex.def)             Requested size: 433.62pt x 433.62885pt.
-
-Overfull \hbox (46.94704pt too wide) in paragraph at lines 59--60
- [][] 
- []
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-) (methodology_prior.tex [14]
-<./images/implication_of_gamma_prior.pdf, id=268, 433.62pt x 433.62pt>
-File: ./images/implication_of_gamma_prior.pdf Graphic file (type pdf)
-<use ./images/implication_of_gamma_prior.pdf>
-Package pdftex.def Info: ./images/implication_of_gamma_prior.pdf  used on input
- line 18.
-(pdftex.def)             Requested size: 433.61894pt x 433.61894pt.
-
-Overfull \hbox (46.94598pt too wide) in paragraph at lines 18--19
- [][] 
- []
-
-[15 <./images/dpmpg_emp_v_pred_decluster.pdf>]) (methodology_dpnormal.tex
-[16]
-<./images/dpmp_emp_v_pred_decluster.pdf, id=285, 505.89pt x 505.89pt>
-File: ./images/dpmp_emp_v_pred_decluster.pdf Graphic file (type pdf)
-<use ./images/dpmp_emp_v_pred_decluster.pdf>
-Package pdftex.def Info: ./images/dpmp_emp_v_pred_decluster.pdf  used on input 
-line 53.
-(pdftex.def)             Requested size: 433.62pt x 433.62885pt.
-
-Overfull \hbox (46.94704pt too wide) in paragraph at lines 53--54
- [][] 
- []
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 63.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\theta' on input line 63.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 63.
-
-<./images/dpmp2_emp_v_pred_decluster.pdf, id=287, 505.89pt x 505.89pt>
-File: ./images/dpmp2_emp_v_pred_decluster.pdf Graphic file (type pdf)
-<use ./images/dpmp2_emp_v_pred_decluster.pdf>
-Package pdftex.def Info: ./images/dpmp2_emp_v_pred_decluster.pdf  used on input
- line 79.
-(pdftex.def)             Requested size: 433.62pt x 433.62885pt.
-
-Overfull \hbox (46.94704pt too wide) in paragraph at lines 79--80
- [][] 
- []
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-) (methodology_dppglognormal.tex) [17]) (results.tex) (conclusion.tex) [18]
-(advancement.bbl)
+) (methodology_deviance.tex [11] [12 <./images/justification_for_more_complex_m
+odels.pdf>] [13])) (results.tex) (conclusion.tex) [14] (advancement.bbl)
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 48.
- [19] [20 <./images/implication_of_gamma_prior.pdf>] [21 <./images/dpmp_emp_v_p
-red_decluster.pdf>] [22 <./images/dpmp2_emp_v_pred_decluster.pdf>]
+
+[15]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 48.
  (advancement.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 48.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 48.
-
-
-Package rerunfilecheck Warning: File `advancement.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `advancement.out':
-(rerunfilecheck)             Before: B4DB0E46D79CB9091CBECD57B6B322C6;1864
-(rerunfilecheck)             After:  DF37E5606277097FE7AA4565B1FBE565;1977.
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
+Package rerunfilecheck Info: File `advancement.out' has not changed.
+(rerunfilecheck)             Checksum: 2F722006FC534008D5896DBF6AF74D72;1797.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 48.
  ) 
 Here is how much of TeX's memory you used:
- 17624 strings out of 492480
- 315266 string characters out of 3121553
- 642414 words of memory out of 3000000
- 21698 multiletter control sequences out of 15000+200000
+ 17574 strings out of 492480
+ 313209 string characters out of 3121552
+ 641262 words of memory out of 3000000
+ 21667 multiletter control sequences out of 15000+200000
  543020 words of font info for 65 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 44i,11n,67p,442b,346s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 44i,9n,67p,388b,333s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Users/Peter/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts
 /cm/cmbx10.pfb><C:/Users/Peter/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/pu
 blic/amsfonts/cm/cmbx12.pfb><C:/Users/Peter/AppData/Local/Programs/MiKTeX 2.9/f
@@ -801,9 +708,9 @@ ms/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/Peter/AppData
 eter/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb
 ><C:/Users/Peter/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/
 cm/cmti10.pfb>
-Output written on advancement.pdf (22 pages, 377388 bytes).
+Output written on advancement.pdf (15 pages, 327363 bytes).
 PDF statistics:
- 420 PDF objects out of 1000 (max. 8388607)
- 88 named destinations out of 1000 (max. 500000)
- 239 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 358 PDF objects out of 1000 (max. 8388607)
+ 82 named destinations out of 1000 (max. 500000)
+ 214 words of extra memory for PDF output out of 10000 (max. 10000000)
 
