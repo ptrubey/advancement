@@ -25,7 +25,7 @@ The posterior predictive loss criterion, \emph{ppl} is introduced in \cite{gelfa
   \begin{equation}
     \label{eq:ppl2}
     D_k^{\prime} = \text{E}\left\lVert{\bf X_l},\text{E}[{\bf X}_l]\right\rVert_{\Omega}^2 +
-                    \frac{k}{k+1}\left\lVert\text{E}[{\bf X}_l],{\bf x}_l\right\rVert-{\Omega}^2.
+                    \frac{k}{k+1}\left\lVert\text{E}[{\bf X}_l],{\bf x}_l\right\rVert_{\Omega}^2.
   \end{equation}
   This generalizes the posterior predictive variance as expected squared distance from a central
   mean.  We can numerically calculate this mean as \makenote{Not sure of this.  googling yields
@@ -136,15 +136,15 @@ Consider a 3-dimensional cube.  Consider 2 points on this 3-dimensional cube,
     \end{bmatrix}
   \end{equation}
 Every successive rotation is relative to the last face.  So, as the number of dimensions grows, the
-  nmumber of possible rotations grows as well.
+  number of possible rotations grows as well.
 
   \makenote{need to finish this!}
 
-As we have $d$ dimensions, if 2 observations are on different faces, then there are
+As we have $d$ faces, if 2 observations are on different faces, then there are
   $\sum_{j = 1}^{d-2}\binom(d-2,j) + 1$ possible rotations to consider. \makenote{There are truly $d!$
   possible nets, but when we consider starting and ending faces fixed, and that portions of the net
   that diverge after the ending face are irrelevant, we arrive at that number of rotations that we
-  actually need consider}.  This is not insurmountable, it is numerically difficult, and developing
+  actually need consider}.  While this is not insurmountable, it is numerically difficult, and developing
   the generalized rotation strategies for $d$ dimensions is beyond the scope of this analysis.
   However, we are in luck in that all we need for a valid energy score is a
   \emph{negative definite kernel}.  This is defined as a function having symmetry in its arguments,
@@ -154,8 +154,27 @@ As we have $d$ dimensions, if 2 observations are on different faces, then there 
 
 Let's go back to the first rotation--we held that as a numerically easier analogue to what we were
   actually calculating--the distance from the starting point, to some optimal point along the
-  intersection between the $x$ and $y$ planes, to the ending point.  That is, the sum of two
-  Euclidean norms.
+  intersection between the starting and ending faces, to the ending point.  At that optimal point,
+  the total distance travelled between starting and ending points becomes symmetric.  We can
+  recognize this distance as the sum of two Euclidean norms.  That is,
+  \begin{equation}
+    \lVert {\bf a},{\bf b}\rVert_{H} = \lVert {\bf a}, {\bf c} \rVert_2 + \lVert {\bf c},{\bf b}\rVert_2
+  \end{equation}
+  If we can be assured of symmetry in the functional arguments, then the requirements for a negative
+  definite kernel are trivially proved.
+
+\subsubsection{Intrinsic Energy Score}
+While we have at length discussed our means of comparison between models, we have limited means of
+  comparing how our model is doing relative to the data.  That is, to say, we lack a metric like $R^2$,
+  the coefficient of variation from linear regression, forcing us to construct something to serve
+  along these lines.
+
+We introduce the \emph{intrinsic energy score} to offer a baseline energy score \emph{in the data},
+  against which we might compare candidate models.  This allows us to see how well our model is doing
+  relative to the data, rather than just relative to other models.  We construct this using the
+  energy score metric, but for any particular observation in the data, we compare that observation
+  against all other observations in the data.  That is, for a given observation, treat other
+  observations as replicates of that observation.
 
 
 

@@ -16,8 +16,10 @@ We again consider 2 models under this family: A finite mixture model, and a diri
   mixture model.
 
 \subsubsection{Finite Mixture of Generalized Dirichlets}
+\label{model:mgd}
 We extend the finite mixture of Dirichlets by, for $l > 1$, allowing $\sigma_{jl}$ to vary, and
-  placing Gamma hyperpriors for its generating shape and rate parameters.
+  placing Gamma hyperpriors for its generating shape and rate parameters.  We denote this model as
+  \emph{MGD}.
   \begin{equation}
     \label{eq:fm_gendirichlet}
     \begin{aligned}
@@ -46,17 +48,13 @@ This results in a more flexible model as compared to the Dirichlet.  The choice 
   sake, rate parameters do not approach 0.
 
 \subsubsection{Dirichlet Process Mixture of Generalized Dirichlets}
-This is the final extension to the Dirichlet model, placing a Dirichlet process prior on the
-  cluster parameters $\zeta_i,\sigma_i$.  Analogous to the Dirichlet process of Dirichlets, and
-  the change made from the finite mixture of Dirichlets to the finite mixture of Generalized
-  Dirichlets, this model allows $\sigma_i$ to vary, and places a Gamma hyperprior on its generating
-  shape and rate parameters.  We use the same hyperparameters as the finite mixture of generalized
-  Dirichlets, assuming that shape parameters descend from a Gamma$(0.5, 0.5)$, and rate parameters
-  descend from a Gamma$(2,2)$.
-
-
-
-
+\label{model:dpgd}
+Analogous to the DP extension to the finite mixture of Dirichlets, we place a Dirichlet process
+  prior on the cluster parameters $\zeta_i,\sigma_i$.  As with \emph{DPD}, and the change made from
+  \emph{MD} to \emph{MGD}, this model allows $\sigma_i$ to vary, and places a Gamma hyperprior on
+  its generating shape and rate parameters.  We use the same hyperparameters as the finite mixture
+  of generalized Dirichlets, assuming that shape parameters descend from a Gamma$(0.5, 0.5)$, and
+  rate parameters descend from a Gamma$(2,2)$.
 
 
   % EOF
