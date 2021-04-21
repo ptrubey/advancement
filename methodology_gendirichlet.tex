@@ -57,4 +57,38 @@ Analogous to the DP extension to the finite mixture of Dirichlets, we place a Di
   rate parameters descend from a Gamma$(2,2)$.
 
 
+\subsubsection{Generalized Dirichlet with log-normal prior on shape}
+We have formed analogous finite mixtures and Dirichlet process mixtures using the Dirichlet kernel,
+  along with a log-normal prior on the shape parameters, in the case of the finite mixture, and a
+  log-normal centering distribution in the case of the DP mixture.  The rate parameters prior remains
+  a product of independent gammas.  That is, for the finite mixture model \emph{MGDLN},
+  \begin{equation}
+    \begin{aligned}
+      (r_i, x_i) \mid \delta_i=j &\sim \prod{l = 1}^d\text{Ga}(rx_{il}\mid \zeta_{jl}, \sigma_{jl})\\
+      \zeta_{j} \mid \mu_j, \Sigma_j &\sim \log\mathcal{N}(\zeta_{jl}\mid \mu,\Sigma)
+      \sigma_{jl} \mid \xi_l, \tau_l &=\sim \text{Ga}(\sigma_{jl}\mid \xi_l, \tau_l)
+                                                                \text{ for }j = 2,\ldots,d
+      \xi_l &\sim \text{Ga}(\xi_l\mid 0.5, 0.5)\\
+      \tau_l &\sim \text{Ga}(\tau_l\mid 2, 2)\\
+      \lambda &\sim \text{Dir}(0.5),
+    \end{aligned}
+  \end{equation}
+  and the Dirichlet Process mixture model, \emph{DPGDLN}
+  \begin{equation}
+    \begin{aligned}
+      (r_i, {\bf x}_i) \mid \zeta_i &\sim \prod_{l = 1}^d\text{Ga}(r_ix_{il}\mid \zeta_{il}, 1)\\
+        \zeta_i &\sim \text{DP}(\eta, G)\hspace{2cm}G = \log\mathcal{N}(\zeta_i\mid\mu,\Sigma)
+                                          \prod_{l = 2}^d \text{Ga}(\sigma_{il}\mid \xi_l,tau_l)\\
+        \alpha_l &\sim \text{Ga}(\alpha_l \mid 0.5, 0.5)\\
+        \beta_l &\sim \text{Ga}(\beta_l \mid 2, 2)\\
+        \eta &\sim \text{Ga}(\eta \mid 2, \kappa) \hspace{2cm}\kappa \in \lbrace 0.1, 1, 10\rbrace
+    \end{aligned}
+  \end{equation}
+  
+
+
+
+
+
+
   % EOF

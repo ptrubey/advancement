@@ -1,0 +1,35 @@
+
+\subsection{Normal model built on Probit representation of Spherical Coordinate Space}
+\label{method:npprobitnorm}
+The transformation in Equation~\ref{eqn:transform} provides us a mapping from $S_{2}^{d-1}$ to a
+  $d-1$ dimensional vector, bounded on $[0, \pi/2]$.  Building on this transformation, this allows
+  us to represent the data using a true $d-1$ dimensional distribution, rather than generating a
+  latent parameter to induce a $d$ dimensional distribution, as we do with all the gamma based
+  models.
+
+A flexible choice of distribution for this multivariate normal.  Let
+  $W_i = \text{Probit}(2\theta_i /\pi)$, then estabblish a multivariate normal distribution on $W$.
+  As we are expecting data to descend from a mixture of distributions, we place a DP prior on the
+  multivariate normal kernel distribution.  The centering distribution is the product of a
+  multivariate normal and inverse Wishart distribution; and we place multivarite normal and
+  inverse Wishart priors on these parameters.  As before, we place a gamma prior on the DP
+  concentration parameter $\eta$.
+  \begin{equation}
+    \begin{aligned}
+                W_i &\sim \mathcal{N}_{d-1}\left(\mu_i, \Sigma_i\right)\\
+    \mu_i, \sigma_i &\sim G_i\\
+                G_i &\sim \text{DP}(\eta, G_0(\mu_i,\Sigma_i\mid\mu_0,\Sigma_0))\\
+                    &\hspace{1cm}G_0(\mu_i,\Sigma_i\mid\mu_0,\Sigma_0) &=
+                      \mathcal{N}_{d-1}(\mu_i\mid\mu_0,\Sigma_0)\text{IW}(\Sigma\mid\nu,\psi)\\
+              \mu_0 &\sim \mathcal{N}_{d-1}\left({\bf u},{\bf S}\right)\\
+           \Sigma_0 &\sim \text{IW}(\nu_0,\psi_0)\\
+               \eta &\sim \text{Ga}(\alpha, \beta)
+    \end{aligned}
+  \end{equation}
+There is an advantage in that for inference on $\mu_i, \mu_0, \Sigma_i$, and $\Sigma_0$ this model
+  is completely conjugate.  However, while the transformation employed in Equation~\ref{eqn:transform}
+  is one to one, small deviations in different dimensions on $S_{\infty}^{d-1}$ have vastly different
+  effects on the resulting transformed variables.  This induced distortion may result in an inferior
+  model, when evaluating on $S_{\infty}^{d-1}$.  We will be evaluating this model as representative
+  of models on the $d-1$ dimensional coordinate space, and comparing it against other models, after
+  projecting back onto $S_{\infty}^{d-1}$.
