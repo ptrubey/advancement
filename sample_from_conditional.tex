@@ -1,0 +1,79 @@
+\documentclass{article}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{lipsum}
+\usepackage{graphicx}
+
+
+\title{Sample from Conditional PDF}
+\author{Peter Trubey}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+
+Let $Z = \{Z_1,\ldots,Z_d\}$ where $\max(Z_l) \sim \text{Pareto}(1)$.  Without loss of generality,
+  assume we are conditioning on $Z_{3:d}$.  That is, assume we're interested in the distribution of
+  $Z_1,Z_2$ given $Z_3,\ldots,Z_d$.  I guess we also have to assume that
+  $\max_{i\in\{3,\ldots,d\}}Z_i > 1$. Let $V_{3:d} = Z_{3:d} / R_p^{(3:d)}$ -- that is, project
+  $Z_{3:d}$ onto $S_{\infty}^{d-3}$.  Then,
+\begin{equation*}
+  \begin{aligned}
+    f(V_{3:d}\mid\alpha,\beta) &= \int\int\int\prod_{l = 1}^d
+          \text{Ga}\left(rV_l\mid\alpha_l,\beta_l\right)\lvert J\rvert dr dv_1 dv_2\\
+        &= \int \prod_{l = 3}^d\text{Ga}(rV_l\mid\alpha_l,\beta_l)\lvert J \lvert dr \\
+  \end{aligned}
+\end{equation*}
+Note, $r$ on the first line is different than $r$ on the second.  I'm going to make that abuse of
+  notation a lot.  As we are dealing with independent gammas, in the vanilla case, the conditional
+  pdf is trivial -- same as the marginal pdf (I think.  There's a lot of handwaving here, but I'm
+  pretty sure with appropriate redefinition of $r$ that it's true).  When we move to the mixture
+  case, it gets a little more interesting.
+\begin{equation*}
+    f(V_1,V_2\mid \vec{\alpha},\vec{\beta},\vec{w},v_{3:d}) =
+      \frac{\sum_{j = 1}^Jw_j\int \prod_{l = 1}^d \text{Ga}(rV_l\mid \alpha_{jl},\beta_{jl})\lvert J\rvert dr}{
+        \sum_{j = 1}^Jw_j\int\prod_{l = 3}^d\text{Ga}(rV_l)\mid\alpha_{jl},\beta_{jl})\lvert J\rvert dr}
+\end{equation*}
+I realize now that I used $J$ for both a handwaved Jacobian and for the number of mixture components.
+  Interpret as appropriate.  $l$ still denotes the column/dimension index.  I'm also massively
+  abusing notation with respect to $r$ -- I'm assuming by this point the $r$'s would actually have
+  been integrated out.
+
+So that means the updated weights of the mixture components become:
+\begin{equation*}
+  w_j^{*} = \frac{w_j\int\prod_{l = 3}^d\text{Ga}(rV_l\mid \alpha_{jl},\beta_{jl})\lvert J\rvert dr}{
+      \sum_{i = 1}^J w_j\int\prod_{l = 3}^d\text{Ga}(rV_l\mid \alpha_{il},\beta_{il})\lvert J\rvert dr
+      }
+\end{equation*}
+Then, in order to sample from this distribution, we generate $y_1,y_2$ as
+\begin{equation*}
+f(y_1,y_2 \mid \ldots) = \sum_{j = 1}^J w_j^{*}\prod_{l = 1}^2 \text{Ga}(y_l\mid \alpha_{jl},\beta_{jl})
+\end{equation*}
+That is, with weight $w_j^{*}$ for a given sample from the posterior, select $(\alpha_j,\beta_j)$
+  and generate a new $y_1,y_2$.  Then we scale $y_1,y_2$ as
+\begin{equation*}
+  \frac{(Y_1,Y_2)}{r} = (V_1,V_2)\mid V_{3:d}
+\end{equation*}
+where $r$ is generated according to whatever norm we're using to build this distribution.  Then,
+  to transform back to the standard Pareto regime, we multiply by a random standard pareto.  That is,
+\begin{equation*}
+  (Z_{1},Z_2)^{\text{new}}\mid Z_{3:d} = R(V_1,V_2)^{\text{new}}
+\end{equation*}
+Alternatively (I'm not sure the transformation 2 equations above is correct), we generate a new $r$
+  given $\alpha_{j3:d}, \beta_{j3:d}$, and $V_{3:d}$.  Then,
+\begin{equation*}
+  V_1,V_2 = \frac{(Y_1,Y_2)}{\lVert Y_1,Y_2,rV_3,\ldots,rV_d\rVert}
+\end{equation*}
+\emph{Then} do the transformation back to the standard Pareto regime.
+
+Then, at least, we can compute the CDF (and survival function) numerically.  Analytically seems to
+  be more difficult.
+
+\end{document}
+
+% EOF
