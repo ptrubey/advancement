@@ -1,0 +1,51 @@
+\subsection{Projection on the $\mathcal{L}_p$-norm}
+Let the $\mathcal{L}_p$-norm be defined as
+\begin{equation*}
+  \lVert s \rVert_p = \left(\sum_{l = 1}^d \lvert s_l\rvert^p\right)^{\frac{1}{p}}
+\end{equation}
+From this, we establish the $\mathcal{L}_1$ norm as $p = 1$, or the sum, equivalently called
+  Manhatten distance; the $\mathcal{L}_2$ norm, as $p = 2$, the Euclidean distance.  From this we
+  also establish the $\mathcal{L}_{\infty}$ norm, as
+  $\lim\limits_{p\to\infty} \lVert s \rVert_p = \max_{l\in\lbrace{1,\ldots,d}}s_l$ as the infinity
+  norm.
+
+We are interested in the direction of vectors described in the positive orthant, $R_{+}^d$.  As we
+  are specifically interested in direction, we can project any distribution in $R_{+}^d$ onto the
+  positive orthant of the unit hypersphere in a $\mathcal{L}_p$-norm, denoted as $S_{p}^{d-1}$.
+  That is,
+  \begin{equation*}
+    S_{p}^{d-1} = \left\lbrace y : y \in R_{+}^{d}, \lVert y\rVert_{p} = 1\right\rbrace.
+  \end{equation*}
+  We can project an observation onto this space by dividing by its $p$-norm.  That is, let
+  $x\in R_{+}^{d}$, then $y = x / \lVert x\rVert_p \in S_{p}^{d-1}$.  We denote the $d-1$ to indicate
+  the loss of one degree of freedom relative to the original vector.
+
+So $S_{1}^{d-1}$ defines the unit simplex, $S_{2}^{d-1}$ defines the generalization of a
+  circle--what we would generally refer to as a hypersphere, and $S_{\infty}^{d-1}$ the surface of
+  the hypercube. The hyperspheres defined by $L_p$ as $p$ varies have a one to one correspondance
+  with eachother, meaning that observations on one can be projected onto another without loss of
+  information.
+
+Assuming ${\bf y} \in S_{p}^{d-1}$, then for finite $p$, $y_d$ can always be represented as a
+  function of the other dimensions.  That is,
+  \begin{equation*}
+    y_d = \left(1 - \sum_{l = 1}^{d-1}y_l^p\right)^{\frac{1}{p}}.
+  \end{equation*}
+  So the transformation
+  \begin{equation*}
+    T(x_1,\ldots,x_d) = (r,y_1,\ldots,y_{d-1})
+  \end{equation*}
+  does not lose any information.  The reverse of this transformation,
+  \begin{equation*}
+    T^{-1}\left(r,y_1,\ldots,y_{d-1}) =
+      (ry_1,\ldots,ry_{d-1},r\left(1 - \sum_{l = 1}^{d-1}y_l^p\right)^{\frac{1}{p}}\right)
+  \end{equation*}
+  equivalently recovers the original data.  The determinant of the Jacobian of this transformation
+  takes the form
+  \begin{equation*}
+    r^{d-1}\left[\left(1 - \sum_{l = 1}^{d-1}y_l^p\right)\frac{1}{p} +
+        \sum_{l = 1}^{d-1}y_l^p\left(1 - \sum_{l=1}^d\right)^{\frac{1}{p} - 1}\right]
+  \end{equation*}
+  For all finite $p$, we are left with $r$, the magnitude,
+  and ${\bf y}$, a vector projected onto $S_{p}^{d-1}$.  If we integrate out $r$, we are left with
+  an exclusively angular distribution.

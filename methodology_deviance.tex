@@ -8,55 +8,50 @@ It is not immediately obvious which criteria to use to judge these models and de
 
 \subsubsection{Posterior Predictive Loss Criterion}
 The posterior predictive loss criterion, \emph{ppl} is introduced in \cite{gelfand1998}.  When we assume a
-  squared error loss function, then for the $l$th observation, the posterior predictive loss criterion
+  squared error loss function, then for the $i$th observation, the posterior predictive loss criterion
   is computed as
   \begin{equation}
     \label{eq:ppl}
-    D_k = \text{Var}(X_l) + \frac{k}{k + 1}\left(\text{E}[X_l] - {\bf x}_l\right)^2,
+    D_{k}^{(i)} = \text{Var}(X_i) + \frac{k}{k + 1}\left(\text{E}[X_i] - x_i\right)^2,
   \end{equation}
-  where $X_l$ is a random variable from the posterior predictive distribution for $x_l$.  The
+  where $X_i$ is a random variable from the posterior predictive distribution for $x_i$.  The
   scalar $k$ is a weighting factor by which we arbitrarily scale the importance of goodness of fit
   relative to precision.  In our analysis, we take the limit as $k\to\infty$, and thus weight both
   parts equally.  Interpreting this criterion, a smaller $\text{Var}({\bf X}_l)$ indicates a higher
   precision, and a smaller $(\text{E}[{\bf X}_l] - {\bf x}_l)^2$  indicates a better fit.  Thus,
   smaller is better.  Note that this is defined for a univariate distribution--we are going to
-  generalize this somewhat, to account both for the multivariate nature of our distribution, and
-  its constrained geometry.  That is, let us re-define it as
+  generalize this somewhat, to account for the multivariate nature of our distribution.  That is,
+  let us re-define it slightly as
   \begin{equation}
     \label{eq:ppl2}
-    D_k^{\prime} = \text{E}\left\lVert{\bf X_l},\text{E}[{\bf X}_l]\right\rVert_{\Omega}^2 +
-                    \frac{k}{k+1}\left\lVert\text{E}[{\bf X}_l],{\bf x}_l\right\rVert_{\Omega}^2.
+    D_k^{i} = \tr\left[\text{Cov}({\bf X}_i)\right] +
+        \frac{k}{k+1}\sum_{l=1}^d\left(\text{E}[X_{il}] - x_{il}\right)^2
   \end{equation}
-  This generalizes the posterior predictive variance as expected squared distance from a central
-  mean.  We can numerically calculate this mean as \makenote{Not sure of this.  googling yields
-   this as the result for median...at least in 1 dimension.  not sure how to calculate for mean.}
-  \begin{equation*}
-    \text{E}[{\bf X}_l] = \text{argmin}_{\omega \in \Omega}\text{E}\lVert {\bf X}_l, s \rVert_{\Omega}.
-  \end{equation*}
-  This is numerically difficult. Adjusting our interpretation somewhat, we can also project our
-  replicates of ${\bf X}_l$ onto the simplex, calculate the mean on the simplex, then re-project
-  that point onto the hypercube.
+  That is, sum up the marginal biases and variances for each dimension of the predictive distribution.
+  Then we report the average $D_k$, taken over the whole dataset. Note that this does not account
+  for the fact we are dealing with a constrained geometry, but interpretation remains consistent--a
+  lower score indicates a better fit.
 
 \subsubsection{Energy Score}
 The energy score of \cite{gneiting2007} is a generalization of the continuous ranked probability
   score, or \emph{crps}, defined for a multi-dimensional random variable.
   \begin{equation}
     \label{eq:es}
-    \text{ES}(P,x) = \frac{1}{2}\text{E}_p\lVert {\bf X}_l,{\bf X}_l^{\prime}\rVert_{\Omega}^{\beta} -
-                            \text{E}_p\lVert {\bf X}_l - {\bf x}_l\rVert_{\Omega}^{\beta}
+    \text{ES}(P,x_i) = \frac{1}{2}\text{E}_p\lVert {\bf X}_i,{\bf X}_i^{\prime}\rVert_{\Omega}^{\beta} -
+                            \text{E}_p\lVert {\bf X}_i - {\bf x}_i\rVert_{\Omega}^{\beta}
   \end{equation}
-  where ${\bf X}_l^{\prime}$ is another replicate from the posterior predictive distribution
-  of ${\bf x}_l$. This means, rather than relying on the first and second moments of the posterior
-  predictive distribution as in the case of posterior predictive loss, we are instead calculating
-  pairwise distances between the observation and draws from the posterior predictive distribution,
-  as well as pairwise distances between those replicates themselves.
+  where ${\bf X}_i^{\prime}$ is a replicate from the posterior predictive distribution
+  of ${\bf x}_i$. This means, rather than relying on the first and second moments of the posterior
+  predictive distribution as in the case of posterior predictive loss\cite{gelfand1998}, we are
+  instead calculating pairwise distances between the observation and draws from the posterior
+  predictive distribution, as well as pairwise distances between those replicates themselves.
 
 Now here's the rub.  We are not aware of any standardized distance metrics developed on the
   positive orthant of the unit hypercube.  In the unit simplex, we can assume the use of
   Euclidean norm.  on the unit hypersphere, our task would be slightly more difficult as
   Euclidean norm would under-report the actual distance required for travel between points $a_1$
-  and $a_2$.  On the unit hypercube, where our task is defined, the distortion between Euclidean
-  norm and the actual distance travelled will be even greater.
+  and $a_2$.  On the unit hypercube, where our task is defined, that distortion between Euclidean
+  norm and the actual distance travelled over the surface of the hypercube be even greater.
 
 The positive orthant of the unit hypercube, defined in Euclidean geometry, is that structure for
   which, in a given point on the hypercube, all dimensions of that point are between 0 and 1, and
@@ -165,16 +160,14 @@ Let's go back to the first rotation--we held that as a numerically easier analog
 
 \subsubsection{Intrinsic Energy Score}
 While we have at length discussed our means of comparison between models, we have limited means of
-  comparing how our model is doing relative to the data.  That is, to say, we lack a metric like $R^2$,
-  the coefficient of variation from linear regression, forcing us to construct something to serve
-  along these lines.
-
-We introduce the \emph{intrinsic energy score} to offer a baseline energy score \emph{in the data},
-  against which we might compare candidate models.  This allows us to see how well our model is doing
-  relative to the data, rather than just relative to other models.  We construct this using the
-  energy score metric, but for any particular observation in the data, we compare that observation
-  against all other observations in the data.  That is, for a given observation, treat other
-  observations as replicates of that observation.
+  comparing how our model is doing relative to the data.  We introduce the
+  \emph{intrinsic energy score} to offer a baseline energy score \emph{in the data}, against which
+  we might compare candidate models.  This allows us to see how well our model is doing relative
+  to the data, rather than just relative to other models.  We construct this using the energy score
+  metric, but for any particular observation in the data, we compare that observation against all
+  other observations in the data.  That is, for a given observation, treat other observations as
+  replicates of that observation.  Comparing our energy score results against this value offers a
+  metric of how well we are partitioning the data into separate distributions to be evaluated.
 
 
 

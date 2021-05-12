@@ -8,12 +8,13 @@ The transformation in Equation~\ref{eqn:transform} provides us a mapping from $S
   models.
 
 A flexible choice of distribution for this multivariate normal.  Let
-  $W_i = \text{Probit}(2\theta_i /\pi)$, then estabblish a multivariate normal distribution on $W$.
-  As we are expecting data to descend from a mixture of distributions, we place a DP prior on the
-  multivariate normal kernel distribution.  The centering distribution is the product of a
-  multivariate normal and inverse Wishart distribution; and we place multivarite normal and
-  inverse Wishart priors on these parameters.  As before, we place a gamma prior on the DP
-  concentration parameter $\eta$.
+  $W_i = \text{Probit}(2\theta_i /\pi)$--that is, scale $\theta_i$ to the unit interval, then
+  conduct a probit transformation on it to result in $W_i \in (-\infty, \infty).  Then we establish
+  a multivariate normal distribution on $W$. As we are expecting data to descend from a mixture of
+  distributions, we place a DP prior on the multivariate normal kernel distribution.  The centering
+  distribution is the product of a multivariate normal and inverse Wishart distribution; and we
+  place multivarite normal and inverse Wishart priors on these parameters.  As before, we place a
+  gamma prior on the DP concentration parameter $\eta$.
   \begin{equation}
     \begin{aligned}
                 W_i &\sim \mathcal{N}_{d-1}\left(\mu_i, \Sigma_i\right)\\
@@ -33,3 +34,10 @@ There is an advantage in that for inference on $\mu_i, \mu_0, \Sigma_i$, and $\S
   model, when evaluating on $S_{\infty}^{d-1}$.  We will be evaluating this model as representative
   of models on the $d-1$ dimensional coordinate space, and comparing it against other models, after
   projecting back onto $S_{\infty}^{d-1}$.
+
+Another disadvantage of this model is the need to compute $d-1$-dimensional matrix determinants
+  and inversions.  If we consider that inversion is a $\mathcal{O}(n^3)$ operation, we face the real
+  problem of computation time climbing astronomically as the number of dimensions grows.  We are
+  currently evaluating this model on 8 and 46 dimensions, we can see that those operations on 46
+  dimensions will take around 190 times longer than on 8 dimensions.  This presents a problem if we
+  want to run this model in any reasonable time scale.

@@ -13,7 +13,7 @@ Again, the Jacobian is $r^{d-1}$.  As the model is not identifiable otherwise, s
   first rate parameter $\sigma_1$ is set to 1.
 
 We again consider 2 models under this family: A finite mixture model, and a dirichlet process
-  mixture model.
+  mixture model, and we again also consider a vanilla generalized Dirichlet model.
 
 \subsubsection{Finite Mixture of Generalized Dirichlets}
 \label{model:mgd}
@@ -56,7 +56,6 @@ Analogous to the DP extension to the finite mixture of Dirichlets, we place a Di
   of generalized Dirichlets, assuming that shape parameters descend from a Gamma$(0.5, 0.5)$, and
   rate parameters descend from a Gamma$(2,2)$.
 
-
 \subsubsection{Generalized Dirichlet with log-normal prior on shape}
 We have formed analogous finite mixtures and Dirichlet process mixtures using the Dirichlet kernel,
   along with a log-normal prior on the shape parameters, in the case of the finite mixture, and a
@@ -84,7 +83,7 @@ We have formed analogous finite mixtures and Dirichlet process mixtures using th
         \eta &\sim \text{Ga}(\eta \mid 2, \kappa) \hspace{2cm}\kappa \in \lbrace 0.1, 1, 10\rbrace
     \end{aligned}
   \end{equation}
-  
+
 
 
 

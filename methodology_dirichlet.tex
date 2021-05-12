@@ -12,7 +12,8 @@ As a distribution defined on the unit hypersphere using the $L_1$ norm, or simpl
   convention we set it to one.  The Jacobian for this transformation is $r^{d-1}$.
 
 We consider two mixture models under this family; a finite mixture model of fixed dimension, and an
-  infinite mixture model using a Dirichlet process prior for $\zeta$.
+  infinite mixture model using a Dirichlet process prior for $\zeta$.  For comparison, we also
+  consider a vanilla Dirichlet model.
 
 \subsubsection{Finite Mixture of Dirichlets}
 \label{model:md}
@@ -30,8 +31,8 @@ The finite dirichlet mixture model, \emph{MD}, attempts to represent the distrib
             \lambda &\sim \text{Dir}(0.5)
     \end{aligned}
   \end{equation}
-  Let $i$ denote indexing over the data set.  Let $j$ denote indexing over mixture components.  Let
-  Let $l$ denote indexing over columns. Thus, $\delta_i$ denotes the mixture component associated
+  Let $i$ denote indexing over the data set, $j$ denote indexing over mixture components, and
+  $l$ denote indexing over columns. Thus, $\delta_i$ denotes the mixture component associated
   with the $i$'th observation.  $\zeta_{jl}$ denotes the shape parameter of the Dirichlet
   distribution associated with mixture component $j$, and column $l$.  The purpose of the rate
   parameter hyperpriors being being somewhat informative, is to ensure for numerical stability
@@ -39,7 +40,8 @@ The finite dirichlet mixture model, \emph{MD}, attempts to represent the distrib
 
 We perform data augmentation, generating $r_i$, and recovering the original product of independent
   gammas interpretation of the Dirichlet RV.  This enables us to do posterior learning about
-  $\zeta_{jl_1}$ independent of $\zeta_{jl_2}$.  The augmented variable, $r_i$, can be generated as
+  $\zeta_{j1}$ independent of $\zeta_{j2}$ within the full conditional.  The augmented variable,
+  $r_i$, can be generated as
   \begin{equation}
     \label{eq:L1augmentation}
     r_i\mid x, \delta, \zeta \sim \text{Ga}(r_i \mid \sum_{l = 1}^d \zeta_{jl}, 1)
@@ -100,9 +102,9 @@ We denote cluster membership using $\delta_i$, as in the previous case.  Let
   \end{equation}
 For new clusters, ostensibly we would integrate out the cluster parameters to get a true
   posterior predictive density.  However, doing so in this case is not straitforward.  Instead,
-  we employ algorithm 8 from \cite{neal2000}, which introduces another parameter $m$.  We
-  generate $m$ new candidate clusters given $\alpha,\beta$, then the probability of $x_i$
-  belonging to any particular cluster from the candidate clusters is given as:
+  we employ algorithm 8 from \cite{neal2000}, which, instead of evaluating the posterior predictive
+  density as a single point, we generate $m$ new candidate clusters given $\alpha,\beta$, then the
+  probability of $x_i$ belonging to any particular candidate cluster is given as:
   \begin{equation}
     p(\delta_i = j \mid r, \zeta^{\prime}, \eta) \propto \frac{\eta / m}{\sum_j n_j + \eta}
                 \prod_{l = 1}^d\text{Ga}(r_ix_{il}\mid\zeta_{jl}^{\prime})
@@ -117,13 +119,13 @@ This model is slightly more complex than the finite mixture of Dirichlets, but a
 
 \subsubsection{Dirichlets with log-normal Prior}
 A derivative model we might try is placing a lognormal prior on $\zeta$.  That is, to say, instead
-  of having $\zeta$ descend from $d$ independent Gamma random variables, we can have $\zeta$ instead
+  of having $\zeta$ descend from $d$ independent Gamma random variables, we can have $\zeta$
   descend from a $d$-dimensional log-normal random variable.  The impetus for this variation comes
   from our implementation of the DP mixture model--that we need to generate candidate clusters for
   the shape parameters.  In the previous model, we are generating these clusters by independently
-  drawing from $d$ gamma distributions.  Some information may be available in terms of covariance
-  between dimensions, so a log-normal prior on $\zeta$ may serve to capture that information between
-  dimensions.  That is, for the finite mixture model,
+  drawing from $d$ gamma distributions.  Some information in terms of covariance between dimensions
+  may be available, and would be lost assuming an independent gamma prior, so a log-normal prior on
+  $\zeta$ may serve to capture that information.  That is, for the finite mixture model,
   \begin{equation}
     \label{model:mgdln}
     \begin{aligned}
@@ -139,8 +141,8 @@ A derivative model we might try is placing a lognormal prior on $\zeta$.  That i
   this introduces a $d$-dimensional normal distribution into the model, and for that we suffer the
   the computational complexity that induces.
 
-  The DP equivalent of this model has $\zeta_i$ as descending from a Dirichlet Process, with a
-    log-normal kernel distribution.  We place a gamma prior on the concentration parameter $\eta$,
-    and thereafter the hyperpriors are the same as for the finite mixture model.
+The DP equivalent of this model has $\zeta_i$ as descending from a Dirichlet Process, with a
+  log-normal kernel distribution.  We place a gamma prior on the concentration parameter $\eta$,
+  and thereafter the hyperpriors are the same as for the finite mixture model.
 
 % EOF
