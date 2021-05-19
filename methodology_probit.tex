@@ -2,19 +2,19 @@
 \subsection{Normal model built on Probit representation of Spherical Coordinate Space}
 \label{method:npprobitnorm}
 The transformation in Equation~\ref{eqn:transform} provides us a mapping from $S_{2}^{d-1}$ to a
-  $d-1$ dimensional vector, bounded on $[0, \pi/2]$.  Building on this transformation, this allows
-  us to represent the data using a true $d-1$ dimensional distribution, rather than generating a
-  latent parameter to induce a $d$ dimensional distribution, as we do with all the gamma based
-  models.
+  $d-1$ dimensional cube, $[0, \pi/2]$.  Building on this transformation allows us to represent
+  the data using a true $d-1$ dimensional distribution, rather than generating a latent parameter
+  to induce a $d$ dimensional distribution, as we do with all the gamma based models.
 
-A flexible choice of distribution for this multivariate normal.  Let
-  $W_i = \text{Probit}(2\theta_i /\pi)$--that is, scale $\theta_i$ to the unit interval, then
-  conduct a probit transformation on it to result in $W_i \in (-\infty, \infty)$.  Then we establish
-  a multivariate normal distribution on $W$. As we are expecting data to descend from a mixture of
-  distributions, we place a DP prior on the multivariate normal kernel distribution.  The centering
-  distribution is the product of a multivariate normal and inverse Wishart distribution; and we
-  place multivarite normal and inverse Wishart priors on these parameters.  As before, we place a
-  gamma prior on the DP concentration parameter $\eta$.
+A canonical choice of distribution in this space might be to further transform to $(-\infty, \infty)$
+  via marginal probit or logit transformation, and represent the data as multivariate normal.  We try
+  that here.   Let $W_i = \text{Probit}(2\theta_i /\pi)$--that is, scale $\theta_i$ to the unit
+  interval, then conduct a probit transformation on it to result in $W_i \in (-\infty, \infty)$.
+  Then we establish a multivariate normal distribution on $W$. As we are expecting data to descend
+  from a mixture of distributions, we place a DP prior on the multivariate normal kernel
+  distribution.  The centering distribution of the DP prior is the product of a multivariate normal
+  and inverse Wishart distribution; and we place multivarite normal and inverse Wishart priors on
+  these parameters.  As before, we place a gamma prior on the DP concentration parameter $\eta$.
   \begin{equation}
     \begin{aligned}
                 W_i &\sim \mathcal{N}_{d-1}\left(\mu_i, \Sigma_i\right)\\
@@ -41,3 +41,5 @@ Another disadvantage of this model is the need to compute $d-1$-dimensional matr
   currently evaluating this model on 8 and 46 dimensions, we can see that those operations on 46
   dimensions will take around 190 times longer than on 8 dimensions.  This presents a problem if we
   want to run this model in any reasonable time scale.
+
+% EOF

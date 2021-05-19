@@ -5,15 +5,15 @@ As a distribution defined on the unit hypersphere using the $L_1$ norm, or simpl
   (or $L_1$ norm). That is,
   \begin{equation}
     \label{eq:dirichletrv}
-    {\bf x} \sim \text{Dir}({\bf x} \mid \zeta) =
-        \int_0^{\infty}\prod_{l = 1}^d\text{Ga}(rx_l \mid zeta_l, 1)\lvert J\rvert\text{d}r
+    {\bf y} \sim \text{Dir}({\bf y} \mid \zeta) =
+        \int_0^{\infty}\prod_{l = 1}^d\text{Ga}(ry_l \mid zeta_l, 1)\lvert J\rvert\text{d}r
   \end{equation}
   The value of the shared rate parameter is irrelevant to the distribution of ${\bf x}$, so by
   convention we set it to one.  The Jacobian for this transformation is $r^{d-1}$.
 
-We consider two mixture models under this family; a finite mixture model of fixed dimension, and an
-  infinite mixture model using a Dirichlet process prior for $\zeta$.  For comparison, we also
-  consider a vanilla Dirichlet model.
+We consider two mixture model approaches under this family; a finite mixture model of fixed
+  dimension, and an infinite mixture model using a Dirichlet process prior for $\zeta$.
+  We For comparison, we also consider a vanilla Dirichlet model.
 
 \subsubsection{Finite Mixture of Dirichlets}
 \label{model:md}

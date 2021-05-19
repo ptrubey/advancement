@@ -1,24 +1,24 @@
-\subsection{Projection on the $\mathcal{L}_p$-norm}
+\subsection{Projection onto the $\mathcal{L}_p$-norm Hypersphere}
 Let the $\mathcal{L}_p$-norm be defined as
-\begin{equation*}
-  \lVert s \rVert_p = \left(\sum_{l = 1}^d \lvert s_l\rvert^p\right)^{\frac{1}{p}}
-\end{equation*}
-From this, we establish the $\mathcal{L}_1$ norm as $p = 1$, or the sum, equivalently called
+  \begin{equation*}
+    \lVert s \rVert_p = \left(\sum_{l = 1}^d \lvert s_l\rvert^p\right)^{\frac{1}{p}}
+  \end{equation*}
+  From this, we establish the $\mathcal{L}_1$ norm as $p = 1$, or the sum, equivalently called
   Manhatten distance; the $\mathcal{L}_2$ norm, as $p = 2$, the Euclidean distance.  From this we
   also establish the $\mathcal{L}_{\infty}$ norm, as
   $\lim\limits_{p\to\infty} \lVert s \rVert_p = \max_{l\in\lbrace{1,\ldots,d}}s_l$ as the infinity
   norm.
 
 We are interested in the direction of vectors described in the positive orthant, $R_{+}^d$.  As we
-  are specifically interested in direction, we can project any distribution in $R_{+}^d$ onto the
-  positive orthant of the unit hypersphere in a $\mathcal{L}_p$-norm, denoted as $S_{p}^{d-1}$.
-  That is,
+  are specifically interested in direction, we can project any distribution in $\mathcal{R}_{+}^d$0
+  onto the positive orthant of the unit hypersphere in a $\mathcal{L}_p$-norm, denoted as
+  $S_{p}^{d-1}$.  That is,
   \begin{equation*}
-    S_{p}^{d-1} = \left\lbrace y : y \in R_{+}^{d}, \lVert y\rVert_{p} = 1\right\rbrace.
+    S_{p}^{d-1} = \left\lbrace y : y \in \mathcal{R}_{+}^{d}, \lVert y\rVert_{p} = 1\right\rbrace.
   \end{equation*}
-  We can project an observation onto this space by dividing by its $p$-norm.  That is, let
-  $x\in R_{+}^{d}$, then $y = x / \lVert x\rVert_p \in S_{p}^{d-1}$.  We denote the $d-1$ to indicate
-  the loss of one degree of freedom relative to the original vector.
+  We can project an observation onto this space by dividing said observation by its $p$-norm.  That
+  is, let $x\in R_{+}^{d}$, then $y = x / \lVert x\rVert_p \in S_{p}^{d-1}$.  We denote the $d-1$
+  to indicate the loss of one degree of freedom relative to the original vector.
 
 So $S_{1}^{d-1}$ defines the unit simplex, $S_{2}^{d-1}$ defines the generalization of a
   circle--what we would generally refer to as a hypersphere, and $S_{\infty}^{d-1}$ the surface of
@@ -44,8 +44,54 @@ Assuming ${\bf y} \in S_{p}^{d-1}$, then for finite $p$, $y_d$ can always be rep
   takes the form
   \begin{equation*}
     r^{d-1}\left[\left(1 - \sum_{l = 1}^{d-1}y_l^p\right)\frac{1}{p} +
-        \sum_{l = 1}^{d-1}y_l^p\left(1 - \sum_{l=1}^d\right)^{\frac{1}{p} - 1}\right]
+        \sum_{l = 1}^{d-1}y_l^p\left(1 - \sum_{l=1}^d\right)^{\frac{1}{p} - 1}\right].
   \end{equation*}
-  For all finite $p$, we are left with $r$, the magnitude,
-  and ${\bf y}$, a vector projected onto $S_{p}^{d-1}$.  If we integrate out $r$, we are left with
-  an exclusively angular distribution.
+  Notice a factor of $r^{d-1}$ independent of $p$. For all finite $p$, we are left with $r$, the
+  magnitude, and ${\bf y}$, a vector projected onto $S_{p}^{d-1}$.  If we assume a parametric
+  distribution for ${\bf x}$, then by transforming to $r, {\bf y}$ and integrating out $r$, we are
+  left with a distribution on solely the angular component--the projection of the vector ${\bf x}$
+  onto $S_{p}^{d-1}$.
+
+Many of the models we present here follow this form, where we, for reasons to be elaborated, assume
+  a $d$-dimensional Gamma distribution on this hypothetical ${\bf x}$. For finite $p$, this has a
+  direct benefit in that it is easy to integrate out $r$.  As we saw with the Jacobian computed
+  earlier, no matter what $p$, the Jacobian always has a factor of $r^{d-1}$.  With the independent
+  Gamma model, $r$ easily integrates out as a gamma distribution.  We can also perform data
+  augmentation generating latent $r$'s, and recovering the ability to do independent inference on
+  the parameters of those gamma distributions.  We investigated other unidimensional distributions
+  with support on $R_+$ in the hopes we could perform the same dimension reduction with a different
+  parameterization, but \makenote{finish thought}
+
+Alternatively, one can also map ${\bf y}\in S_{p}^{d-1}$ into an alternative geometry, where we
+  can express those $d-1$ degrees of freedom in a $d-1$ dimensional vector.  On the $\mathcal{L}_1$
+  norm, one might consider isometric or additive logratios\cite{aitchison1982}.  On the
+  $\mathcal{L}_2$ norm, we consider spherical coordinates.  This directly maps $S_2^{d-1}$ to
+  $[0,\pi/2]^{d-1}$. \cite{nunez2019} follows this course, starting with the independent Gamma
+  distribution and still integrating out $r$ to create an angular distribution in this $d-1$
+  dimensional geometry.  But we can also construct a distribution in this space.  Along this idea,
+  via probit transformation we map $[0,\pi/2]^{d-1}$ to $(-\infty, \infty)^{d-1}$, and construct
+  a multivariate normal distribution in this geometry.
+
+One might question why we don't use this method to construct a distribution in $S_{\infty}^{d-1}$,
+  the unit hypersphere under $L_{\infty}$.  If we examine the the determinant of the Jacobian under
+  the $L_{\infty}$ norm, and take the limit of that as $p\to\infty$, we end up with a factor along
+  the lines of
+  \begin{equation*}
+    \left(1 - \sum_{l = 1}^{d-1}y_i^p\right)^{\frac{1}{p} - 1}
+  \end{equation*}
+  which, as $p$ approaches infinity, if any other $y_l$ than $y_d$ is equal to 1, then that value
+  approaches $0^{-1}$--an impossibility.  Thus, we see a clear breaking point between inference
+  conducted on the finite $p$ hypersphere, $S_{p}^{d-1}$, and the $L_{\infty}$ hypersphere,
+  $S_{\infty}^{d-1}$. \makenote{Include arguments from stackexchange thread}
+
+With this in mind, the way one might build a distribution on $S_{\infty}^{d-1}$ that still operates
+  in Cartesian coordinates geometry might be to include an equal weighting mixture model, where each
+  component of the mixture represents the probability of an observation being on that face, times
+  the conditional density of the other dimensions given the face.  That is,
+  \begin{equation*}
+    f(y) = \sum_{l = 1}^{d}p(y_l = 1)f(y_{-l}\mid y_l = 1)
+  \end{equation*}
+  Under this interpretation, we can consider $p(y_l = 1) = P(x_l = \max_i x_i)$.
+  \makenote{Continue this chain of thought?}
+
+% EOF

@@ -131,32 +131,31 @@ Consider a 3-dimensional cube.  Consider 2 points on this 3-dimensional cube,
     \end{bmatrix}
   \end{equation}
 Every successive rotation is relative to the last face.  So, as the number of dimensions grows, the
-  number of possible rotations grows as well.
+  number of possible rotations grows as well.  As we have $d$ faces, if 2 observations are on
+  different faces, then there are $\sum_{j = 1}^{d-2}\binom(d-2,j) + 1$ possible rotations to
+  consider. \makenote{There are truly $d!$ possible nets, but when we consider starting and ending
+  faces fixed, and that portions of the net that diverge after the ending face are irrelevant,
+  we arrive at that number of rotations that we actually need consider}.  While this is not
+  insurmountable, it is numerically difficult, and developing the generalized rotation strategies
+  for $d$ dimensions is beyond the scope of this analysis. However, we are in luck in that all we
+  need for a valid energy score is a \emph{negative definite kernel}.  This is defined as a function
+  having symmetry in its arguments, $d(x_1,x_2) = d(x_2,x_1)$, and for which
+  $\sum_{i =1}^n\sum_{j=1}^na_ia_jd(x_1,x_2) \leq 0$ for all positive integers n, with the
+  restriction that $\sum_{i=1}^na_i = 0$.  The Euclidean norm is one example of a negative definite
+  kernel.
 
-  \makenote{need to finish this!}
-
-As we have $d$ faces, if 2 observations are on different faces, then there are
-  $\sum_{j = 1}^{d-2}\binom(d-2,j) + 1$ possible rotations to consider. \makenote{There are truly $d!$
-  possible nets, but when we consider starting and ending faces fixed, and that portions of the net
-  that diverge after the ending face are irrelevant, we arrive at that number of rotations that we
-  actually need consider}.  While this is not insurmountable, it is numerically difficult, and developing
-  the generalized rotation strategies for $d$ dimensions is beyond the scope of this analysis.
-  However, we are in luck in that all we need for a valid energy score is a
-  \emph{negative definite kernel}.  This is defined as a function having symmetry in its arguments,
-  $d(x_1,x_2) = d(x_2,x_1)$, and for which $\sum_{i =1}^n\sum_{j=1}^na_ia_jd(x_1,x_2) \leq 0$ for
-  all positive integers n, with the restriction that $\sum_{i=1}^na_i = 0$.  The Euclidean norm
-  is one example of a negative definite kernel.
-
-Let's go back to the first rotation--we held that as a numerically easier analogue to what we were
-  actually calculating--the distance from the starting point, to some optimal point along the
-  intersection between the starting and ending faces, to the ending point.  At that optimal point,
-  the total distance travelled between starting and ending points becomes symmetric.  We can
+Let's go back to the first rotation--we held that as a numerically easier analogue to our actual
+  goal--the distance from the starting point, to some optimal point along the intersection between
+  the starting and ending faces, to the ending point.  At that optimal point, the total distance
+  travelled between starting and ending points becomes symmetric.  We can
   recognize this distance as the sum of two Euclidean norms.  That is,
   \begin{equation}
     \lVert {\bf a},{\bf b}\rVert_{H} = \lVert {\bf a}, {\bf c} \rVert_2 + \lVert {\bf c},{\bf b}\rVert_2
   \end{equation}
   If we can be assured of symmetry in the functional arguments, then the requirements for a negative
-  definite kernel are trivially proved.
+  definite kernel are trivially proved.  And from geometry\makenote{need citation on this}, we can
+  assert that on a one-dimension unfolding, the line segment connecting the starting and ending
+  points will travel through that optimal net.
 
 \subsubsection{Intrinsic Energy Score}
 While we have at length discussed our means of comparison between models, we have limited means of

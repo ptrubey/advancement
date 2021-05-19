@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.3) (preloaded format=pdflatex 2021.5.12)  12 MAY 2021 13:58
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.3) (preloaded format=pdflatex 2021.5.12)  18 MAY 2021 23:12
 entering extended mode
 **./advancement.tex
 (advancement.tex
@@ -256,3 +256,316 @@ with kernel methods
 )
 \Fld@listcount=\count276
 \c@bookmark@seq@number=\count277
+
+(C:\Users\Peter\AppData\Local\Programs\MiKTeX 2.9\tex/latex/rerunfilecheck\reru
+nfilecheck.sty
+Package: rerunfilecheck 2019/12/05 v1.9 Rerun checks for auxiliary files (HO)
+
+(C:\Users\Peter\AppData\Local\Programs\MiKTeX 2.9\tex/generic/uniquecounter\uni
+quecounter.sty
+Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
+)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+86.
+)
+\Hy@SectionHShift=\skip52
+)
+(C:\Users\Peter\AppData\Local\Programs\MiKTeX 2.9\tex/latex/xcolor\xcolor.sty
+Package: xcolor 2016/05/11 v2.12 LaTeX color extensions (UK)
+
+(C:\Users\Peter\AppData\Local\Programs\MiKTeX 2.9\tex/latex/graphics-cfg\color.
+cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package xcolor Info: Driver file: pdftex.def on input line 225.
+
+(C:\Users\Peter\AppData\Local\Programs\MiKTeX 2.9\tex/latex/graphics-def\pdftex
+.def
+File: pdftex.def 2020/10/05 v1.2a Graphics/color driver for pdftex
+)
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1348.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1352.
+Package xcolor Info: Model `RGB' extended on input line 1364.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1366.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1367.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1368.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1369.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1370.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
+)
+(C:\Users\Peter\AppData\Local\Programs\MiKTeX 2.9\tex/latex/lipsum\lipsum.sty
+(C:\Users\Peter\AppData\Local\Programs\MiKTeX 2.9\tex/latex/l3kernel\expl3.sty
+Package: expl3 2021-05-07 L3 programming layer (loader) 
+
+(C:\Users\Peter\AppData\Local\Programs\MiKTeX 2.9\tex/latex/l3backend\l3backend
+-pdftex.def
+File: l3backend-pdftex.def 2021-05-07 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count278
+\l__pdf_internal_box=\box49
+))
+(C:\Users\Peter\AppData\Local\Programs\MiKTeX 2.9\tex/latex/l3packages/xparse\x
+parse.sty
+(C:\Users\Peter\AppData\Local\Programs\MiKTeX 2.9\tex/latex/l3packages/xparse\x
+parse-2020-10-01.sty
+(C:\Users\Peter\AppData\Local\Programs\MiKTeX 2.9\tex/latex/l3packages/xparse\x
+parse-generic.tex)))
+Package: lipsum 2021-03-03 v2.3 150 paragraphs of Lorem Ipsum dummy text
+
+(C:\Users\Peter\AppData\Local\Programs\MiKTeX 2.9\tex/latex/lipsum\lipsum.ltd.t
+ex
+File: lipsum.ltd.tex 2021-03-03 v2.3 The Lorem ipsum dummy text
+))
+(C:\Users\Peter\AppData\Local\Programs\MiKTeX 2.9\tex/latex/graphics\graphicx.s
+ty
+Package: graphicx 2020/09/09 v1.2b Enhanced LaTeX Graphics (DPC,SPQR)
+
+(C:\Users\Peter\AppData\Local\Programs\MiKTeX 2.9\tex/latex/graphics\graphics.s
+ty
+Package: graphics 2020/08/30 v1.4c Standard LaTeX Graphics (DPC,SPQR)
+
+(C:\Users\Peter\AppData\Local\Programs\MiKTeX 2.9\tex/latex/graphics\trig.sty
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+)
+(C:\Users\Peter\AppData\Local\Programs\MiKTeX 2.9\tex/latex/graphics-cfg\graphi
+cs.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 105.
+)
+\Gin@req@height=\dimen160
+\Gin@req@width=\dimen161
+) (advancement.aux (table_dev.aux) (table_dev_updated.aux
+
+LaTeX Warning: Label `tab:dev' multiply defined.
+
+))
+\openout1 = `advancement.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: <default>
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: 
+* h-part:(L,W,R)=(113.81102pt, 386.67296pt, 113.81102pt)
+* v-part:(T,H,B)=(113.81102pt, 567.34795pt, 113.81102pt)
+* \paperwidth=614.295pt
+* \paperheight=794.96999pt
+* \textwidth=386.67296pt
+* \textheight=567.34795pt
+* \oddsidemargin=41.54103pt
+* \evensidemargin=41.54103pt
+* \topmargin=4.54103pt
+* \headheight=12.0pt
+* \headsep=25.0pt
+* \topskip=10.0pt
+* \footskip=30.0pt
+* \marginparwidth=65.0pt
+* \marginparsep=11.0pt
+* \columnsep=10.0pt
+* \skip\footins=9.0pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+Package hyperref Info: Link coloring OFF on input line 24.
+
+(C:\Users\Peter\AppData\Local\Programs\MiKTeX 2.9\tex/latex/hyperref\nameref.st
+y
+Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
+
+(C:\Users\Peter\AppData\Local\Programs\MiKTeX 2.9\tex/latex/refcount\refcount.s
+ty
+Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
+)
+(C:\Users\Peter\AppData\Local\Programs\MiKTeX 2.9\tex/generic/gettitlestring\ge
+ttitlestring.sty
+Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
+)
+\c@section@level=\count279
+)
+LaTeX Info: Redefining \ref on input line 24.
+LaTeX Info: Redefining \pageref on input line 24.
+LaTeX Info: Redefining \nameref on input line 24.
+ (advancement.out) (advancement.out)
+\@outlinefile=\write3
+\openout3 = `advancement.out'.
+
+
+(C:\Users\Peter\AppData\Local\Programs\MiKTeX 2.9\tex/context/base/mkii\supp-pd
+f.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count280
+\scratchdimen=\dimen162
+\scratchbox=\box50
+\nofMPsegments=\count281
+\nofMParguments=\count282
+\everyMPshowfont=\toks22
+\MPscratchCnt=\count283
+\MPscratchDim=\dimen163
+\MPnumerator=\count284
+\makeMPintoPDFobject=\count285
+\everyMPtoPDFconversion=\toks23
+)
+(C:\Users\Peter\AppData\Local\Programs\MiKTeX 2.9\tex/latex/epstopdf-pkg\epstop
+df-base.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+85.
+
+(C:\Users\Peter\AppData\Local\Programs\MiKTeX 2.9\tex/latex/00miktex\epstopdf-s
+ys.cfg
+File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
+))
+LaTeX Font Info:    Trying to load font information for U+msa on input line 27.
+
+
+(C:\Users\Peter\AppData\Local\Programs\MiKTeX 2.9\tex/latex/amsfonts\umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 27.
+
+
+(C:\Users\Peter\AppData\Local\Programs\MiKTeX 2.9\tex/latex/amsfonts\umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+[1
+
+{C:/Users/Peter/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
+(advancement.toc)
+\tf@toc=\write4
+\openout4 = `advancement.toc'.
+
+ [2] (introduction.tex) (background.tex [3] [4]) (review.tex
+[5]) (problem.tex [6]) (methodology.tex (methodology_pareto.tex)
+(methodology_pnorm.tex
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 1.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `subscript' on input line 1.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 1.
+
+[7] [8]) (methodology_dirichlet.tex [9]
+Overfull \hbox (8.34114pt too wide) in paragraph at lines 60--63
+\OT1/cmr/m/n/10 The full con-di-tion-als for $\OML/cmm/m/it/10 []$ \OT1/cmr/m/
+n/10 and $\OML/cmm/m/it/10 []$ []\OT1/cmr/m/n/10 are yet to be in-serted, but 
+they are sim-ple gamma/gamma
+ []
+
+[10] [11]) (methodology_projgamma.tex [12] [13]
+<./images/justification_for_more_complex_models.pdf, id=300, 505.89pt x 505.89p
+t>
+File: ./images/justification_for_more_complex_models.pdf Graphic file (type pdf
+)
+<use ./images/justification_for_more_complex_models.pdf>
+Package pdftex.def Info: ./images/justification_for_more_complex_models.pdf  us
+ed on input line 87.
+(pdftex.def)             Requested size: 361.34999pt x 361.35352pt.
+ [14 <./images/justification_for_more_complex_models.pdf>]) (methodology_gendir
+ichlet.tex
+Overfull \hbox (63.41351pt too wide) detected at line 36
+[][][]
+ []
+
+[15]
+Overfull \hbox (59.3695pt too wide) detected at line 74
+[][][]
+ []
+
+) (methodology_probit.tex [16]) (methodology_deviance.tex [17] [18] [19]))
+(results.tex [20]
+\openout2 = `table_dev.aux'.
+
+ (table_dev.tex) [21
+
+] [22
+
+
+]
+\openout2 = `table_dev_updated.aux'.
+
+ (table_dev_updated.tex) [23
+
+])
+(conclusion.tex) [24
+
+
+] (advancement.bbl) [25] (advancement.aux (table_dev.aux)
+(table_dev_updated.aux))
+
+LaTeX Warning: There were multiply-defined labels.
+
+Package rerunfilecheck Info: File `advancement.out' has not changed.
+(rerunfilecheck)             Checksum: F364C8B0CC028FD509E5370E9004DAA3;6768.
+ ) 
+Here is how much of TeX's memory you used:
+ 10393 strings out of 479173
+ 157496 string characters out of 2852223
+ 727700 words of memory out of 3000000
+ 27681 multiletter control sequences out of 15000+600000
+ 414733 words of font info for 70 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 60i,9n,67p,503b,344s stack positions out of 5000i,500n,10000p,200000b,80000s
+<C:/Users/Peter/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts
+/cm/cmbx10.pfb><C:/Users/Peter/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/pu
+blic/amsfonts/cm/cmbx12.pfb><C:/Users/Peter/AppData/Local/Programs/MiKTeX 2.9/f
+onts/type1/public/amsfonts/cm/cmbx7.pfb><C:/Users/Peter/AppData/Local/Programs/
+MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx9.pfb><C:/Users/Peter/AppData/Loc
+al/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/Pete
+r/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cmextra/cmex7.p
+fb><C:/Users/Peter/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfont
+s/cm/cmmi10.pfb><C:/Users/Peter/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/p
+ublic/amsfonts/cm/cmmi12.pfb><C:/Users/Peter/AppData/Local/Programs/MiKTeX 2.9/
+fonts/type1/public/amsfonts/cm/cmmi5.pfb><C:/Users/Peter/AppData/Local/Programs
+/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/Peter/AppData/Lo
+cal/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/Pete
+r/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C
+:/Users/Peter/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/
+cmr12.pfb><C:/Users/Peter/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/
+amsfonts/cm/cmr17.pfb><C:/Users/Peter/AppData/Local/Programs/MiKTeX 2.9/fonts/t
+ype1/public/amsfonts/cm/cmr5.pfb><C:/Users/Peter/AppData/Local/Programs/MiKTeX 
+2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/Peter/AppData/Local/Progr
+ams/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Users/Peter/AppData/
+Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/P
+eter/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy5.pfb
+><C:/Users/Peter/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/
+cm/cmsy7.pfb><C:/Users/Peter/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/publ
+ic/amsfonts/cm/cmti10.pfb>
+Output written on advancement.pdf (25 pages, 380201 bytes).
+PDF statistics:
+ 474 PDF objects out of 1000 (max. 8388607)
+ 111 named destinations out of 1000 (max. 500000)
+ 294 words of extra memory for PDF output out of 10000 (max. 10000000)
+
