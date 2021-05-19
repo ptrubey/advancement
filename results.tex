@@ -6,21 +6,27 @@
 We use data from the integrated water vapor transport (\emph{IVT}) model\makenote{needs citation}
   of atmospheric rivers as a means of testing these models.  An atmospheric river is a meteorological
   event of local concentration of water vapor in the atmosphere that moves with wind patterns.
-  Understanding extreme events in atmospheric rivers will go some ways towards understanding
-  \makenote{finish}
+  Understanding dependence among extreme events in atmospheric rivers \makenote{finish thought}.
 
-
-
-  Each dimension corresponds to a grid
-  cell on the coast of California,
+We observe
 
 
 \include{table_dev}
 
+We compare these values against the intrinsic energy score for the 8 cell IVT dataset, approximately
+  $0.796$.  Note that the vanilla models have a slightly higher energy score, subtly indicating a
+  data structure that is unaccounted for by a single distribution.  The mixture models overall do
+  better, though the restricted gamma based mixture models do significantly better than the
+  unrestricted models.
+
 \subsection{IVT - 46 Cells}
 
 \include{table_dev_updated}
-
+We compare these values against the intrinsic energy score for the 46 cell IVT dataset, approximately
+  $1.428$.  Again, as with the 8 cell dataset, vanilla models show a worse result than the intrinsic
+  energy score, indicating a model structure requiring a mixture approach.  In comparison to the
+  8 cell data, where the log-normal prior models performed comparably or worse across the board to
+  their
 
 
 
