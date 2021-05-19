@@ -7,6 +7,8 @@ Extreme value theory (EVT) seeks to model and assess probability of observing
   the body commissioning the study.  For instance, an insurance company might
   commission a study on extreme weather events, as a localized extreme event
   could cause a spike in claims from that region.
+  
+  \bruno{Is this part of the introduction? Anyway, something that is important to highlight is the fact that extreme value theory offers theoretical tool to make inference about the tails of a distribution without actually observing the tails. The use of asymptotic theory allows you to say things about the probability of events that happen every 100 years even if you only have 50 years worth of data.}
 
 \subsection{Univariate EVT - Maxima}
 Extreme value theory describes the asymptotic behavior of extreme events.  For a
@@ -46,6 +48,8 @@ Thus, if $F$ is in the domain of attraction of any EVD, it will be in the domain
 G^n(a_nz + b_n) = G(z)
 \end{equation*}
 
+\bruno{This is fine, but we need more formality. I am assuming that in the introduction, that is not written yet, your would have described some of the history of the field, and provided some basic references. Even so, you should provide some references here.}
+
 For estimation, generally it will occur that we identify some natural block for
   the data.  For example, for temperature data taken hourly, we might identify a
   day (24 hours) as a block.  There's an implicit violation of the assumption of
@@ -54,6 +58,8 @@ For estimation, generally it will occur that we identify some natural block for
   effect of reducing our sample size by a factor of $1/\text{block size}$.  In
   data with a natural block, this might be appropriate, but without a natural
   block this is extremely wasteful of data.
+  
+  \bruno{So, you pick a block size, you calculate the maxima per block and the you fit the GEV. You should say that.}
 
 \subsection{Univariate EVT - Thresholding}
 If $F$ is in the domain of attraction of an EVD, then for a random variable $X$
@@ -77,9 +83,11 @@ This defines the generalized Pareto family of distributions.  Thus, if block
   maxima have a limiting distribution $G$ within the EVD family, then threshold
   exceedances for a sufficiently high threshold have a limiting distribution $H$
   within the Generalized Pareto (GP) family.  Furthermore, the extremal index $\chi$
-  will be the same for these two limiting distributions.
+  will be the same for these two limiting distributions. \bruno{Not clear where the extremal index comes from.}
 
 \subsection{Multivariate EVT}
+
+\bruno{At this point you need to say that in this work we will focus on the methods based on threshold exceedance in a multivariate setting. You should introduce the topic (although you might have already done that in the introduction) indicating the difficulties that there exist in the generalization of a Pareto distribution in the multivariate case. Cite some papers, of course. You can then say that the traditional approach consists on focusing on the estimation of the joint tail behavior, separate from the marginal behavior. }
 Within multivariate EVT, we observe the joint behavior between extreme events.
   It is useful, at this juncture, to to standardize each variable $X_i$
   according to its marginal distribution.  Note, as has been stated, that
@@ -98,6 +106,7 @@ Note that $Z_j > 1$ implies that $x_j > b_{t,j}$, meaning that the observation
 We assume the existence of a probability measure $\mu$ on ${\bf Z}$ such that
 \begin{equation}
 \lim_{n\rightarrow\infty}n\text{Pr}\left[\frac{1}{n}{\bf Z} \geq {\bf z}\right] = \mu\left([{\bf 0}, {\bf z}]^c\right)
+\label{eq:standard}
 \end{equation}
 $\mu$ is thus the asymptotic distribution of ${\bf Z}$ in extreme regions.  It
   exhibits the homogeneity property, such that for any region A,
@@ -123,6 +132,10 @@ As the angular component is now independent of the radial component, we can
 \begin{equation}
   \Omega(B) = \mu[{\bf z}: R({\bf z}) > 1, {\bf V} \in B].
 \end{equation}
+\bruno{This needs t be sharpened. I don't see why $R({\bf z})>1$ is needed. Also
+\[	\mu([0,1/\bm{z}]^c) = \int_{{\mathbb S}_\infty^{d-1}} 
+\left(\bigvee_{j} \theta_jz_j\right) d\Omega(\theta)\; ,\]
+which is the reason $\Omega$ is a spectral measure.}
 Then we can think of the spectral measure in terms of the limit measure $\mu$,
   and:
 \begin{equation}
@@ -134,6 +147,15 @@ Thus we see a one-to-one correspondance between the limit measure $\mu$ and the
 \begin{equation}
   \text{Pr}\left({\bf V} \in B \mid r > 1\right) = \frac{\Omega(B)}{\Omega(S_{\infty}^{d-1})},
 \end{equation}
+\bruno{Again, this needs sharpening, I don't get the $r>1$. What you have is that, for any value of $r$. 
+\begin{equation}
+ \lim_{r\rightarrow\infty} \text{Pr}\left({\bf V} \in B \mid R > r\right) = \frac{\Omega(B)}{\Omega(S_{\infty}^{d-1})},
+\end{equation}
+So, the point here is what we do in practice. We start by doing the univariate analysis for each component. Take $b_{t,j} = F^{-1}(1 - 1/t)$ as the threshold. So
+\begin{equation}
+ \lim_{t\rightarrow\infty} \text{Pr}\left({\bf V} \in B \mid R_t > 1\right) = \frac{\Omega(B)}{\Omega(S_{\infty}^{d-1})},
+\end{equation}. 
+What this means in practice is that we take high thresholds in each dimension, and then take the standardized vectors for which $R>1$.}
 \makenote{Paraphrasing from Goix et. al., figure if/how to cite}
 conditioned on at least one of the components being extreme in the marginal
   sense.  It is using this property that we will establish our method.
