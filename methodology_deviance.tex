@@ -7,9 +7,9 @@ It is not immediately obvious which criteria to use to judge these models and de
   to that end.
 
 \subsubsection{Posterior Predictive Loss Criterion}
-The posterior predictive loss criterion, \emph{ppl} is introduced in \cite{gelfand1998}.  When we assume a
-  squared error loss function, then for the $i$th observation, the posterior predictive loss criterion
-  is computed as
+The posterior predictive loss criterion, \emph{PPL} is introduced in \cite{gelfand1998}.  When we 
+  assume a squared error loss function, then for the $i$th observation, the posterior predictive
+  loss criterion is computed as
   \begin{equation}
     \label{eq:ppl}
     D_{k}^{(i)} = \text{Var}(X_i) + \frac{k}{k + 1}\left(\text{E}[X_i] - x_i\right)^2,
@@ -132,7 +132,7 @@ Consider a 3-dimensional cube.  Consider 2 points on this 3-dimensional cube,
   \end{equation}
 Every successive rotation is relative to the last face.  So, as the number of dimensions grows, the
   number of possible rotations grows as well.  As we have $d$ faces, if 2 observations are on
-  different faces, then there are $\sum_{j = 1}^{d-2}\binom(d-2,j) + 1$ possible rotations to
+  different faces, then there are $\sum_{j = 1}^{d-2}\binom{d-2}{j} + 1$ possible rotations to
   consider. \makenote{There are truly $d!$ possible nets, but when we consider starting and ending
   faces fixed, and that portions of the net that diverge after the ending face are irrelevant,
   we arrive at that number of rotations that we actually need consider}.  While this is not
@@ -144,7 +144,7 @@ Every successive rotation is relative to the last face.  So, as the number of di
   restriction that $\sum_{i=1}^na_i = 0$.  The Euclidean norm is one example of a negative definite
   kernel.
 
-Let's go back to the first rotation--we held that as a numerically easier analogue to our actual
+Let's go back to that first rotation--we held that as a numerically easier analogue to our actual
   goal--the distance from the starting point, to some optimal point along the intersection between
   the starting and ending faces, to the ending point.  At that optimal point, the total distance
   travelled between starting and ending points becomes symmetric.  We can
