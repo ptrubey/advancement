@@ -35,8 +35,8 @@ The posterior predictive loss criterion, \emph{PPL} is introduced in \cite{gelfa
   lower score indicates a better fit.
 
 \subsubsection{Energy Score}
-The energy score of \cite{gneiting2007} is a generalization of the continuous ranked probability
-  score, or \emph{crps}, defined for a multi-dimensional random variable.
+The energy score of Gneiting, et al\cite{gneiting2007}, is a generalization of the continuous ranked
+  probability score, or \emph{crps}, defined for a multi-dimensional random variable.
   \begin{equation}
     \label{eq:es}
     \text{ES}(P,x_i) = \frac{1}{2}\text{E}_p\lVert {\bf X}_i,{\bf X}_i^{\prime}\rVert_{\Omega}^{\beta} -
@@ -210,7 +210,8 @@ An alternative to this method that we will use is based on distance between obse
   based KL divergence.  We employ the formula of Boltz et al \cite{boltz2009}, as
   \begin{equation}
     \label{eqn:knnkld}
-    D_{\text{KL}}^{(k)}(A,B) = \log\frac{n(B)}{n(A)} + c(A) \left[\rho_A^{(k)}(B) - \rho_A^{(k)}(A)\right]
+    D_{\text{KL}}^{(k)}(A,B) = \log\frac{n(B)}{n(A)} + c(A) \left[\rho_A^{(k)}(B)
+                                                                      - \rho_A^{(k)}(A)\right]
   \end{equation}
   where $\rho_A(\cdot)$ denotes the average log-distance for observations in $A$ to their $k$th
   nearest observation in $\cdot$.  Boltz et al acknowledge that their method is biased, does not
