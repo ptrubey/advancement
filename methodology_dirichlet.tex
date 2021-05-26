@@ -8,8 +8,9 @@ As a distribution defined on the unit hypersphere using the $L_1$ norm, or simpl
     {\bf y} \sim \text{Dir}({\bf y} \mid \zeta) =
         \int_0^{\infty}\prod_{l = 1}^d\text{Ga}(ry_l \mid zeta_l, 1)\lvert J\rvert\text{d}r
   \end{equation}
+  \bruno{I don't think I understand this, basically because I don't understand the meaning of $Ga(ry_l| ...)$.}
   The value of the shared rate parameter is irrelevant to the distribution of ${\bf x}$, so by
-  convention we set it to one.  The Jacobian for this transformation is $r^{d-1}$.
+  convention we set it to one.  The Jacobian for this transformation is $r^{d-1}$. \bruno{Can you give a better explanation of what the idea behind the Dirichlet? I suppose you are mapping $S_\infty^{d-1}$ into $S_1^{d-1}$, right?}
 
 We consider two mixture model approaches under this family; a finite mixture model of fixed
   dimension, and an infinite mixture model using a Dirichlet process prior for $\zeta$.
@@ -145,4 +146,5 @@ The DP equivalent of this model has $\zeta_i$ as descending from a Dirichlet Pro
   log-normal kernel distribution.  We place a gamma prior on the concentration parameter $\eta$,
   and thereafter the hyperpriors are the same as for the finite mixture model.
 
+\bruno{The three models that you consider in this section are essentially the same model with three variations. You should write the section by presenting a model that consists of a mixture of Dirichlet with two options: a finite mixture and a DP mixture, the a submodel for the DP misture where you consider two choices fot he hyperparameter priors. Now, is it really worth presenting all three different models?}
 % EOF

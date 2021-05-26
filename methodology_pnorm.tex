@@ -28,14 +28,14 @@ So $S_{1}^{d-1}$ defines the unit simplex, $S_{2}^{d-1}$ defines the generalizat
   with eachother, meaning that observations on one can be projected onto another without loss of
   information.
 
-Assuming ${\bf y} \in S_{p}^{d-1}$, then for finite $p$, $y_d$ can always be represented as a
+Assuming ${\bf y} \in S_{p}^{d-1}$, \bruno{sometimes you use bold faces to denote vectors and sometimes you don't. You need to be consistent.}then for finite $p$, $y_d$ can always be represented as a
   function of the other dimensions.  That is,
   \begin{equation*}
     y_d = \left(1 - \sum_{l = 1}^{d-1}y_l^p\right)^{\frac{1}{p}}.
   \end{equation*}
   So the transformation
   \begin{equation*}
-    T(x_1,\ldots,x_d) = (r,y_1,\ldots,y_{d-1})
+    T(x_1,\ldots,x_d) = \bruno{(||x||_p, x_1/||x||_p, \ldots , x_{d-1}/||x||_p)=} (r,y_1,\ldots,y_{d-1})
   \end{equation*}
   does not lose any information.  The reverse of this transformation,
   \begin{equation*}
@@ -48,10 +48,11 @@ Assuming ${\bf y} \in S_{p}^{d-1}$, then for finite $p$, $y_d$ can always be rep
     r^{d-1}\left[\left(1 - \sum_{l = 1}^{d-1}y_l^p\right)\frac{1}{p} +
         \sum_{l = 1}^{d-1}y_l^p\left(1 - \sum_{l=1}^d\right)^{\frac{1}{p} - 1}\right].
   \end{equation*}
-  Notice a factor of $r^{d-1}$ independent of $p$. For all finite $p$, we are left with $r$, the
-  magnitude, and ${\bf y}$, a vector projected onto $S_{p}^{d-1}$.  If we assume a parametric
+  \bruno{There is something missing in this formula}
+  Notice a factor of $r^{d-1}$ independent of $p$. \bruno{We refer to $\bm{y}$ and $r$ as, respectively, the angular and radial components of $\bm{x}$.} \sout{For all finite $p$, we are left with $r$, the
+  magnitude, and ${\bf y}$, a vector projected onto $S_{p}^{d-1}$}.  If we assume a \sout{parametric}
   distribution for ${\bf x}$, then by transforming to $r, {\bf y}$ and integrating out $r$, we are
-  left with a distribution on solely the angular component--the projection of the vector ${\bf x}$
+  left with a distribution on solely the angular component, \bruno{or, equivalently, }the projection of the vector ${\bf x}$
   onto $S_{p}^{d-1}$.
 
 Many of the models we present here follow this form, where we, for reasons to be elaborated, assume
@@ -85,6 +86,7 @@ One might question why we don't use this method to construct a distribution in $
   approaches $0^{-1}$--an impossibility.  Thus, we see a clear breaking point between inference
   conducted on the finite $p$ hypersphere, $S_{p}^{d-1}$, and the $L_{\infty}$ hypersphere,
   $S_{\infty}^{d-1}$. \makenote{Include arguments from stackexchange thread; cite accordingly}
+  \bruno{You need to sharpen the last two paragraphs because I am having a hard time understanding what you are trying to say here.}
 
 With this in mind, the way one might build a distribution on $S_{\infty}^{d-1}$ that still operates
   in Cartesian coordinates geometry might be to include an equal weighting mixture model, where each
