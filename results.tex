@@ -80,4 +80,32 @@ The final, and most important, revelation this table contains concerns relative 
   $S_{2}^{d-1}$ rather than $S_1^{d-1}$, the simplex.  That difference in model performance is of
   interest.
 
+\begin{figure}[h]
+  \label{fig:knnkl}
+  \includegraphics{./images/kl_divergence_curves}
+  \caption{KL Divergence Curves calculated through the KNN-KL Metric, evaluated between the empirical
+  dataset and posterior predictive datasets of various models.  The top row corresponds to the
+  8-dimensional data, while the bottom row the 46.  The left column corresponds to the vanilla models
+  with no mixture method; the middle column a Dirichlet process prior, and the right column a finite
+  mixture model.}
+\end{figure}
+
+Interpreting the KL divergence curves in Figure~\ref{fig:knnkl}, KL divergence at its core is a
+  log-ratio of densities.  We would prefer, all else being equal, a KL divergence near 0.
+  Interpreting this particular divergence metric, a KL divergence less than 0 means on average,
+  that the $k$th closest sample from the posterior predictive dataset is closer to the observation
+  than the $k$th closest sample from the empirical dataset.  There is a logged ratio of sample sizes
+  to account for differences in cardinality between the empirical dataset and posterior predictive.
+
+From this, we would interpret the \emph{best} model as that model which remains closest to the
+  horizontal line at $0$.  For the 8-dimension model, this means the generalized Dirichlet and
+  projected Gamma models, the unrestricted Gamma based models, seem to perform the best.   This is
+  in stark contrast to our inference from the earlier posterior predictive loss and energy score
+  criterions, which sharply favored the restricted Gamma models.  However, as dimensionality
+  increases, we see that the restricted Gamma models again become favored, indicating that the
+  greater flexibility of the unrestricted Gamma models becomes burdensome to fit in a
+  high-dimensional case.
+
+
+
 % EOF
