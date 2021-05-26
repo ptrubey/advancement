@@ -2,37 +2,82 @@
 
 \section{Results}
 
-\subsection{IVT - 8 Cells}
+\subsection{Integrated Vapor Transport}
 We use data from the integrated water vapor transport (\emph{IVT}) model\makenote{needs citation}
   of atmospheric rivers as a means of testing these models.  An atmospheric river is a meteorological
   event of local concentration of water vapor in the atmosphere that moves with wind patterns.
   Understanding dependence among extreme events in atmospheric rivers \makenote{finish thought}.
 
-We observe
+Fitting our models to this data requires some pre-processing.  The marginal distributions of the
+  IVT data appear naturally log-normal, which falls into the domain of attraction of a Gumbel
+  distribution.  Given that, we can apply thresholding and exceedances over that threshold will
+  follow a generalized Pareto distribution.  Our model begins with that assessment.  As estimating
+  the Pareto parameters is not yet our focus in this analysis, we choose to apply the threshold
+  using the empirical CDF.  That is, for a given $t$, let $b_t = \hat{F}^{-1}(1 - t^{-1})$.  For
+  this analysis, we set $t = 20$, indicating the $95$ percentile.  The other parameters of the
+  generalized Pareto--the scale parameter $\alpha_t$ and the extremal index $\chi$--are set via
+  maximum likelihood.  A fully Bayesian model formulation will allow their varying within a
+  distribution, and we hope to eventually allow that.  However, such a model will not lend itself
+  to being fitted by MCMC.
 
+After the thresholding and maximum likelihood estimation of the parameters of the Pareto, we scale
+  the data to the standard multivariate Pareto.  Dividing each observation by its
+  $\mathcal{L}_{\infty}$ norm, we arrive at data on the hypercube.  Data in sequence represents
+  observations in time, and these are heavily correlated.  As such, we choose to \emph{decluster}
+  the observations by, observing a sequence of observations ${\bf z}$ for which $\inorm{z_i} > 1$
+  for each observation in sequence, we keep only the observation with the maximum observed
+  $\mathcal{L}_{\infty}$ norm.
 
-\include{table_dev}
+We fit the proscribed models to the data via whatever projection is necessary, run the models, and
+  use the fitted model parameters to generate posterior predictive distributions--both overall, for
+  use with the KL divergence metric, and conditioned on individual observations, for use with the
+  posterior predictive loss and energy score metrics.
 
-We compare these values against the intrinsic energy score for the 8 cell IVT dataset, approximately
-  $0.796$.  Note that the vanilla models have a slightly higher energy score, subtly indicating a
-  data structure that is unaccounted for by a single distribution.  The mixture models overall do
-  better, though the restricted gamma based mixture models do significantly better than the
-  unrestricted models.
+We have, at our disposal, two datasets from the IVT model.  One records data from 8 grid cells,
+  covering generally the coast of California.  The other, with a higher resolution, records data
+  from 46 grid cells covering the same area.  We fit our models to both datasets.
 
-\subsection{IVT - 46 Cells}
+\begin{table}[h]
+  \include{table_dev}
+\end{table}
 
-\include{table_dev_updated}
-We compare these values against the intrinsic energy score for the 46 cell IVT dataset, approximately
-  $1.428$.  Again, as with the 8 cell dataset, vanilla models show a worse result than the intrinsic
-  energy score, indicating a model structure requiring a mixture approach.  In comparison to the
-  8 cell data, where the log-normal prior models performed comparably or worse across the board to
-  their
+As is visible from Table~\ref{tab:dev}, we see a strong preference for the mixture models as
+  compared to the vanilla models both in posterior predictive loss and energy score.  As these
+  measure model performance conditional on the observed data's posterior mixture component flags,
+  it would likely be the case that a mixture model is preferred as compared to a single model.  We
+  also employ the KL divergence metric to look for differences in kernel density.
 
+That said, there is much we can glean from this table.  The normal model, which we developed after
+  having cast the data from $S_{\infty}^{d-1}$ to the $d-1$ cube $[0,\pi/2]^{d-1}$ via spherical
+  coordinate transformation, then scaled via probit transformation to $(-\infty,\infty)$, was not
+  competitive when we transform samples from its posterior predictive distribution back onto
+  $S_{\infty}^{d-1}$. The spherical coordinate transformation induces a high degree of dependence
+  between dimensions, so it is difficult to think of the geometry of that space as orthogonal.
+  Never the less, fitting a normal model in that space assumes something like orthogonality, which
+  obviously doesn't hold.  The resulting low model performance in the normal model is likely a
+  result of this distortion.
 
+Another inference to learn from this table is the generally better results of the restricted Gamma
+  models--Dirichlet, projected restricted Gamma--as compared to the Gamma models that allow for a
+  varying rate parameter--generalized Dirichlet and projected Gamma.  Note that regardless of what
+  prior was used for the shape parameter, we always assumed a Gamma prior for the rate parameter if
+  we allowed it to vary.  In one model formulation, we attempted a multivariate log-normal prior that
+  covered both the rate and shape parameters, but this overall resulted in worse model performance
+  even comparing to our current results.
 
+It is no surprise that Dirichlet process models are generally preferred as compared to the finite
+  mixture models.  Properly tuned, finite mixture models will likely only do \emph{as well} as the
+  Dirichlet process mixture model when their number of extant model components are in rough
+  agreement.  The Dirichlet process just allows us to bypass to some extent that tuning process.
+  That said, for a given performance, the finite mixture model would be preferred, as much of the
+  model sampling can be accomplished in parallel.
 
-
-
-
+The final, and most important, revelation this table contains concerns relative model performance
+  between the incarnations of the restricted Gamma model.  Given the mixture method, the Dirichlet
+  and projected restricted Gamma model are effectively the same model, just built on a different
+  projection of the original data.  And indeed, on the 8 dimensional data, the model performance is
+  comparable.  But on the higher dimensional data, we see model performance favor the model built on
+  $S_{2}^{d-1}$ rather than $S_1^{d-1}$, the simplex.  That difference in model performance is of
+  interest.
 
 % EOF
