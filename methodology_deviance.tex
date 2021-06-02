@@ -21,19 +21,15 @@ The posterior predictive loss criterion, \emph{PPL} is introduced in \cite{gelfa
   relative to precision.  In our analysis, we take the limit as $k\to\infty$, and thus weight both
   parts equally.  Interpreting this criterion, a smaller $\text{Var}({\bf X}_l)$ indicates a higher
   precision, and a smaller $(\text{E}[{\bf X}_l] - {\bf x}_l)^2$  indicates a better fit.  Thus,
-  smaller is better.  Note that this is defined for a univariate distribution--we are going to
-  generalize this somewhat, to account for the multivariate nature of our distribution.  That is,
-  let us re-define it slightly as
+  smaller is better.  Note that this is defined for a univariate distribution.  As we are dealing
+  with a multivariate distribution, in keeping with our spatial statistics brethren
+  \makenote{find a citation where they do this}, we will be taking the posterior predictive loss
+  averaged over all dimensions.  That is,
   \begin{equation}
     \label{eq:ppl2}
-    D_k^{i} = \tr\left[\text{Cov}({\bf X}_i)\right] +
-        \frac{k}{k+1}\sum_{l=1}^d\left(\text{E}[X_{il}] - x_{il}\right)^2
+    D_k^{i} = \frac{1}{d}\sum_{l = 1}^{d}\left[\text{Var}(X_{il}) + \frac{k}{k+1}\left(\text{E}[X_{il}] - x_{il}\right)^2\right]
   \end{equation}
-  That is, sum up the marginal biases and variances for each dimension of the predictive distribution.
-  Then we report the average $D_k$, taken over the whole dataset. Note that this does not account
-  for the fact we are dealing with a constrained geometry, but interpretation remains consistent--a
-  lower score indicates a better fit.
-  \bruno{This development of the PPLC looks pretty ad hoc. Either you develop an actual multivariate PPLC by looking at the original paper, or the discussion of the PPLC in the Gneiting and Raftery paper (chances are it's already been done, check the literature) or you just stick to the univariate version and take and take an average over all dimensions, which is what people do in spatial statistics most of the time.}
+  Then we report the average $D_k$, taken over the whole dataset.
 
 \subsubsection{Energy Score}
 The energy score of Gneiting, et al\cite{gneiting2007}, is a generalization of the continuous ranked
@@ -44,25 +40,25 @@ The energy score of Gneiting, et al\cite{gneiting2007}, is a generalization of t
                             \text{E}_p\lVert {\bf X}_i - {\bf x}_i\rVert_{\Omega}^{\beta}
   \end{equation}
   \bruno{I don't understand the first term of this expression.}
-  where ${\bf X}_i^{\prime}$ is a replicate from the posterior predictive distribution
+  where ${\bf X}_i^{\prime}$ is another replicate from the posterior predictive distribution
   of ${\bf x}_i$. This means, rather than relying on the first and second moments of the posterior
   predictive distribution as in the case of posterior predictive loss\cite{gelfand1998}, we are
   instead calculating pairwise distances between the observation and draws from the posterior
   predictive distribution, as well as pairwise distances between those replicates themselves.
 
-Now here's the rub.  We are not aware of any standardized distance metrics developed on the
+Now here's the rub.  We are not aware of any established distance metrics developed on the
   positive orthant of the unit hypercube.  In the unit simplex, we can assume the use of
-  Euclidean norm.  on the unit hypersphere, our task would be slightly more difficult as
-  Euclidean norm would under-report the actual distance required for travel between points $a_1$
-  and $a_2$.  On the unit hypercube, where our task is defined, that distortion between Euclidean
-  norm and the actual distance travelled over the surface of the hypercube be even greater.
+  Euclidean norm as accurately representing the distance between two points.  For any
+  $\mathcal{S}_{p}^{d-1}$ space, $p > 1$, Euclidean norm is going to under-report the actual distance
+  required for travel between two points.  That distortion is maximized on
+  $\mathcal{S}_{\infty}^{d-1}$
 
 The positive orthant of the unit hypercube, defined in Euclidean geometry, is that structure for
   which, in a given point on the hypercube, all dimensions of that point are between 0 and 1, and
   at least one dimension must be 1.  Developing terminology, we can consider observations for which
   the $j$th dimension is equal to 1, to be on the $j$th \emph{face}.  The intersection of the $i$th
-  and $j$th face is a hypercube with $d-2$ degrees of freedom, and observations in this space have
-  dimensions $i,j$ equal to 1.
+  and $j$th face is a $d-2$ dimensional cube, and observations in this space have dimensions $i,j$
+  equal to 1.
 
 A \emph{distance} in this space is a \emph{geodesic} on this space. From geometry, we know that
   the geodesic, or shortest path between 2 points along the surface of a $d$ dimensional figure
@@ -160,8 +156,12 @@ Let's go back to that first rotation--we held that as a numerically easier analo
   definite kernel are trivially proved.  And from geometry\makenote{need citation on this}, we can
   assert that on a one-dimension unfolding, the line segment connecting the starting and ending
   points will travel through that optimal net.
-  
-  \bruno{This whole paragraph can be made much shorter and crispier. Introduce the problem, then mention the difficulty of defining an actual distance in $S_\infty^{d-1}$ and jump into the negative kernel idea, then write the lemma from the paper by Gneiting and Raftery, define a suitable kernel and write a proposition proving that it is negative definite, then comment on how you calculate it. BTW, I still don't understand the notation ||a,b||.}
+
+  \bruno{This whole paragraph can be made much shorter and crispier. Introduce the problem, then mention the
+         difficulty of defining an actual distance in $S_\infty^{d-1}$ and jump into the negative kernel idea,
+         then write the lemma from the paper by Gneiting and Raftery, define a suitable kernel and write a
+         proposition proving that it is negative definite, then comment on how you calculate it.
+         BTW, I still don't understand the notation ||a,b||.}
 
 \subsubsection{Intrinsic Energy Score}
 While we have at length discussed our means of comparison between models, we have limited means of
@@ -176,7 +176,13 @@ While we have at length discussed our means of comparison between models, we hav
 
 \subsection{Kullbeck Liebler Divergence}
 The \emph{Kullbeck Liebler divergence} $D_{\text{KL}}$ offers a means of comparing two densities.
-  In our case, as the densities are intractible, we will be estimating the density using a numerical
+  It is, at its core, a logratio of the two densities, integrated over the first density.  That is,
+  \begin{equation}
+    \label{eqn:kld}
+    D_{\text{KL}}(A,B) = \int_{x\in \Omega(A)}A(x)\log\left\frac{A(x)}{B(x)}dx
+  \end{equation}
+  where $\Omega(\cdot)$ indicates the support, and $A,B$ are densities.  In our case, as the
+  densities are intractible, we will be estimating the densities using a numerical
   method.  There is a wealth of literature on this topic, but for reasons to be made clear, I will
   discuss two and use one.
   \bruno{You need to sharpen this explanation and possibly include a formula.}

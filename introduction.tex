@@ -1,6 +1,23 @@
 
 \section{Introduction}
 
+ The integrated water vapor transport (IVT) is a metric describing the total amount of water vapor
+  being transported in an atmospheric column.  The data is delivered as a vector, each element
+  detailing the IVT for a particular area at a point in time.  Thus, we can consider the data to
+  represent a multivariate time series.  The particular IVT data product we are working with
+  \makenote{All of this needs to be rewritten... just getting ideas on paper}
+  represents the coast of California, arranged in a set of grid cells.  One observation from this
+  data set consists of readings from each grid cell at a point in time.  We have daily observations
+  over 30 years, omitting February 29 in each leap year.
 
+We have two IVT datasets, in differing spatial resolutions.  The lower resolution splits the coast
+  of california into 8 grid cells, while the higher resolution splits California into 46 grid cells.
+  We will be looking at relative model performance on these two datasets as a means of evaluating
+  how well any model we propose scales.
 
+We are interested in developing an understanding of extremal dependence between grid cells.  That is,
+  if one grid cell's value is \emph{extreme}, how does that affect the distribution of other grid
+  cells.  To that end, we employ some ideas from multivariate extreme value theory to recast our
+  problem of extremal dependence as one of direction.
+  
 % EOF
