@@ -179,7 +179,7 @@ The \emph{Kullbeck Liebler divergence} $D_{\text{KL}}$ offers a means of compari
   It is, at its core, a logratio of the two densities, integrated over the first density.  That is,
   \begin{equation}
     \label{eqn:kld}
-    D_{\text{KL}}(A,B) = \int_{x\in \Omega(A)}A(x)\log\left\frac{A(x)}{B(x)}dx
+    D_{\text{KL}}(A,B) = \int_{x\in \Omega(A)}A(x)\log\left(\frac{A(x)}{B(x)}\right)dx
   \end{equation}
   where $\Omega(\cdot)$ indicates the support, and $A,B$ are densities.  In our case, as the
   densities are intractible, we will be estimating the densities using a numerical
