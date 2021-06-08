@@ -1,23 +1,244 @@
 
 \section{Introduction}
+Atmospheric rivers are temporary events, where large elongated regions of high concentrations of
+  water vapor are developed in the atmosphere and carry huge amounts of water potentially thousands
+  of miles.  The amount of water in transit during these events dwarfs that of terrestrial rivers.
+  For the targetted region, the atmospheric river can represent a significant portion of the
+  precipitation the region will experience.  Such events are thus of great interest to meterologists,
+  as well as farmers, \makenote{expand and cite}.
 
- The integrated water vapor transport (IVT) is a metric describing the total amount of water vapor
-  being transported in an atmospheric column.  The data is delivered as a vector, each element
-  detailing the IVT for a particular area at a point in time.  Thus, we can consider the data to
-  represent a multivariate time series.  The particular IVT data product we are working with
-  \makenote{All of this needs to be rewritten... just getting ideas on paper}
-  represents the coast of California, arranged in a set of grid cells.  One observation from this
-  data set consists of readings from each grid cell at a point in time.  We have daily observations
-  over 30 years, omitting February 29 in each leap year.
+One metric by which we might identify and declare atmospheric rivers is the integrated water vapor
+  transport, or \emph{IVT}.  This value represents the total amount of water vapor being transported
+  in an atmospheric column--that is, a column of the troposphere of particular size. These values
+  can be measured by dropsondes, but the values we are using are estimated as part of a data
+  product\makenote{needs citation}.  An observation from these data includes a reading (estimated
+  or measured) at grid cell at a period in time; where a grid cell represents the surface of the
+  earth associated with the atmospheric column.  Our specific data comes from the coast of California,
+  with daily readings of IVT covering 30 years, omitting leap days.
 
-We have two IVT datasets, in differing spatial resolutions.  The lower resolution splits the coast
-  of california into 8 grid cells, while the higher resolution splits California into 46 grid cells.
+We have two such datasets, in differing spatial resolutions.  The lower resolution splits the coast
+  of california into 8 grid cells, while the higher resolution does so into 46 grid cells.
   We will be looking at relative model performance on these two datasets as a means of evaluating
-  how well any model we propose scales.
+  how well any model we propose scales.  We are specifically interested in extremal dependence--the
+  relationship between the upper tails of dimensions of the distribution.  In this case, that means
+  the relationship between extreme values in different grid cells.  We are going to be looking at
+  point-in-time behavior rather than considering the time series nature of the data--that
+  relationship may come later.
 
-We are interested in developing an understanding of extremal dependence between grid cells.  That is,
-  if one grid cell's value is \emph{extreme}, how does that affect the distribution of other grid
-  cells.  To that end, we employ some ideas from multivariate extreme value theory to recast our
-  problem of extremal dependence as one of direction.
-  
+As we are interested in the extremal dependence, it makes sense that we would choose to represent
+  this data using lessons from extreme value theory.  Extreme value theory, or \emph{EVT}, seeks
+  to model and assess probability of observing extreme events.  Such a topic is applicable
+  generally, but it finds particularly strong use among such fields as finance\cite{allen2013},
+  climatology\cite{trepanier2018}, and insurance.\findcite  In these fields, extreme events may
+  represent significant loss to the body commissioning the study.  For instance, an insurance
+  company might commission a study on extreme weather events, as a localized extreme event could
+  cause a spike in claims from that region.  Extreme value theory offers us a tool set for making
+  inference about the tails of a distribution, without having observed said tails.  For instance,
+  with an extreme weather event like flooding, we can make predictions about return levels--the
+  average time until an observation of a particular magnitude occurs--without having seen an
+  observation of that magnitude, or having observed that long.
+
+\bruno{Is this part of the introduction? Anyway, something that is important to highlight is the
+  fact that extreme value theory offers theoretical tool to make inference about the tails of a
+  distribution without actually observing the tails. The use of asymptotic theory allows you to say
+  things about the probability of events that happen every 100 years even if you only have 50 years
+  worth of data.}\makenote{I tried to incorporate that}
+
+\subsection{Univariate EVT - Maxima}
+Extreme value theory describes the asymptotic behavior of extreme events.  For a sample ${\bf x}$
+  where ${\bf x} = (x_1,\ldots,x_n)$ represents a sequence of independent random variables from a
+  distribution function $F$, the distribution of the maximum $M_n$ of this sequence can be derived
+  as:
+  \begin{equation*}
+    \begin{aligned}
+      \text{Pr}(M_n\leq z) &= \text{Pr}(X_1 \leq z, \ldots, X_n \leq z)\\
+        &= \text{Pr}(X_1\leq z)\times\ldots\times\text{Pr}(X_n\leq z)\\
+        &= F(z)^n
+    \end{aligned}
+  \end{equation*}
+  Where $F$ is unknown, we seek to approximate the behavior of $F^n$ as $n\rightarrow\infty$.  To
+  ensure this doesn't degenerate to a point mass, we select a sequence of constants $a_n > 0$,
+  $b_n$ and define $M_n^{\prime}$ as $M_n^{\prime} = (M_n - b_n)/a_n$, where $b_n$ represents the
+  location, and $a_n$ the scale.  These sequences stabilize as $n$ increases, which creates a
+  limiting distribution for $M_n^{\prime}$. To summarize, if there exists some sequence of
+  constants $a_n > 0$, $b_n$ such that:
+  \begin{equation*}
+    \text{Pr}\left[\frac{M_n - b_n}{a_n} \leq z\right] \stackrel{d}{\rightarrow} G(z)
+  \end{equation*}
+  as $n\rightarrow\infty$, then $G$ is a max-stable distribution, and $F$ is in the domain of
+  attraction of that max stable distribution.  Maurice Fr{\'e}chet\cite{frechet1927} originates the
+  field, identifying what would become known as the Fr{\'e}chet and Weibull distributions.  Wallodi
+  Weibull, et al, \cite{weibull1951} expands the analysis of the Weibull distribution; the results
+  of that work giving it its current name.  Fisher and Tippet\cite{fisher1928} identify the Fr{\'e}chet
+  and Weibull distributions, along with a third form, as the three limiting forms of the distribution
+  of the maxima of a sample.  Emil Gumbel\cite{gumbel1935} offered an analysis of that third form,
+  what is now known as the Gumbel distribution.  Later works, including that of Arthur
+  Jenkinson\cite{jenkinson1955} reparameterize all three forms as special cases of a single unifying
+  form, the generalized extreme value distribution, \emph{GEV}:
+  \begin{equation*}
+    \label{eqn:gev}
+    F(m \mid \mu, \sigma, \xi) = \exp\left\lbrace-\left[1 + \xi\left(\frac{x - \mu}{\sigma}\right)\right]^{-1/{\xi}}\right\rbrace.
+  \end{equation*}
+  As we specified earlier, distributions can be in the domain of attraction of one of the
+  aforementioned extreme value distributions.  If they are, regardless of which one, they will be in
+  the domain of attraction of the GEV.  Now, one characteristic aspect of max stable distributions
+  is that they feature the homogeneity property,
+  \begin{equation*}
+    \mu(tx) = \frac{1}{t}\mu(x).
+  \end{equation*}
+  Use of this property is endemic in EVT.
+
+As this distribution specifies asymptotic behavior for the maximum of a set of observations,
+  inference assuming this distribution requires we specify some block of data that we would take the
+  maximum in, and report only that maximum.  A series of these blocks yielding a series of maxima
+  allows us to conduct inference about the parameters of the distribution.  Taking only the maximum
+  in a block of observations necessitates reducing our sample size by a factor of $1/\text{block size}$.
+  In some data where there might occur a natural block, such as an hourly time series where a natural
+  block might be a day, this might be appropriate.  There is an implicit violation of the assumption
+  of independence within a block, but that violation is generally ignored.  In data without a natural
+  block, this data reduction might be considered wasteful, as it limits our ability to conduct
+  inference.
+
+\bruno{This is fine, but we need more formality. I am assuming that in the introduction, that is not
+   written yet, your would have described some of the history of the field, and provided some basic
+   references. Even so, you should provide some references here.}\makenote{I've tried to provide a
+   history of the field, at least with respect to the relevant distributions.  I'm sure I still
+   need to provide some more recent history.}
+
+\subsection{Univariate EVT - Thresholding}
+Another way we can approach the problem that is less wasteful of data, is to specify a threshold,
+  and consider only those observations \emph{extreme} that are in excess of the threshold.  From the
+  start, if $F$ is in the domain of attraction of an EVD, then for a random variable $X\sim F$,
+  exceedances over a large threshold $u$ can be said to follow a Pareto distribution.  Again, let
+  $X$ follow some distribution function $F$. Then let us regard observed values that exceed some
+  threshold $u$ as extreme.  It follows that:
+  \begin{equation*}
+    \text{Pr}\left[X > u + y\mid X > u\right] = \frac{1 - F(u + y)}{1 - F(u)}
+  \end{equation*}
+  for $y > 0$.  If we consider the limit of the above as $u\to\infty$, then if $F$ is in the domain
+  of attraction of an EVD, then $\lim\limits_{u\to\infty}\text{Pr}\left[X > u + y\mid X > u\right]$
+  has a functional form--the survival function of a Pareto distribution. Let $X_1,\ldots,X_n$ be a
+  sequence of random variables with the distribution function $F$.  Let $M_n = \max[x_1,\ldots,x_n]$.
+  Suppose that $F$ is in the domain of attraction of the GEV, such that for large $n$,
+  $\text{Pr}[M_n \leq z]\approx G(z)$.  Then, for large enough $u$, $\text{Pr}[X > u+y\mid x > u]$
+  approximates to
+  \begin{equation*}
+    \label{eqn:gp}
+    H(y) = 1 - \left(1 + \frac{\xi y}{\sigma}\right)^{-\frac{1}{\xi}}.
+  \end{equation*}
+  This defines the generalized Pareto family of distributions.  Thus, if block maxima have a
+  limiting distribution $G$ within the EVD family, then threshold exceedances for a sufficiently
+  high threshold have a limiting distribution $H$ within the Generalized Pareto (GP) family.
+  Furthermore, the extremal index $\chi$ will be the same for these two limiting distributions.
+  \bruno{Not clear where the extremal index comes from.}\makenote{I need to add some sources for
+  Pareto distribution, as well as further explanation.  minor explanation of the existence for
+  various estimators beyond ML for chi as well.}
+
+One other point of note is that for time series, the implicit assumption of independence for those
+  observations in excess of a threshold is violated.  One means of dealing with this violation is
+  to consider a string of observations in excess of a threshold as correlated, and only keep one
+  of the string.\makenote{Need citation of paper that uses this approach...as we do as well.}
+
+\subsection{Multivariate EVT}
+\bruno{At this point you need to say that in this work we will focus on the methods based on
+  threshold exceedance in a multivariate setting. You should introduce the topic (although you might
+  have already done that in the introduction) indicating the difficulties that there exist in the
+  generalization of a Pareto distribution in the multivariate case. Cite some papers, of course.
+  You can then say that the traditional approach consists on focusing on the estimation of the
+  joint tail behavior, separate from the marginal behavior. }
+
+Within multivariate EVT, we observe the joint behavior between extreme events. It is useful, at
+  this juncture, to to standardize each variable $X_i$ according to its marginal distribution.
+  Note, as has been stated, that threshold exceedances for a high threshold have a limiting
+  distribution in the GP family.  Therefore, we estimate parameters for those marginal distributions
+  considering only those observations that exceed the threshold.
+  Standardization occurs as:
+  \begin{equation}
+    z_j = \left(1 + \xi\frac{x_j - b_{t,j}}{a_{t,j}}\right)_{+}^{1/\xi}
+  \end{equation}
+  Note that $Z_j > 1$ implies that $x_j > b_{t,j}$, meaning that the observation
+  $x$ is extreme in the $j$'th dimension.  Note also that $\sup_j Z_j$ follows a
+  simple Pareto distribution.
+
+\subsubsection{Limit Measures}
+We assume the existence of a probability measure $\mu$ on ${\bf Z}$ such that
+  \begin{equation}
+    \lim_{n\rightarrow\infty}n\text{Pr}\left[\frac{1}{n}{\bf Z} \geq {\bf z}\right] = \mu\left([{\bf 0}, {\bf z}]^c\right)
+    \label{eq:standard}
+  \end{equation}
+  $\mu$ is thus the asymptotic distribution of ${\bf Z}$ in extreme regions.  It
+  exhibits the homogeneity property, such that for any region A,
+  $\mu(rA) = r^{-1}\mu(A)$.  By this property we can thus factorize ${\bf Z}$
+  into two components:
+  \begin{equation}
+    \begin{aligned}
+      R &= \inorm{{\bf Z}} \in [1, \infty),\\
+      {\bf V} &= \frac{{\bf Z}}{R} \in S_{\infty}^{d-1}.
+    \end{aligned}
+  \end{equation}
+  That is, to say, we factorize ${\bf Z}$ into a radial component $R$, and an
+  angular component, ${\bf V}$, which is the projection of ${\bf Z}$ onto the
+  positive orthant of the $d$-dimensional unit hypersphere defined by the
+  infinity norm, $S_{\infty}^{d-1}$. The radial component $R$, as we have
+  stated, follows a simple pareto distribution, and as a consequence of the
+  homogeneity property, is independent of the angular component ${\bf V}$.
+
+As the angular component is now independent of the radial component, we can
+  establish a distribution on the angular component.  For
+  $B\subset S_{\infty}^{d-1}$, We define the spectral (or angular) measure,
+  $\Omega(B)$, as
+  \begin{equation}
+    \Omega(B) = \mu[{\bf z}: R({\bf z}) > 1, {\bf V} \in B].
+  \end{equation}
+  \bruno{This needs t be sharpened. I don't see why $R({\bf z})>1$ is needed. Also
+  \[	\mu([0,1/\bm{z}]^c) = \int_{{\mathbb S}_\infty^{d-1}}
+  \left(\bigvee_{j} \theta_jz_j\right) d\Omega(\theta)\; ,\]
+  which is the reason $\Omega$ is a spectral measure.}
+  Then we can think of the spectral measure in terms of the limit measure $\mu$, and:
+  \begin{equation}
+    \mu[{\bf z}:R(z)>t, {\bf V}\in B] = t^{-1}\Omega(B).
+  \end{equation}
+  Thus we see a one-to-one correspondance between the limit measure $\mu$ and the
+    spectral measure $\phi$, and by factoring out the Pareto distributed radial
+    component, we can establish a distribution on the angular component
+  \begin{equation}
+    \text{Pr}\left({\bf V} \in B \mid r > 1\right) = \frac{\Omega(B)}{\Omega(S_{\infty}^{d-1})},
+  \end{equation}
+  \bruno{Again, this needs sharpening, I don't get the $r>1$. What you have is that, for any value of $r$.
+  \begin{equation}
+   \lim_{r\rightarrow\infty} \text{Pr}\left({\bf V} \in B \mid R > r\right) = \frac{\Omega(B)}{\Omega(S_{\infty}^{d-1})},
+  \end{equation}
+  So, the point here is what we do in practice. We start by doing the univariate analysis for each component. Take $b_{t,j} = F^{-1}(1 - 1/t)$ as the threshold. So
+  \begin{equation}
+   \lim_{t\rightarrow\infty} \text{Pr}\left({\bf V} \in B \mid R_t > 1\right) = \frac{\Omega(B)}{\Omega(S_{\infty}^{d-1})},
+  \end{equation}.
+  What this means in practice is that we take high thresholds in each dimension, and then take the standardized vectors for which $R>1$.}
+  \makenote{Paraphrasing from Goix et. al., figure if/how to cite}
+  conditioned on at least one of the components being extreme in the marginal
+    sense.  It is using this property that we will establish our method.
+
+For each $\nu\subset\lbrace{1,\ldots,d}, \nu \neq \emptyset$, we define the
+    \emph{truncated cone} $\mathcal{C}_{\nu}$, where
+  \begin{equation}
+      \mathcal{C}_{\nu} = \left\lbrace {\bf z} \geq 0 : \lVert z\rVert_{\infty}\geq 1, z_j \geq 0 \forall j \in \nu, z_j = 0 \forall j \not\in \nu\right\rbrace.
+  \end{equation}
+  That is, $\nu$ identifies a set index specifying components of the standardized
+  data for which the observation is greater than 0.  The observation is greater
+  than 0 for columns within that index, and 0 outside that index.  By
+  construction, we're also requiring that the observation is greater than 1 in
+  at least one of those dimensions.  By this definition, we observe that each
+  $\mathcal{C}_{\nu}$ is distinct and disjoint from any other
+  $\mathcal{C}_{\nu}$.  Now, defining $\Omega_{\nu}$ as the projection of
+  $C_{\nu}$ onto $S_{\infty}^{d-1}$,
+  \begin{equation}
+      \Omega_{\nu} = \left\lbrace {\bf v} \in S_{\infty}^{d-1} : x_i > 0 \forall i \in \nu, x_i = 0 \forall i \not\in \nu\right\rbrace,
+  \end{equation}
+  we can clearly see $\mu(\mathcal{C}_\nu) = \Phi(\Omega_{\nu})$ for all
+  $\alpha \subset\lbrace1,\ldots,d\rbrace$.  Where we call $\mu(\dot)$ the limit
+  measure, we refer to $\Phi(\dot)$ as the \emph{spectral} or
+  \emph{angular measure}.  Our goal is establishing statistical inference on this
+  angular measure.
+
+
+
 % EOF
