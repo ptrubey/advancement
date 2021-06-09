@@ -1,7 +1,7 @@
 \subsection{Projection onto an arbitrary unit hypersphere}
 A hypersphere is a geometric object such that the distance from any point to the center takes a fixed,
   constant value.  The unit hypersphere is a hypersphere where that distance is 1. We can define the
-  hypersphere under an arbitrary distance measurement, so let's take the $\mathcal{L}_p$ norm. Let
+  hypersphere under an arbitrary distance measurement, but let's take the $\mathcal{L}_p$ norm. Let
   the $\mathcal{L}_p$-norm be defined as
   \begin{equation*}
     \lVert {\bf s} \rVert_p = \left(\sum_{l = 1}^d \lvert s_l\rvert^p\right)^{\frac{1}{p}}.
@@ -9,47 +9,57 @@ A hypersphere is a geometric object such that the distance from any point to the
   From this, we establish the $\mathcal{L}_1$ norm as $p = 1$, or the absolute sum, equivalently called
   Manhattan distance; the $\mathcal{L}_2$ norm, as $p = 2$, the Euclidean distance.  From this we
   also establish the $\mathcal{L}_{\infty}$ norm, as
-  $\lim\limits_{p\to\infty} \lVert {\bf s} \rVert_p = \max_{l\in\lbrace{1,\ldots,d}}s_l$.
+  \begin{equation*}
+    \lVert {\bf s} \rVert_{\infty} = \lim\limits_{p\to\infty} \lVert {\bf s} \rVert_p = \max_{l\in\lbrace{1,\ldots,d}}s_l.
+  \end{equation*}
+  In the three-dimensional setting, the set of hyperspheres established under $\mathcal{L}_p$,
+  $p = 1,2,\ldots,\infty$ will appear as a membrane stretched between $(0,0,1), (0,1,0), (1,0,0)$,
+  being blown outward towards $(1,1,1)$ as the pressure, $p$, increases.  At infinite pressure, the
+  membrane matches the containing vessel, the cube. \makenote{I don't think this is a good sentence.
+  I didn't want to end the paragraph on an equation.  suggestions?}
 
-We are interested in the direction, or angular distribution, of vectors described in the positive
-  orthant, $\mathcal{R}_{+}^d$.  As we are specifically interested in direction, we can project any
-  distribution in $\mathcal{R}_{+}^d$ onto the positive orthant of the unit hypersphere in a
-  $\mathcal{L}_p$-norm, denoted as $\mathcal{S}_{p}^{d-1}$.  That is,
+We are interested in the direction, or angular component, of vectors described in the positive
+  orthant, $\mathcal{R}_{+}^d$.  This necessitates the loss of one degree of freedom relative to the
+  original vector in $\mathcal{R}_{+}^d$. As we are specifically interested in direction, we can
+  project any distribution defined in $\mathcal{R}_{+}^d$ onto the positive orthant of the unit
+  hypersphere defined on an $\mathcal{L}_p$-norm, denoted as $\mathcal{S}_{p}^{d-1}$.  That is,
   \begin{equation*}
     \mathcal{S}_{p}^{d-1} = \left\lbrace {\bf y} : {\bf y} \in \mathcal{R}_{+}^{d}, \lVert {\bf y}\rVert_{p} = 1\right\rbrace.
   \end{equation*}
-  We can project an observation onto this space by dividing said observation by its $p$-norm.  That
-  is, let ${\bf x}\in \mathcal{R}_{+}^{d}$, then
-  ${\bf y} = {\bf x} / \lVert {\bf x}\rVert_p \in \mathcal{S}_{p}^{d-1}$.  We denote the $d-1$
-  to indicate the loss of one degree of freedom relative to the original vector.
+  We can project an observation onto this space by dividing said observation by its $p$-norm. Let
+  ${\bf x}\in \mathcal{R}_{+}^{d}$, then ${\bf y} = {\bf x} / \lVert {\bf x}\rVert_p \in \mathcal{S}_{p}^{d-1}$.
+  We denote the $d-1$ to indicate the loss of one degree of freedom relative to the original vector.
 
-So $\mathcal{S}_{1}^{d-1}$ defines the unit simplex, $\mathcal{S}_{2}^{d-1}$ defines the generalization of a
-  circle--what we would generally refer to as a hypersphere, and $\mathcal{S}_{\infty}^{d-1}$ the surface of
-  the hypercube. The hyperspheres defined by $\mathcal{L}_p$ as $p$ varies have a one to one correspondance
-  with eachother, meaning that observations on one can be projected onto another without loss of
-  information.
+So $\mathcal{S}_{1}^{d-1}$ defines the unit simplex, $\mathcal{S}_{2}^{d-1}$ defines the generalization
+  of a circle--what we would generally refer to as a hypersphere, and $\mathcal{S}_{\infty}^{d-1}$
+  the surface of a hypercube. The hyperspheres defined by $\mathcal{L}_p$ as $p$ varies have a one
+  to one correspondance with one-another, meaning that observations on one can be projected onto
+  another without loss of information.
 
-Assuming ${\bf y} \in \mathcal{S}_{p}^{d-1}$, \bruno{sometimes you use bold faces to denote vectors and sometimes you don't. You need to be consistent.}then for finite $p$, $y_d$ can always be represented as a
-  function of the other dimensions.  That is,
+Assuming ${\bf y} \in \mathcal{S}_{p}^{d-1}$, then for finite $p$, $y_d$ can always be represented
+  as a function of the other dimensions.  That is,
   \begin{equation*}
     y_d = \left(1 - \sum_{l = 1}^{d-1}y_l^p\right)^{\frac{1}{p}}.
   \end{equation*}
   So the transformation
   \begin{equation*}
-    T(x_1,\ldots,x_d) = \left(\pnorm{{\bf x}}{p}, \frac{x_1}{\pnorm{{\bf x}}{p}}, \ldots , \frac{x_{d-1}}{\pnorm{{\bf x}}{p}}\right) = (r,y_1,\ldots,y_{d-1})
+    T(x_1,\ldots,x_d) = \left(\pnorm{{\bf x}}{p}, \frac{x_1}{\pnorm{{\bf x}}{p}},
+                          \ldots , \frac{x_{d-1}}{\pnorm{{\bf x}}{p}}\right) = (r,y_1,\ldots,y_{d-1})
   \end{equation*}
   does not lose any information.  The reverse of this transformation,
   \begin{equation*}
     T^{-1}\left(r,y_1,\ldots,y_{d-1}\right) =
-      \left(ry_1,\ldots,ry_{d-1},r\left(1 - {\scriptstyle\sum}_{l = 1}^{d-1}y_l^p\right)^{\frac{1}{p}}\right)
+      \left(ry_1,\ldots,ry_{d-1}, r\left(1 - {\scriptstyle\sum}_{l = 1}^{d-1}y_l^p\right)^{\frac{1}{p}}\right)
   \end{equation*}
-  equivalently recovers the original data.  The determinant of the Jacobian of this transformation
-  takes the form
+  equivalently recovers the original data.  Transforming random variables such that we want to recover
+  the new density requires calculating the Jacobian--the matrix of derivatives of the inverse
+  transformation--or rather, the determinant thereof.  The determinant of the Jacobian of this
+  transformation takes the form
   \begin{equation*}
     r^{d-1}\left[\left(1 - \sum_{l = 1}^{d-1}y_l^p\right)^{\frac{1}{p}} +
-        \sum_{l = 1}^{d-1}y_l^p\left(1 - \sum_{l=1}^d\right)^{\frac{1}{p} - 1}\right].
+        \sum_{l = 1}^{d-1}y_l^p\left(1 - \sum_{l=1}^{d-1} y_l^p\right)^{\frac{1}{p} - 1}\right].
   \end{equation*}
-  \bruno{There is something missing in this formula}
+  \bruno{There is something missing in this formula}\makenote{think it's fixed}
   Notice a factor of $r^{d-1}$ independent of $p$. We refer to $\bm{y}$ and $r$ as, respectively,
   the angular and radial components of $\bm{x}$.  If we assume a distribution for ${\bf x}$, then
   by transforming to $r, {\bf y}$ and integrating out $r$, we are left with a distribution on solely
@@ -75,17 +85,16 @@ One might question why we don't use this method to construct a distribution dire
     \left(1 - \sum_{l = 1}^{d-1}y_i^p\right)^{\frac{1}{p} - 1}
   \end{equation*}
   which, if we take the limit as $p$ approaches infinity, if any other $y_l$ than $y_d$ is equal to
-  1, then that value approaches $0^{-1}$--an impossibility.  We see a clear breaking point
-  between inference conducted on the finite $p$ hypersphere, $\mathcal{S}_{p}^{d-1}$, and the
-  $\mathcal{L}_{\infty}$ hypersphere, $\mathcal{S}_{\infty}^{d-1}$. Another way we can recognize
-  this issue is from the transformation itself: under $\mathcal{L}_{\infty}$,
-  $T^{-1}(r,y_1,\ldots,y_{d-1})$ will not recover $x_1,\ldots,x_d$ if $y_d \neq 1$, or equivalently
-  $x_d \neq \max_i x_i$.
+  1, then that value approaches $0^{-1}$--an impossibility.  Another way we can recognize the problem
+  is directly in the transformation--$T^{-1}(r,y_1,\ldots,y_{d-1}) will not recover ${\bf x}$ if
+  any $y_l$ other than $y_d$ is 1, or equivalently $\max_l x_l\neq x_d$.  Thus, we see a clear
+  breaking point between inference conducted on the finite $p$ hypersphere, $\mathcal{S}_{p}^{d-1}$,
+  and the $\mathcal{L}_{\infty}$ hypersphere, $\mathcal{S}_{\infty}^{d-1}$.
 
-With this in mind, the way one might build a distribution on $\mathcal{S}_{\infty}^{d-1}$ that still operates
-  in Cartesian coordinates geometry might be to include an equal weighting mixture model, where each
-  component of the mixture represents the probability of an observation being on that face, times
-  the conditional density of the other dimensions given the face.  That is,
+With this in mind, the way one might build a distribution on $\mathcal{S}_{\infty}^{d-1}$ that still
+  operates in Cartesian coordinate geometry might be to include an equal weighting mixture model,
+  where each component of the mixture represents the probability of an observation being on that face,
+  multiplied by the conditional density of the other dimensions given the face.  That is,
   \begin{equation*}
     f(y) = \sum_{l = 1}^{d}p(y_l = 1)f(y_{-l}\mid y_l = 1)
   \end{equation*}
@@ -96,18 +105,44 @@ With this in mind, the way one might build a distribution on $\mathcal{S}_{\inft
   \bruno{You need to sharpen the last two paragraphs because I am having a hard time understanding what you are trying to say here.}
   \makenote{I've tried to make it a little more clear.}
 
-Alternatively, one can also map ${\bf y}\in \mathcal{S}_{p}^{d-1}$ into an alternative geometry,
-  where we can express those $d-1$ degrees of freedom in a $d-1$ dimensional vector.  On the
-  $\mathcal{L}_1$ norm, one might consider isometric or additive logratios\cite{aitchison1982} as
-  an appropriate geometry.  On the $\mathcal{L}_2$ norm, we consider spherical coordinates.  This
-  directly maps $S_2^{d-1}$ to $[0,\pi/2]^{d-1}$. \cite{nunez2019} follows this course, starting
-  with the independent Gamma distribution and still integrating out $r$ to create an angular
-  distribution in $[0,\pi/2]^{d-1}$. But we can also construct a distribution directly in this
-  space.  Along this idea, via probit transformation we map $[0,\pi/2]^{d-1}$ to
-  $(-\infty, \infty)^{d-1}$, and construct a multivariate normal distribution in this geometry.
+As an alternative to this projected distribution model, one method we might consider would be to map
+  to an alternative geometry, where we can express those $d-1$ degrees of freedom in a $d-1$
+  dimensional vector.  In such a space, we can assign whatever model seems appropriate without the
+  degrees of freedom restriction necessary in the projected gamma model.  Choosing what $\mathcal{L}_p$
+  norm hypersphere we start mapping from identifies what possible geometries we might use.  For instance,
+  if we start from the $\mathcal{L}_1$ norm, a possible geometry we might use would be isometric or
+  additive logratios\cite{aitchison1982}.  A brief explanation of the additive logratio transformation
+  as follows.  For ${\bf x}\in \mathcal{S}_{1}^{d-1}$ (on the unit simplex, so $\sum_{l = 1}^d x_l = 1$),
+  let $y_l = \log\frac{x_l}{x_d}$ for $l = 1,\ldots,d-1$. This transformation, and those like it,
+  exhibit extreme edge effects.  In this case, if any $x_l\to0$ for $l \neq d$, then $y_l\to-\infty$.
+  If $x_d \to 0$, then ${\bf y}\to\infty$.
 
-
-
-
+On the $\mathcal{L}_2$ norm, we consider spherical coordinates.  Let ${\bf x} \in \mathcal{S}_{2}^{d-1}$.
+  Then, we transform ${\bf x}$ to spherical coordinates as
+  \begin{equation*}
+    \theta_l = \arccos\frac{x_l}{\pnorm{{\bf x}_{l:d}}{2}},
+  \end{equation*}
+  for $l = 1,\ldots, d-1$. That is, the arccosine of the ratio of the mass of a given dimension,
+  versus the \emph{combined} mass of that dimension and subsequent dimensions.  If $x_l = 0$, and
+  $\pnorm{{\bf x}_{l:d}}{2} > 0$, then $\theta_l = \frac{\pi}{2}$, indicating that all the mass was
+  in later dimensions.  One can see here that order of the axes has a great effect on the resulting
+  coordinates.  The inverse of this transformation takes the form:
+  \begin{equation}
+    \begin{aligned}
+      x_1 &= \cos\theta_1\\
+      x_2 &= \sin\theta_1\cos\theta_2\\
+      &\vdots\\
+      x_{d-1} &= \sin\theta_1\ldots\sin\theta_{d-2}\cos\theta_{d-1}\\
+      x_d &= \sin\theta_1\ldots\sin\theta_{d-1}\\
+      {\small \prod}_{l = 1}^{d-2}[\sin\theta_{l}]\cos\theta_{d-1}\\
+      x_d &= {\small \prod}_{l = 1}^{d-1}\sin\theta_l
+    \end{aligned}
+  \end{equation}
+  In this way, we map $\mathcal{S}_2^{d-1}$ to $[0,\pi/2]^{d-1}$. Nunez \& Antonio\cite{nunez2019}
+  follow this course, starting with the independent Gamma distribution and still integrating out
+  $r$ to create an angular distribution constructed on $[0,\pi/2]^{d-1}$. But we can also construct
+  a distribution directly in this space.  Along this idea, via probit transformation we map
+  $[0,\pi/2]^{d-1}$ to $(-\infty, \infty)^{d-1}$, and construct a multivariate normal distribution
+  in this geometry.
 
 % EOF
