@@ -42,23 +42,26 @@ Assuming ${\bf y} \in \mathcal{S}_{p}^{d-1}$, then for finite $p$, $y_d$ can alw
     y_d = \left(1 - \sum_{l = 1}^{d-1}y_l^p\right)^{\frac{1}{p}}.
   \end{equation*}
   So the transformation
-  \begin{equation*}
+  \begin{equation}
+    \label{eqn:pnormt}
     T(x_1,\ldots,x_d) = \left(\pnorm{{\bf x}}{p}, \frac{x_1}{\pnorm{{\bf x}}{p}},
                           \ldots , \frac{x_{d-1}}{\pnorm{{\bf x}}{p}}\right) = (r,y_1,\ldots,y_{d-1})
-  \end{equation*}
+  \end{equation}
   does not lose any information.  The reverse of this transformation,
-  \begin{equation*}
+  \begin{equation}
+    \label{eqn:pnormtinv}
     T^{-1}\left(r,y_1,\ldots,y_{d-1}\right) =
       \left(ry_1,\ldots,ry_{d-1}, r\left(1 - {\scriptstyle\sum}_{l = 1}^{d-1}y_l^p\right)^{\frac{1}{p}}\right)
-  \end{equation*}
+  \end{equation}
   equivalently recovers the original data.  Transforming random variables such that we want to recover
   the new density requires calculating the Jacobian--the matrix of derivatives of the inverse
   transformation--or rather, the determinant thereof.  The determinant of the Jacobian of this
   transformation takes the form
-  \begin{equation*}
+  \begin{equation}
+    \label{eqn:pnormjac}
     r^{d-1}\left[\left(1 - \sum_{l = 1}^{d-1}y_l^p\right)^{\frac{1}{p}} +
         \sum_{l = 1}^{d-1}y_l^p\left(1 - \sum_{l=1}^{d-1} y_l^p\right)^{\frac{1}{p} - 1}\right].
-  \end{equation*}
+  \end{equation}
   \bruno{There is something missing in this formula}\makenote{think it's fixed}
   Notice a factor of $r^{d-1}$ independent of $p$. We refer to $\bm{y}$ and $r$ as, respectively,
   the angular and radial components of $\bm{x}$.  If we assume a distribution for ${\bf x}$, then
@@ -86,7 +89,7 @@ One might question why we don't use this method to construct a distribution dire
   \end{equation*}
   which, if we take the limit as $p$ approaches infinity, if any other $y_l$ than $y_d$ is equal to
   1, then that value approaches $0^{-1}$--an impossibility.  Another way we can recognize the problem
-  is directly in the transformation--$T^{-1}(r,y_1,\ldots,y_{d-1}) will not recover ${\bf x}$ if
+  is directly in the transformation--$T^{-1}(r,y_1,\ldots,y_{d-1})$ will not recover ${\bf x}$ if
   any $y_l$ other than $y_d$ is 1, or equivalently $\max_l x_l\neq x_d$.  Thus, we see a clear
   breaking point between inference conducted on the finite $p$ hypersphere, $\mathcal{S}_{p}^{d-1}$,
   and the $\mathcal{L}_{\infty}$ hypersphere, $\mathcal{S}_{\infty}^{d-1}$.
@@ -128,6 +131,7 @@ On the $\mathcal{L}_2$ norm, we consider spherical coordinates.  Let ${\bf x} \i
   in later dimensions.  One can see here that order of the axes has a great effect on the resulting
   coordinates.  The inverse of this transformation takes the form:
   \begin{equation}
+    \label{eqn:sperical}
     \begin{aligned}
       x_1 &= \cos\theta_1\\
       x_2 &= \sin\theta_1\cos\theta_2\\
