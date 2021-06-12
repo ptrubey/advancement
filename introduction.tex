@@ -139,7 +139,7 @@ One other point of note is that for time series, the implicit assumption of inde
   to consider a string of observations in excess of a threshold as correlated, and only keep one
   of the string.\makenote{Need citation of paper that uses this approach...as we do as well.}
 
-\subsection{Multivariate EVT}
+\subsection{Multivariate Threshold EVT}
 \makenote{Rewrite is done to this point.}
 \bruno{At this point you need to say that in this work we will focus on the methods based on
   threshold exceedance in a multivariate setting. You should introduce the topic (although you might
@@ -148,46 +148,48 @@ One other point of note is that for time series, the implicit assumption of inde
   You can then say that the traditional approach consists on focusing on the estimation of the
   joint tail behavior, separate from the marginal behavior. }
 
-Within multivariate EVT, we observe the joint behavior between extreme events. It is useful, at
-  this juncture, to to standardize each variable $X_i$ according to its marginal distribution.
-  Note, as has been stated, that threshold exceedances for a high threshold have a limiting
-  distribution in the GP family.  Therefore, we estimate parameters for those marginal distributions
-  considering only those observations that exceed the threshold.
-  Standardization occurs as:
+Our motivating example lies in the domain of multivariate EVT, where we make inference about the
+  distribution conditional on at least one threshold exceedance.  In multivariate EVT, the standard
+  practice is to first standardize each dimension according to its marginal distribution, then
+  estimate its dependence structure.\needcite  As has been stated, if each marginal distribution falls
+  into the domain of attraction of the GEV, then threshold exceedances for a sufficiently
+  \emph{sufficiently high} threshold will have a limiting distribution in the GP family\cite{beirlant2006}.
+  Therefore, we estimate parameters for those marginal distributions considering only those
+  observations that exceed the threshold.  For ${\bf x}$, for which the marginal distributions of its
+  dimensions are within the domain of attraction of a GEV, standardization occurs as
   \begin{equation}
-    z_j = \left(1 + \xi\frac{x_j - b_{t,j}}{a_{t,j}}\right)_{+}^{1/\xi}
+    Z_j = \left(1 + \xi_j\frac{X_j - b_{t,j}}{a_{t,j}}\right)_{+}^{1/\xi_j}.
   \end{equation}
-  Note that $Z_j > 1$ implies that $x_j > b_{t,j}$, meaning that the observation
-  $x$ is extreme in the $j$'th dimension.  Note also that $\sup_j Z_j$ follows a
-  simple Pareto distribution.
+  In practice, as estimation of these parameters is not the focus of this paper, we specify 
+  $b_{t,j} := \hat{F}_j^{-1}\left(1 - \frac{1}{t}\right)$, then fit the scale parameter $a_{t,j}$,
+  and extremal index $\xi_j$ via maximum likelihood.  Note that $z_j > 1$ implies that $x_j > b_{t,j}$,
+  meaning that the observation ${\bf x}$ is extreme in the $j$'th dimension.  Note also that
+  $\sup_j Z_j$ follows a simple Pareto distribution.
 
 \subsubsection{Limit Measures}
-We assume the existence of a probability measure $\mu$ on ${\bf Z}$ such that
+Multivariate EVT assumes the existence of a probability measure $\mu$ on ${\bf Z}$ such that
   \begin{equation}
-    \lim_{n\rightarrow\infty}n\text{Pr}\left[\frac{1}{n}{\bf Z} \geq {\bf z}\right] = \mu\left([{\bf 0}, {\bf z}]^c\right)
+    \lim_{n\rightarrow\infty}n\text{Pr}\left[\frac{1}{n}{\bf Z} \geq {\bf z}\right] = \mu\left([{\bf 0}, {\bf z}]^c\right).
     \label{eq:standard}
   \end{equation}
-  $\mu$ is thus the asymptotic distribution of ${\bf Z}$ in extreme regions.  It
-  exhibits the homogeneity property, such that for any region A,
-  $\mu(rA) = r^{-1}\mu(A)$.  By this property we can thus factorize ${\bf Z}$
-  into two components:
+  $\mu$ is thus the asymptotic distribution of ${\bf Z}$ in extreme regions.  It exhibits the
+  homogeneity property, such that for any region A, $\mu(rA) = r^{-1}\mu(A)$.  By this property we
+  thus factorize ${\bf Z}$ into two components:
   \begin{equation}
     \begin{aligned}
       R &= \inorm{{\bf Z}} \in [1, \infty),\\
       {\bf V} &= \frac{{\bf Z}}{R} \in S_{\infty}^{d-1}.
     \end{aligned}
   \end{equation}
-  That is, to say, we factorize ${\bf Z}$ into a radial component $R$, and an
-  angular component, ${\bf V}$, which is the projection of ${\bf Z}$ onto the
-  positive orthant of the $d$-dimensional unit hypersphere defined by the
-  infinity norm, $S_{\infty}^{d-1}$. The radial component $R$, as we have
-  stated, follows a simple pareto distribution, and as a consequence of the
-  homogeneity property, is independent of the angular component ${\bf V}$.
+  That is, to say, we factorize ${\bf Z}$ into a radial component $R$, and an angular component,
+  ${\bf V}$, which is the projection of ${\bf Z}$ onto the positive orthant of the $d$-dimensional
+  unit hypersphere defined by the infinity norm, $S_{\infty}^{d-1}$. The radial component $R$, as we
+  have stated, follows a simple pareto distribution, and as a consequence of the homogeneity property,
+  is independent of the angular component ${\bf V}$.
 
-As the angular component is now independent of the radial component, we can
-  establish a distribution on the angular component.  For
-  $B\subset S_{\infty}^{d-1}$, We define the spectral (or angular) measure,
-  $\Omega(B)$, as
+As the angular component is now independent of the radial component, we can establish a distribution
+  on solely the angular component.  For  $B\subset S_{\infty}^{d-1}$, We define the spectral
+  (or angular) measure, $\Omega(B)$, as
   \begin{equation}
     \Omega(B) = \mu[{\bf z}: R({\bf z}) > 1, {\bf V} \in B].
   \end{equation}
@@ -207,16 +209,19 @@ As the angular component is now independent of the radial component, we can
   \end{equation}
   \bruno{Again, this needs sharpening, I don't get the $r>1$. What you have is that, for any value of $r$.
   \begin{equation}
-   \lim_{r\rightarrow\infty} \text{Pr}\left({\bf V} \in B \mid R > r\right) = \frac{\Omega(B)}{\Omega(S_{\infty}^{d-1})},
+   \lim_{r\rightarrow\infty} \text{Pr}\left({\bf V} \in B \mid R > r\right) =
+              \frac{\Omega(B)}{\Omega(S_{\infty}^{d-1})},
   \end{equation}
-  So, the point here is what we do in practice. We start by doing the univariate analysis for each component. Take $b_{t,j} = F^{-1}(1 - 1/t)$ as the threshold. So
+  So, the point here is what we do in practice. We start by doing the univariate analysis for each
+  component. Take $b_{t,j} = F^{-1}(1 - 1/t)$ as the threshold. So
   \begin{equation}
-   \lim_{t\rightarrow\infty} \text{Pr}\left({\bf V} \in B \mid R_t > 1\right) = \frac{\Omega(B)}{\Omega(S_{\infty}^{d-1})},
+   \lim_{t\rightarrow\infty} \text{Pr}\left({\bf V} \in B \mid R_t > 1\right) =
+            \frac{\Omega(B)}{\Omega(S_{\infty}^{d-1})},
   \end{equation}.
   What this means in practice is that we take high thresholds in each dimension, and then take the standardized vectors for which $R>1$.}
   \makenote{Paraphrasing from Goix et. al., figure if/how to cite}
   conditioned on at least one of the components being extreme in the marginal
-    sense.  It is using this property that we will establish our method.
+  sense.  It is using this property that we will establish our method.
 
 For each $\nu\subset\lbrace{1,\ldots,d}, \nu \neq \emptyset$, we define the
     \emph{truncated cone} $\mathcal{C}_{\nu}$, where
@@ -239,6 +244,7 @@ For each $\nu\subset\lbrace{1,\ldots,d}, \nu \neq \emptyset$, we define the
   measure, we refer to $\Phi(\dot)$ as the \emph{spectral} or
   \emph{angular measure}.  Our goal is establishing statistical inference on this
   angular measure.
+
 
 
 
