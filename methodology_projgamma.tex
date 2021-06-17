@@ -122,7 +122,7 @@ While the generalized Dirichlet is more flexible than a Dirichlet, and \cite{nun
   \end{equation*}
   By sampling and conditioning on $\delta_i$, we end up with very similar semi-conjugate forms for
   inference of ${\bf \alpha}_j$, ${\bf \beta}_j$ that we used in the vanilla model.  The changes made
-  to Eqns.~\ref{eqn:betafc},\ref{eqn:alphafc},\ref{alphafc1} are such that we're conducting inference
+  to Eqns.~\ref{eqn:betafc},\ref{eqn:alphafc},\ref{eqn:alphafc1} are such that we're conducting inference
   on a mixture component given the mixture component identifiers ${\bf \delta}$, so instead of indexing
   $i$ over the whole data set, we're indexing $i$ over the set $\{i :\delta_i = j\}$, with $n = n_j$,
   the cardinality of that set. Inference on ${\bf \xi,\tau,\zeta,\sigma}$ follows a similar form as
@@ -140,7 +140,7 @@ Additionally, we investigate a finite mixture extension of the \emph{Projected R
   \makenote{I need to say this better}.
 
 \subsubsection{Dirichlet Process Mixture Model}
-A logical extension to the finite mixture model described in Eqn.~\ref{fmixp} would be to assume the
+A logical extension to the finite mixture model described in Eqn.~\ref{eqn:fmixp} would be to assume the
   ${\bf y}$'s descending from an infinite mixture model.  This to some extent solves the issue of
   selecting the number of mixture components, as that will effectively be done so in the model.
   \begin{equation}
@@ -240,7 +240,7 @@ We also present a restricted Gamma form of this model, where we have set $\beta_
   \bruno{\bf I think that 3.2.2 -- 3.2.4 are pretty much the same model with some elaborations.
                 You should be able to present the whole story in a much more condensed fashion.}
 
-\subsubsection{Choice of $\mathcal{L}_p$ Norm}
+\subsubsection{Choice of Norm}
 In our motivating example, we defined our problem on $\mathcal{S}_{\infty}^{d-1}$, the positive orthant
   of the hypersphere defined under the $\mathcal{L}_{\infty}$ norm.  We described the difficulty in
   establishing a density directly on this geometry.  \makenote{will continue this.  describe impetus
