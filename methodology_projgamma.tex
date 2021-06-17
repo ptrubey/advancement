@@ -27,20 +27,25 @@ As stated previously, one approach we might try in order to generate a distribut
   \end{equation}
   This forms a valid density for all finite $p$.  We can regard the Generalized Dirichlet distribution
   as being a special case of this density, where ${\bf y}\in \mathcal{S}_{1}^{d-1}$.  Equivalently,
-  the distribution described \st{by} \bruno{in} \cite{nunez2019} maps this distribution
-  for ${\bf y}\in \mathcal{S}_{2}^{d-1}$ to spherical coordinates, via Eqn.~\ref{eqn:spherical}.
-  Restricted Gamma models, such as Dirichlet, are also a special case of this model, where we restrict
-  the rate parameters to all be 1.
-  \bruno{\bf How is the connection between this model and the Generalize Dirichlet obvious? Actually, what is the Generalize Dirichlet?}
+  the distribution described in \cite{nunez2019} maps this distribution for ${\bf y}\in \mathcal{S}_{2}^{d-1}$
+  to spherical coordinates, via Eqn.~\ref{eqn:spherical}. Restricted Gamma models, such as Dirichlet,
+  are also a special case of this model, where we restrict the rate parameters to all be 1.
+  \bruno{\bf How is the connection between this model and the Generalize Dirichlet obvious? Actually,
+                what is the Generalize Dirichlet?}
 
 In the estimation of the parameters of this model, we can quickly arrive at a problem, in that
   without some linear restriction on the rate parameters $\beta_l$, the model is not identifiable.
   The restriction most often used in the case of the Generalized Dirichlet, as well as by
   \cite{nunez2019} is to set $\beta_1 := 1$.
-  \bruno{\bf This section needs to be tied up with the previous section. You start by saying that, following the discussion in the previous section ... Then you make sure that your notation is consistent. Here we have $\bm{X}$ and $\bm{Y}$ which had not been defined before, and $\theta$ has disappeared. Something that is totally obscure at this point is what the observations are.}
+  \bruno{\bf This section needs to be tied up with the previous section. You start by saying that,
+        following the discussion in the previous section ... Then you make sure that your notation
+        is consistent. Here we have $\bm{X}$ and $\bm{Y}$ which had not been defined before, and
+         $\theta$ has disappeared. Something that is totally obscure at this point is what the
+         observations are.}
 
 \subsubsection{ \bruno{Basic} Model}
-The \st{vanilla} \bruno{\bf We consider a basic model that consists of ...} model is the most basic model we present.  In this model, we assume all observations
+The \st{vanilla} \bruno{\bf We consider a basic model that consists of ...} model is the most basic model we present.
+  In this model, we assume all observations
   are descended from a single distribution.  The shape and rate parameters for the latent
   \text{Gamma} random variables, $\alpha_l,\beta_l$, must be greater than 0, so a logical prior to
   use would be a Gamma prior for each parameter, excepting for $\beta_1 := 1$.
@@ -194,9 +199,11 @@ Again, we will be looking at this model, and the restricted gamma form of this m
 A final extension we can make to this model is to allow for some structure, or dependence, in the prior
   for shape parameters within a cluster.  The impetus for this approach is from recognizing that the
   algorithm we are using for sampling the DP may not adequately represent the posterior density for
-  a new cluster, as it is assuming sampling from an independent prior.  As shape parameters must
-  be greater than 0, it seems logical to assume a log normal prior, as that allows us the familar
-  forms of a mean vector and covariance matrix for representing the source of cluster parameters. So,
+  a new cluster, as it is assuming sampling from an independent prior.  If we account for dependence
+  between dimensions within the prior, then we may be able to more efficiently sample new clusters.
+  As shape parameters must be greater than 0, it seems logical to assume a log normal prior, as that
+  allows us the familar forms of a mean vector and covariance matrix for representing the source of
+  cluster parameters. So,
   \begin{equation}
     \label{eqn:dpln}
     \begin{aligned}
@@ -216,8 +223,9 @@ A final extension we can make to this model is to allow for some structure, or d
   complexity--this introduces a $d$-dimensional normal distribution into the model, requiring a
   $d$-dimensional matrix inversion step.  This necessarily limits the potential number of dimensions
   possible, merely as a practical matter.  The posterior inference strategies for $\beta,\zeta,\sigma$
-  are the same as for prior models and have been described.  Inference for $\alpha_j$ given $\mu,\Sigma$
-  will rely on a $d$-dimensional Metropolis Hastings step, where the log-posterior density is proportional to
+  are the same as for prior models and have been described.  Inference for $\alpha_j$ given
+  $r, \mu,\Sigma$ will rely on a $d$-dimensional Metropolis Hastings step, where the log-posterior
+  density is proportional to
   \begin{equation}
     \label{eqn:dplnlp}
     \text{\makenote{need to put this equation in}}
@@ -228,8 +236,9 @@ A final extension we can make to this model is to allow for some structure, or d
 
 We also present a restricted Gamma form of this model, where we have set $\beta_l := 1$ for all
   $l = 1,\ldots,d$.  This removes the inference steps for $\beta,\zeta,\sigma$.
-  
-  \bruno{\bf I think that 3.2.2 -- 3.2.4 are pretty much the same model with some elaborations. You should be able to present the whole story in a much more condensed fashion.}
+
+  \bruno{\bf I think that 3.2.2 -- 3.2.4 are pretty much the same model with some elaborations.
+                You should be able to present the whole story in a much more condensed fashion.}
 
 \subsubsection{Choice of $\mathcal{L}_p$ Norm}
 In our motivating example, we defined our problem on $\mathcal{S}_{\infty}^{d-1}$, the positive orthant

@@ -101,9 +101,10 @@ With this in mind, the way one might build a distribution on $\mathcal{S}_{\inft
   operates in Cartesian coordinate geometry might be to include an equal weighting mixture model,
   where each component of the mixture represents the probability of an observation being on that face,
   multiplied by the conditional density of the other dimensions given the face.  That is,
-  \begin{equation*}
+  \begin{equation}
+    \label{eqn:mixconddensity}
     f(y) = \sum_{l = 1}^{d}p(y_l = 1)f(y_{-l}\mid y_l = 1)
-  \end{equation*}
+  \end{equation}
   Under this interpretation, we can consider $p(y_l = 1) = P(x_l = \max_i x_i)$.  Unfortunately,
   this calculation is not straitforward. \bruno{\bf Did you pursue this? I don't think so, so drop it.}
 
@@ -144,7 +145,7 @@ As an alternative to this projected distribution model, one method we might cons
     \end{aligned}
   \end{equation}
   \bruno{Something is weird with the alignement in this equation. Also, the index of $x$ gets all the way to $d$, but you said $\bm{x} \in S^{d-1}_2$, so $x$ has dimension $d-1$.  }
-  In this way, we map $\mathcal{S}_2^{d-1}$ to $[0,\pi/2]^{d-1}$. 
+  In this way, we map $\mathcal{S}_2^{d-1}$ to $[0,\pi/2]^{d-1}$.
   \cite{nunez2019} \bruno{use this transformation to obtain a distribution on $[0,2\pi]^{d-1}$}
   \st{follow this course}, starting with \st{the} $d$ independent Gamma distributions and \st{still} integrating out
   $r$ \st{to create an angular distribution constructed on $[0,\pi/2]^{d-1}$}. \st{But we} \bruno{Alternatively, we} can \st{also construct} \bruno{obtain}
