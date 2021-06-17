@@ -27,18 +27,20 @@ As stated previously, one approach we might try in order to generate a distribut
   \end{equation}
   This forms a valid density for all finite $p$.  We can regard the Generalized Dirichlet distribution
   as being a special case of this density, where ${\bf y}\in \mathcal{S}_{1}^{d-1}$.  Equivalently,
-  the distribution described by N{\'u}{\~n}ez \& Geneyro\cite{nunez2019} maps this distribution
+  the distribution described \st{by} \bruno{in} \cite{nunez2019} maps this distribution
   for ${\bf y}\in \mathcal{S}_{2}^{d-1}$ to spherical coordinates, via Eqn.~\ref{eqn:spherical}.
   Restricted Gamma models, such as Dirichlet, are also a special case of this model, where we restrict
   the rate parameters to all be 1.
+  \bruno{\bf How is the connection between this model and the Generalize Dirichlet obvious? Actually, what is the Generalize Dirichlet?}
 
 In the estimation of the parameters of this model, we can quickly arrive at a problem, in that
   without some linear restriction on the rate parameters $\beta_l$, the model is not identifiable.
   The restriction most often used in the case of the Generalized Dirichlet, as well as by
-  N{\'u}{\~n}ez and Geneyro\cite{nunez2019} is to set $\beta_1 := 1$.
+  \cite{nunez2019} is to set $\beta_1 := 1$.
+  \bruno{\bf This section needs to be tied up with the previous section. You start by saying that, following the discussion in the previous section ... Then you make sure that your notation is consistent. Here we have $\bm{X}$ and $\bm{Y}$ which had not been defined before, and $\theta$ has disappeared. Something that is totally obscure at this point is what the observations are.}
 
-\subsubsection{Vanilla Model}
-The vanilla model is the most basic model we present.  In this model, we assume all observations
+\subsubsection{ \bruno{Basic} Model}
+The \st{vanilla} \bruno{\bf We consider a basic model that consists of ...} model is the most basic model we present.  In this model, we assume all observations
   are descended from a single distribution.  The shape and rate parameters for the latent
   \text{Gamma} random variables, $\alpha_l,\beta_l$, must be greater than 0, so a logical prior to
   use would be a Gamma prior for each parameter, excepting for $\beta_1 := 1$.
@@ -87,10 +89,10 @@ The vanilla model is the most basic model we present.  In this model, we assume 
   model inference on all $\alpha_l$ will use this form.
 
 \subsubsection{Finite Mixture Model}
-While the generalized Dirichlet is more flexible than a Dirichlet, and N{\'u}{\~n}ez \& Geneyro\cite{nunez2019}
+While the generalized Dirichlet is more flexible than a Dirichlet, and \cite{nunez2019}
   extol the flexibility of their projected Gamma model, it's conceivable that a single Projected Gamma
   distribution will not sufficiently capture the variability of real data.  In that case, a logical
-  extension to make to the above model is to assume the data, ${\bf y}$, are descending from a finite
+  extension to make to the above model is to assume the data, ${\bf y}$, are \st{descending} \bruno{generated} from a finite
   mixture of projected Gammas:
   \begin{equation}
     \label{eqn:fmixp}
@@ -226,6 +228,8 @@ A final extension we can make to this model is to allow for some structure, or d
 
 We also present a restricted Gamma form of this model, where we have set $\beta_l := 1$ for all
   $l = 1,\ldots,d$.  This removes the inference steps for $\beta,\zeta,\sigma$.
+  
+  \bruno{\bf I think that 3.2.2 -- 3.2.4 are pretty much the same model with some elaborations. You should be able to present the whole story in a much more condensed fashion.}
 
 \subsubsection{Choice of $\mathcal{L}_p$ Norm}
 In our motivating example, we defined our problem on $\mathcal{S}_{\infty}^{d-1}$, the positive orthant
@@ -239,11 +243,5 @@ In our motivating example, we defined our problem on $\mathcal{S}_{\infty}^{d-1}
 
 
 
-\bruno{
-  The three models that you consider in this section are essentially the same model with three
-  variations. You should write the section by presenting a model that consists of a mixture of
-  Dirichlet with two options: a finite mixture and a DP mixture, the a submodel for the DP
-  misture where you consider two choices fot he hyperparameter priors. Now, is it really worth
-  presenting all three different models?
-  }
+
 % EOF

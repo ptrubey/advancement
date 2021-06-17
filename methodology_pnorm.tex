@@ -1,4 +1,5 @@
 \subsection{Projection onto an arbitrary unit hypersphere}
+\bruno{\bf How do we get here? I mean, why do we need to talk about hyperspheres? We need a connection with the stuff that comes before this section. }
 A hypersphere is a geometric object such that the distance from any point to the center takes a fixed,
   constant value.  The unit hypersphere is a hypersphere where that distance is 1. We can define the
   hypersphere under an arbitrary distance measurement, but let's take the $\mathcal{L}_p$ norm. Let
@@ -62,12 +63,12 @@ Assuming ${\bf y} \in \mathcal{S}_{p}^{d-1}$, then for finite $p$, $y_d$ can alw
     r^{d-1}\left[\left(1 - \sum_{l = 1}^{d-1}y_l^p\right)^{\frac{1}{p}} +
         \sum_{l = 1}^{d-1}y_l^p\left(1 - \sum_{l=1}^{d-1} y_l^p\right)^{\frac{1}{p} - 1}\right].
   \end{equation}
-  \bruno{There is something missing in this formula}\makenote{think it's fixed}
   Notice a factor of $r^{d-1}$ independent of $p$. We refer to $\bm{y}$ and $r$ as, respectively,
   the angular and radial components of $\bm{x}$.  If we assume a distribution for ${\bf x}$, then
   by transforming to $r, {\bf y}$ and integrating out $r$, we are left with a distribution on solely
   the angular component, or, equivalently, the projection of the vector ${\bf x}$ onto
   $\mathcal{S}_{p}^{d-1}$.
+  \bruno{\bf The idea is there, but you need to make the explanation that starts at the beginning of the section and ends here much sharper. }
 
 Many of the models we present here follow this form, where we, for reasons to be elaborated, assume
   a $d$-dimensional Gamma distribution on this hypothetical ${\bf x}$. For finite $p$, this has a
@@ -79,6 +80,7 @@ Many of the models we present here follow this form, where we, for reasons to be
   with support on $\mathcal{R}_+$ in the hopes we could perform the same dimension reduction with a
   different parameterization, but none offered the flexibility of the Gamma while allowing $r$ to be
   integrated out in closed form.
+  \bruno{\bf You can probably summarize this paragraph with two or three sentences saying that you use a product of independent gamma distributions on the components of $x_j$ for convenience and tractability.}
 
 One might question why we don't use this method to construct a distribution directly on
   $\mathcal{S}_{\infty}^{d-1}$, the unit hypersphere under $\mathcal{L}_{\infty}$.  Put simply, we
@@ -93,6 +95,7 @@ One might question why we don't use this method to construct a distribution dire
   any $y_l$ other than $y_d$ is 1, or equivalently $\max_l x_l\neq x_d$.  Thus, we see a clear
   breaking point between inference conducted on the finite $p$ hypersphere, $\mathcal{S}_{p}^{d-1}$,
   and the $\mathcal{L}_{\infty}$ hypersphere, $\mathcal{S}_{\infty}^{d-1}$.
+  \bruno{\bf I am not sure I understand what you are trying to say in the paragraph.}
 
 With this in mind, the way one might build a distribution on $\mathcal{S}_{\infty}^{d-1}$ that still
   operates in Cartesian coordinate geometry might be to include an equal weighting mixture model,
@@ -102,11 +105,9 @@ With this in mind, the way one might build a distribution on $\mathcal{S}_{\inft
     f(y) = \sum_{l = 1}^{d}p(y_l = 1)f(y_{-l}\mid y_l = 1)
   \end{equation*}
   Under this interpretation, we can consider $p(y_l = 1) = P(x_l = \max_i x_i)$.  Unfortunately,
-  this calculation is not straitforward.
+  this calculation is not straitforward. \bruno{\bf Did you pursue this? I don't think so, so drop it.}
 
   \makenote{Include arguments from stackexchange thread; cite accordingly}
-  \bruno{You need to sharpen the last two paragraphs because I am having a hard time understanding what you are trying to say here.}
-  \makenote{I've tried to make it a little more clear.}
 
 As an alternative to this projected distribution model, one method we might consider would be to map
   to an alternative geometry, where we can express those $d-1$ degrees of freedom in a $d-1$
@@ -118,9 +119,9 @@ As an alternative to this projected distribution model, one method we might cons
   as follows.  For ${\bf x}\in \mathcal{S}_{1}^{d-1}$ (on the unit simplex, so $\sum_{l = 1}^d x_l = 1$),
   let $y_l = \log\frac{x_l}{x_d}$ for $l = 1,\ldots,d-1$. This transformation, and those like it,
   exhibit extreme edge effects.  In this case, if any $x_l\to0$ for $l \neq d$, then $y_l\to-\infty$.
-  If $x_d \to 0$, then ${\bf y}\to\infty$.
+  If $x_d \to 0$, then ${\bf y}\to\infty$. \bruno{\bf Did you implement this approach? If not, then drop it as well. You need to focus on the approaches that you took. You may add some discussion at the end. Otherwise the narrative becomes confusing.}
 
-On the $\mathcal{L}_2$ norm, we consider spherical coordinates.  Let ${\bf x} \in \mathcal{S}_{2}^{d-1}$.
+\bruno{An example of the approach of using the angular transformation to obtain a distribution on the hypershere is given by the }i\st{On the} $\mathcal{L}_2$ norm\st{, we consider spherical coordinates}.  Let ${\bf x} \in \mathcal{S}_{2}^{d-1}$.
   Then, we transform ${\bf x}$ to spherical coordinates as
   \begin{equation*}
     \theta_l = \arccos\frac{x_l}{\pnorm{{\bf x}_{l:d}}{2}},
@@ -142,11 +143,13 @@ On the $\mathcal{L}_2$ norm, we consider spherical coordinates.  Let ${\bf x} \i
       x_d &= {\small \prod}_{l = 1}^{d-1}\sin\theta_l
     \end{aligned}
   \end{equation}
-  In this way, we map $\mathcal{S}_2^{d-1}$ to $[0,\pi/2]^{d-1}$. Nunez \& Antonio\cite{nunez2019}
-  follow this course, starting with the independent Gamma distribution and still integrating out
-  $r$ to create an angular distribution constructed on $[0,\pi/2]^{d-1}$. But we can also construct
-  a distribution directly in this space.  Along this idea, via probit transformation we map
+  \bruno{Something is weird with the alignement in this equation. Also, the index of $x$ gets all the way to $d$, but you said $\bm{x} \in S^{d-1}_2$, so $x$ has dimension $d-1$.  }
+  In this way, we map $\mathcal{S}_2^{d-1}$ to $[0,\pi/2]^{d-1}$. 
+  \cite{nunez2019} \bruno{use this transformation to obtain a distribution on $[0,2\pi]^{d-1}$}
+  \st{follow this course}, starting with \st{the} $d$ independent Gamma distributions and \st{still} integrating out
+  $r$ \st{to create an angular distribution constructed on $[0,\pi/2]^{d-1}$}. \st{But we} \bruno{Alternatively, we} can \st{also construct} \bruno{obtain}
+  a distribution \bruno{for $\bm{x}$ by considering a multivariate normal distribution for the } \st{directly in this space.  Along this idea, via} probit transformation \bruno{of $\theta_i ,i=1, \ldots , d-1$.} \st{we map
   $[0,\pi/2]^{d-1}$ to $(-\infty, \infty)^{d-1}$, and construct a multivariate normal distribution
-  in this geometry.
+  in this geometry.}
 
 % EOF
