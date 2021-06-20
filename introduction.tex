@@ -63,7 +63,7 @@ Extreme value theory describes the asymptotic behavior of extreme events. \bruno
   \end{equation*}
   as $n\rightarrow\infty$, then $G$ is a max-stable distribution, and $F$ is in the domain of
   attraction of that max stable distribution.  Maurice Fr{\'e}chet \citep{frechet1927} originates the
-  field, identifying what would become known as the Fr{\'e}chet and Weibull distributions.  
+  field, identifying what would become known as the Fr{\'e}chet and Weibull distributions.
   \cite{weibull1951} expands the analysis of the Weibull distribution; the results
   of that work giving it its current name.  \cite{fisher1928} identify the Fr{\'e}chet
   and Weibull distributions, along with a third form, as the three limiting forms of the distribution
@@ -87,16 +87,16 @@ As this distribution specifies asymptotic behavior for the maximum of a set of o
   inference assuming this distribution requires we specify some block of data that we would take the
   maximum in, and report only that maximum.  A series of these blocks yielding a series of maxima
   allows us to conduct inference about the parameters of the distribution.  Taking only the maximum
-  in a block of observations \st{necessitates reducing} \bruno{leads to the reduction of} our sample size by a factor of $1/\text{block size}$.
-  In \st{some} \bruno{problems where the} data \st{where there might} occur \st{a} natural block\bruno{s}, such as an hourly time series where a natural
+  in a block of observations leads to the reduction of our sample size by a factor of $1/\text{block size}$.
+  In problems where the data occur in natural blocks, such as an hourly time series where a natural
   block might be a day, this might be appropriate.  There is an implicit violation of the assumption
-  of independence within a block, \bruno{in most cases, }but that violation is generally ignored.  In data without a natural
-  block, this data reduction might \st{be considered wasteful, as it limits our ability to conduct inference} \bruno{be artificial. Moreover, in general, retaining only one datum for each block increases the variability of the parameter estimates.
-  }
+  of independence within a block, in most cases, but that violation is generally ignored. In data
+  without a natural block, it may be difficult to justify an induced artitifial block.  Moreover, in
+  general, retaining only one datum for each block increases the variability of the parameter estimates.
 
 \subsection{Univariate EVT - Thresholding}
 Another way we can approach the problem that is less wasteful of data, is to specify a threshold,
-  and consider \st{only those} observations \bruno{are} \emph{extreme} \st{that} \bruno{is they} are in excess of the threshold.  From the
+  and consider observations \emph{extreme} if they are in excess of the threshold.  From the
   start, if $F$ is in the domain of attraction of an EVD, then for a random variable $X\sim F$,
   exceedances over a large threshold $u$ can be said to follow a Pareto distribution.  Again, let
   $X$ follow some distribution function $F$. Then let us regard observed values that exceed some
@@ -118,8 +118,8 @@ Another way we can approach the problem that is less wasteful of data, is to spe
   This defines the generalized Pareto family of distributions.  Thus, if block maxima have a
   limiting distribution $G$ within the EVD family, then threshold exceedances for a sufficiently
   high threshold have a limiting distribution $H$ within the Generalized Pareto (GP) family.
-  Furthermore, the extremal index $\chi$ will be the same for these two limiting distributions.
-  \bruno{Not clear where the extremal index comes from.}\makenote{I need to add some sources for
+
+  \makenote{I need to add some sources for
   Pareto distribution, as well as further explanation.  minor explanation of the existence for
   various estimators beyond ML for chi as well.}
 
@@ -127,6 +127,12 @@ One other point of note is that for time series, the implicit assumption of inde
   observations in excess of a threshold is violated.  One means of dealing with this violation is
   to consider a string of observations in excess of a threshold as correlated, and only keep one
   of the string.\makenote{Need citation of paper that uses this approach...as we do as well.}
+
+\subsection{Multivariate EVT - Maxima}
+The standard practice in multivariate EVT is to separate study of the marginal distributions and the
+  dependence structure\needcite.
+
+
 
 \subsection{Multivariate Threshold EVT}
 \makenote{Rewrite is done to this point.}
@@ -136,6 +142,12 @@ One other point of note is that for time series, the implicit assumption of inde
   generalization of a Pareto distribution in the multivariate case. Cite some papers, of course.
   You can then say that the traditional approach consists on focusing on the estimation of the
   joint tail behavior, separate from the marginal behavior. }
+
+
+
+
+
+
 
 Our motivating example lies in the domain of multivariate EVT, where we make inference about the
   distribution conditional on at least one threshold exceedance.  In multivariate EVT, the standard
@@ -147,12 +159,12 @@ Our motivating example lies in the domain of multivariate EVT, where we make inf
   observations that exceed the threshold.  For ${\bf x}$, for which the marginal distributions of its
   dimensions are within the domain of attraction of a GEV, standardization occurs as
   \begin{equation}
-    Z_j = \left(1 + \xi_j\frac{X_j - b_{t,j}}{a_{t,j}}\right)_{+}^{1/\xi_j}.
+    Z_l = \left(1 + \xi_l\frac{X_l - b_{t,l}}{a_{t,l}}\right)_{+}^{1/\xi_l}.
   \end{equation}
-  In practice, as estimation of these parameters is not the focus of this paper, we specify 
-  $b_{t,j} := \hat{F}_j^{-1}\left(1 - \frac{1}{t}\right)$, then fit the scale parameter $a_{t,j}$,
-  and extremal index $\xi_j$ via maximum likelihood.  Note that $z_j > 1$ implies that $x_j > b_{t,j}$,
-  meaning that the observation ${\bf x}$ is extreme in the $j$'th dimension.  Note also that
+  In practice, as estimation of these parameters is not the focus of this paper, we specify
+  $b_{t,l} := \hat{F}_l^{-1}\left(1 - \frac{1}{l}\right)$, then fit the scale parameter $a_{t,l}$,
+  and extremal index $\xi_l$ via maximum likelihood.  Note that $z_l > 1$ implies that $x_l > b_{t,l}$,
+  meaning that the observation ${\bf x}$ is extreme in the $l$'th dimension.  Note also that
   $\sup_j Z_j$ follows a simple Pareto distribution.
 
 \subsubsection{Limit Measures}
