@@ -8,7 +8,9 @@ Atmospheric rivers are temporary events, where large elongated regions of high c
   as well as farmers, \makenote{expand and cite}.
 
 One metric by which we might identify and declare atmospheric rivers is the integrated water vapor
-  transport, or \emph{IVT} \bruno{Why does `` emph '' produce an underlying word instead of italics? It messes up the style of the references}.  This value represents the total amount of water vapor being transported
+  transport, or \emph{IVT}
+  \bruno{Why does `` emph '' produce an underlying word instead of italics? It messes up the style of the references
+  }.  This value represents the total amount of water vapor being transported
   in an atmospheric column--that is, a column of the troposphere of particular size. These values
   can be measured by dropsondes, but the values we are using are estimated as part of a data
   product\makenote{needs citation}.  An observation from these data includes a reading (estimated
@@ -17,7 +19,15 @@ One metric by which we might identify and declare atmospheric rivers is the inte
   with daily readings of IVT covering 30 years, omitting leap days.
 
 We have two such datasets, in differing spatial resolutions.  The lower resolution splits the coast
-  of california into 8 grid cells, while the higher resolution does so into 46 grid cells. \bruno{At this point you have to say what is the problem with these data that is relevant for this work. I suppose the story could something like: we are interested is extreme values of IVT, and in how likely it is that an extreme IVT will happen jointly in more than one location, as well as in identifying configurations of the IVT values at the different location that may be anomalous. The you say that you will propose different models and that you will evaluate them using the two different datasets.}
+  of california into 8 grid cells, while the higher resolution does so into 46 grid cells.
+  \bruno{
+  At this point you have to say what is the problem with these data that is relevant for this work.
+  I suppose the story could something like: we are interested is extreme values of IVT, and in how
+  likely it is that an extreme IVT will happen jointly in more than one location, as well as in
+  identifying configurations of the IVT values at the different location that may be anomalous.
+  The you say that you will propose different models and that you will evaluate them using
+  the two different datasets.
+  }
   We will be looking at relative model performance on these two datasets as a means of evaluating
   how well any model we propose scales.  We are specifically interested in extremal dependence--the
   relationship between the upper tails of dimensions of the distribution.  In this case, that means
@@ -26,86 +36,92 @@ We have two such datasets, in differing spatial resolutions.  The lower resoluti
   relationship may come later.
 
 As we are interested in the extremal dependence, it makes sense that we would choose to represent
-  this data using \st{lessons} \bruno{tools} from extreme value theory.  Extreme value theory, or \emph{EVT}, seeks
-  to model and assess probability of observing extreme events.  Such a topic is applicable
-  generally, but it finds particularly strong use among such fields as finance \citep{allen2013},
-  climatology \citep{trepanier2018}, and insurance.\findcite  In these fields, extreme events may
-  represent significant loss to the body commissioning the study.  For instance, an insurance
-  company might commission a study on extreme weather events, as a localized extreme event could
-  cause a spike in claims from that region.  Extreme value theory offers us a tool set for making
-  inference about the tails of a distribution, without having observed said tails.  For instance,
-  with an extreme weather event like flooding, we can make predictions about return levels--the
-  average time until an observation of a particular magnitude occurs--without having seen an
-  observation of that magnitude, or having observed that long.
-  \bruno{This is good. Now you have to add a sentence illustrating the applicability for the IVT-atmospheric river story.}
-
+  this data using \st{lessons} \bruno{tools} from extreme value theory.  Extreme value theory, or
+  \emph{EVT}, seeks to model and assess probability of observing extreme events.  Such a topic is
+  applicable generally, but it finds particularly strong use among such fields as finance \citep{allen2013},
+  climatology \citep{trepanier2018}, and insurance \citep{beirlant1994}.  In these fields, extreme
+  events may represent significant loss to the body commissioning the study.  For instance, an
+  insurance company might commission a study on extreme weather events, as an extreme weather event
+  localized to a particular region could cause a spike in claims from that region.  Extreme value
+  theory offers us a tool set for making inference about the tails of a distribution, without having
+  observed said tails.  For
+  instance, with an extreme weather event like flooding, we can make predictions about return
+  levels--the average time until an observation of a particular magnitude occurs--without having seen
+  an observation of that magnitude, or having observed that long.  In the context of our motivating
+  example, extreme values in the IVT may represent the formation of an atmospheric river, which has
+  dramatic effects on precipitation and ground water.  The formation of an IVT may lead to flooding
+  and other negative effects, but is also contributes necessary water for irrigation and agriculture.
+  Development of statistical tools regarding these extreme events becomes necessary for making informed
+  decisions.
 
 \subsection{Univariate EVT - Maxima}
-Extreme value theory describes the asymptotic behavior of extreme events. \bruno{You said that already. Now we need some glue to what you said in the previous paragraph.}  For a sample ${\bf x}$
-  where ${\bf x} = (x_1,\ldots,x_n)$ represents a sequence of independent random variables from a
+Regarding the asymptotic behavior of extreme events, there are a couple major strategies for conducting
+  inference--developing probabilistic estimates of extreme behavior.  First developed is the theory
+  of a limiting distribution on maxima--the largest observation from a sample.  For a sample ${\bf x}$
+  where ${\bf x} = (x_1,\ldots,x_n)$ represents a sequence of $n$ independent random variables from a
   distribution function $F$, the distribution of the maximum $M_n$ of this sequence can be derived
   as:
   \begin{equation*}
     \begin{aligned}
       \text{Pr}(M_n\leq z) &= \text{Pr}(X_1 \leq z, \ldots, X_n \leq z)\\
         &= \text{Pr}(X_1\leq z)\times\ldots\times\text{Pr}(X_n\leq z)\\
-        &= F(z)^n
+        &= F(z)^n.
     \end{aligned}
   \end{equation*}
-  Where $F$ is unknown, we seek to approximate the behavior of $F^n$ as $n\rightarrow\infty$.  To
-  ensure this \st{doesn't} \bruno{does not} degenerate to a point mass, we \st{select a sequence of constants $a_n > 0$,
-  $b_n$ and define $M_n^{\prime}$ as $M_n^{\prime} = (M_n - b_n)/a_n$, where $b_n$ represents the
-  location, and $a_n$ the scale} \bruno{need to consider a standardized sequence of maxima. If this sequence stabilizes as $n$ increases, the a limiting distribution exists.} \st{These sequences stabilize as $n$ increases, which creates a
-  limiting distribution for $M_n^{\prime}$. To summarize}, \bruno{More specifically,} if there exists some sequence of
-  constants $a_n > 0$, $b_n$ such that:
+  In situations where $F$ is unknown, we seek to approximate the behavior of $F^n$ as
+  $n\rightarrow\infty$.  To ensure this does not degenerate to a point mass, we need to consider a
+  standardized sequence of maxima. If this sequence stabilizes as $n$ increases, the a limiting
+  distribution exists.  More specifically, if there exists some sequence of constants $a_n > 0$, $b_n$ s
+  uch that:
   \begin{equation*}
     \text{Pr}\left[\frac{M_n - b_n}{a_n} \leq z\right] \stackrel{d}{\rightarrow} G(z)
   \end{equation*}
   as $n\rightarrow\infty$, then $G$ is a max-stable distribution, and $F$ is in the domain of
-  attraction of that max stable distribution.  Maurice Fr{\'e}chet \citep{frechet1927} originates the
+  attraction of that max stable distribution.  Maurice Fr{\'e}chet \cite{frechet1927} originates the
   field, identifying what would become known as the Fr{\'e}chet and Weibull distributions.
   \cite{weibull1951} expands the analysis of the Weibull distribution; the results
   of that work giving it its current name.  \cite{fisher1928} identify the Fr{\'e}chet
-  and Weibull distributions, along with a third form, as the three limiting forms of the distribution
-  of the maxima of a sample.  \cite{gumbel1935} offered an analysis of that third form,
-  what is now known as the Gumbel distribution.  Later works, including \st{that of}  \cite{jenkinson1955} reparameterize all three forms as special cases of a single unifying
-  form, the generalized extreme value distribution, \emph{GEV}:
+  and Weibull distributions, along with an as then unnamed third form, as the three limiting forms of
+  the distribution of the maxima of a sample.  \cite{gumbel1935,gumbel1942} offers an analysis of that
+  third form, now known as the Gumbel distribution.  Later works, including \cite{jenkinson1955}
+  reparameterize all three forms as special cases of a single unifying form, the generalized extreme
+  value distribution, \emph{GEV}:
   \begin{equation*}
     \label{eqn:gev}
     F(m \mid \mu, \sigma, \xi) = \exp\left\lbrace-\left[1 + \xi\left(\frac{x - \mu}{\sigma}\right)\right]^{-1/{\xi}}\right\rbrace.
   \end{equation*}
-  As we specified earlier, distributions can be in the domain of attraction of one of the
-  aforementioned extreme value distributions.  If they are, regardless of which one, they will be in
-  the domain of attraction of the GEV.  Now, one characteristic aspect of max stable distributions
+  Thus distributions in the domain of attraction of an EVD (Gumbel, Fr{\'e}chet, or Weibull) will be
+  in the domain of attraction of the GEV. Now, one characteristic aspect of max stable distributions
   is that they feature the homogeneity property,
   \begin{equation*}
     \mu(tx) = \frac{1}{t}\mu(x).
   \end{equation*}
-  Use of this property is \st{endemic in EVT} \bruno{fundamental in the generalization of EVT to a multivariate setting}.
+  Use of this property will be fundamental in the generalization of EVT to a multivariate setting.
 
 As this distribution specifies asymptotic behavior for the maximum of a set of observations,
   inference assuming this distribution requires we specify some block of data that we would take the
-  maximum in, and report only that maximum.  A series of these blocks yielding a series of maxima
-  allows us to conduct inference about the parameters of the distribution.  Taking only the maximum
-  in a block of observations leads to the reduction of our sample size by a factor of $1/\text{block size}$.
-  In problems where the data occur in natural blocks, such as an hourly time series where a natural
-  block might be a day, this might be appropriate.  There is an implicit violation of the assumption
-  of independence within a block, in most cases, but that violation is generally ignored. In data
-  without a natural block, it may be difficult to justify an induced artitifial block.  Moreover, in
-  general, retaining only one datum for each block increases the variability of the parameter estimates.
+  maximum in, and for the block report only that maximum.  A series of these blocks yielding a series
+  of maxima allows us to conduct inference about the parameters of the distribution.  Taking only the
+  maximum in a block of observations leads to the reduction of our sample size by a factor of
+  $1/\text{block size}$. In problems where the data occur in natural blocks, such as an hourly time
+  series where a natural block might be a day, this might be appropriate.  There is an implicit
+  violation of the assumption of independence within a block, in most cases, but that violation is
+  generally ignored. In data without a natural block, it may be difficult to justify an induced
+  artitifial block.\makenote{need more better sentence.} Moreover, in general, retaining only one
+  datum for each block increases the variability of the parameter estimates.
 
 \subsection{Univariate EVT - Thresholding}
-Another way we can approach the problem that is less wasteful of data, is to specify a threshold,
-  and consider observations \emph{extreme} if they are in excess of the threshold.  From the
+Another way we can conduct inference that is less wasteful of data, is to specify a threshold,
+  and consider observations \emph{extreme} if they are in excess of that threshold.  From the
   start, if $F$ is in the domain of attraction of an EVD, then for a random variable $X\sim F$,
-  exceedances over a large threshold $u$ can be said to follow a Pareto distribution.  Again, let
-  $X$ follow some distribution function $F$. Then let us regard observed values that exceed some
-  threshold $u$ as extreme.  It follows that:
+  exceedances over a large threshold $u$ will similarly have a limiting distribution, and that
+  limiting distribution is in the Generalized Pareto family.  Again, let $X$ follow some distribution
+  function $F$. It follows that:
   \begin{equation*}
     \text{Pr}\left[X > u + y\mid X > u\right] = \frac{1 - F(u + y)}{1 - F(u)}
   \end{equation*}
-  for $y > 0$.  If we consider the limit of the above as $u\to\infty$, then if $F$ is in the domain
-  of attraction of an EVD, then $\lim\limits_{u\to\infty}\text{Pr}\left[X > u + y\mid X > u\right]$
+  for $y > 0$.  If $F$ is in the domain of attraction of an EVD, then
+  $\lim\limits_{u\to\infty}\text{Pr}\left[X > u + y\mid X > u\right]$
   has a functional form--the survival function of a Pareto distribution. Let $X_1,\ldots,X_n$ be a
   sequence of random variables with the distribution function $F$.  Let $M_n = \max[x_1,\ldots,x_n]$.
   Suppose that $F$ is in the domain of attraction of the GEV, such that for large $n$,
