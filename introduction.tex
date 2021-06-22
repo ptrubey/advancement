@@ -8,11 +8,11 @@ Atmospheric rivers are temporary events, where large elongated regions of high c
   as well as farmers, \makenote{expand and cite}.
 
 One metric by which we might identify and declare atmospheric rivers is the integrated water vapor
-  transport, or \emph{IVT} \bruno{Why does `` emph '' produce an underlying word instead of italics? 
-  It messes up the style of the references}\makenote{I don't know.  It doesn't when I build it on my 
-  computer.  This is only happening in overleaf...}.  This value represents the total amount of water 
-  vapor being transported in an atmospheric column--that is, a column of the troposphere of particular 
-  size. These values can be measured by dropsondes, but the values we are using are estimated as part 
+  transport, or \emph{IVT} \bruno{Why does `` emph '' produce an underlying word instead of italics?
+  It messes up the style of the references}\makenote{I don't know.  It doesn't when I build it on my
+  computer.  This is only happening in overleaf...}.  This value represents the total amount of water
+  vapor being transported in an atmospheric column--that is, a column of the troposphere of particular
+  size. These values can be measured by dropsondes, but the values we are using are estimated as part
   of a data product\makenote{needs citation}.  An observation from these data includes a reading (estimated
   or measured) at grid cell at a period in time; where a grid cell represents the surface of the
   earth associated with the atmospheric column.  Our specific data comes from the coast of California,
@@ -36,8 +36,8 @@ We have two such datasets, in differing spatial resolutions.  The lower resoluti
   relationship may come later.
 
 As we are interested in the extremal dependence, it makes sense that we would choose to represent
-  this data using tools from extreme value theory.  Extreme value theory, or \emph{EVT}, seeks to 
-  model and assess probability of observing extreme events.  Such a topic is applicable generally, 
+  this data using tools from extreme value theory.  Extreme value theory, or \emph{EVT}, seeks to
+  model and assess probability of observing extreme events.  Such a topic is applicable generally,
   but it finds particularly strong use among such fields as finance \citep{allen2013},
   climatology \citep{trepanier2018}, and insurance \citep{beirlant1994}.  In these fields, extreme
   events may represent significant loss to the body commissioning the study.  For instance, an
@@ -133,7 +133,16 @@ Another way we can conduct inference that is less wasteful of data, is to specif
   \end{equation*}
   This defines the generalized Pareto family of distributions.  Thus, if block maxima have a
   limiting distribution $G$ within the EVD family, then threshold exceedances for a sufficiently
-  high threshold have a limiting distribution $H$ within the Generalized Pareto (GP) family.
+  high threshold have a limiting distribution $H$ within the Generalized Pareto (GP) family.  We can
+  identify $\sigma$ as a scale parameter, but $\xi$ deserves special mention as the extremal index.
+  We can interpret the Pareto tail probability as
+  \begin{equation*}
+    \lim\limits_{t\to\infty}\frac{1 - F(tx)}{1 - F(t)} = x^{-\frac{1}{\xi}}
+  \end{equation*}
+  for $x > 1$.  Importantly, $\xi$ from the limiting distribution of excesses over a threshold is the
+  same parameter, and has the same value as the $\xi$ from the limiting distribution of the maximum
+  observation of a sample.  Pickand\needcite and Hill\needcite provide estimators for this value
+  relying on this result.
 
   \makenote{I need to add some sources for
   Pareto distribution, as well as further explanation.  minor explanation of the existence for
@@ -145,9 +154,12 @@ One other point of note is that for time series, the implicit assumption of inde
   of the string.\makenote{Need citation of paper that uses this approach...as we do as well.}
 
 \subsection{Multivariate EVT - Maxima}
-The standard practice in multivariate EVT is to separate study of the marginal distributions and the
-  dependence structure\needcite.
-
+There is inherent difficulty in establishing what it means to be \emph{extreme} in multiple dimensions.
+  \makenote{This needs rewriting}.  Multivariate EVT then splits into two components--establishing the
+  marginal distributions, then estimating the dependence structure.  By establishing the marginal
+  distributions, we can translate or standardize the margins to a common scale--allowing us to then
+  estimate the dependence structure without having to deal with disparate scales.  This path of analysis
+  is born out in the literature\needcite.
 
 
 \subsection{Multivariate Threshold EVT}
@@ -159,7 +171,16 @@ The standard practice in multivariate EVT is to separate study of the marginal d
   You can then say that the traditional approach consists on focusing on the estimation of the
   joint tail behavior, separate from the marginal behavior. }
 
-
+Assume that the $d$-dimensional vector ${\bf Z}$, after standardization, for some distribution $\mu$
+  defined on the positive orthant of $\mathcal{R}^d$, then
+  \begin{equation*}
+    \lim_{n\to\infty} n\text{Pr}\left(\frac{1}{n}{\bf Z}\geq {\bf z}\right) = \mu\left([{\bf 0},{\bf z}]^c).
+  \end{equation*}
+  In this setting, $\mu$ corresponds to the asymptotic distribution of ${\bf Z}$ in extreme regions.
+  In the terminology of EVT, this is known as the exponent measure.  This will feature the homogeneity
+  property, such that $\mu(tA) = \frac{1}{t}\mu(A)$.  This implies that ${\bf Z}$ can be factorized
+  as ${\bf Z} = R{\bf V}$, where $R = \pnorm{{\bf Z}}{\infty} > 1$, and
+  ${\bf V} = {\bf Z}/\pnorm{{\bf Z}}{\infty} \in \mathcal{S}_{\infty}^{d-1}$.
 
 
 
