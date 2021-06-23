@@ -68,68 +68,63 @@ Regarding the asymptotic behavior of extreme events, there are a couple major st
         &= F(z)^n.
     \end{aligned}
   \end{equation*}
-  In situations where $F$ is unknown, we seek to approximate the behavior of $F^n$ as
+  In situations where $F$ is unknown, we can seek to approximate the behavior of $F^n$ as
   $n\rightarrow\infty$.  To ensure this does not degenerate to a point mass, we need to consider a
   standardized sequence of maxima. If this sequence stabilizes as $n$ increases, the a limiting
-  distribution exists.  More specifically, if there exists some sequence of constants $a_n > 0$, $b_n$ s
-  uch that:
+  distribution exists.  More specifically, if there exists some sequence of constants $a_n > 0$, $b_n$
+  such that:
   \begin{equation*}
     \text{Pr}\left[\frac{M_n - b_n}{a_n} \leq z\right] \stackrel{d}{\rightarrow} G(z)
   \end{equation*}
   as $n\rightarrow\infty$, then $G$ is a max-stable distribution, and $F$ is in the domain of
   attraction of that max stable distribution.  Maurice Fr{\'e}chet \cite{frechet1927} originates the
-  field, identifying what would become known as the Fr{\'e}chet and Weibull distributions.
-  \cite{weibull1951} expands the analysis of the Weibull distribution; the results
-  of that work giving it its current name.  \cite{fisher1928} identify the Fr{\'e}chet
-  and Weibull distributions, along with an as then unnamed third form, as the three limiting forms of
-  the distribution of the maxima of a sample.  \cite{gumbel1935,gumbel1942} offers an analysis of that
-  third form, now known as the Gumbel distribution.  Later works, including \cite{jenkinson1955}
-  reparameterize all three forms as special cases of a single unifying form, the generalized extreme
-  value distribution, \emph{GEV}:
+  field, identifying two limiting forms of max-stable distributions, which would become known as the
+  Fr{\'e}chet and Weibull distributions. \cite{weibull1951} expands the analysis of the Weibull
+  distribution.  \cite{fisher1928}, in what is now called the \emph{Fisher-Tippett Theorem}, identifies
+  the Fr{\'e}chet and Weibull distributions, along with an as then unnamed third form, as the three
+  limiting forms of the distribution of the maxima of a sample.  \cite{gumbel1935,gumbel1942} offers
+   an analysis of that third form, now known as the Gumbel distribution.  Later works, including
+   \cite{jenkinson1955} reparameterize all three forms as special cases of a single unifying form,
+   the generalized extreme value distribution, \emph{GEV}:
   \begin{equation*}
     \label{eqn:gev}
-    F(m \mid \mu, \sigma, \xi) = \exp\left\lbrace-\left[1 + \xi\left(\frac{x - \mu}{\sigma}\right)\right]^{-1/{\xi}}\right\rbrace.
+    F(m \mid \mu, \sigma, \xi) = \exp\left\lbrace-\left[1 + \xi\left(\frac{x - \mu}{\sigma}\right)\right]_{}^{-1/{\xi}}\right\rbrace.
   \end{equation*}
   Thus distributions in the domain of attraction of an EVD (Gumbel, Fr{\'e}chet, or Weibull) will be
-  in the domain of attraction of the GEV. Now, one characteristic aspect of max stable distributions
-  is that they feature the homogeneity property,
-  \begin{equation*}
-    \mu(tx) = \frac{1}{t}\mu(x).
-  \end{equation*}
-  Use of this property will be fundamental in the generalization of EVT to a multivariate setting.
+  in the domain of attraction of the GEV.
 
 As this distribution specifies asymptotic behavior for the maximum of a set of observations,
   inference assuming this distribution requires we specify some block of data that we would take the
   maximum in, and for the block report only that maximum.  A series of these blocks yielding a series
   of maxima allows us to conduct inference about the parameters of the distribution.  Taking only the
-  maximum in a block of observations leads to the reduction of our sample size by a factor of
-  $1/\text{block size}$. In problems where the data occur in natural blocks, such as an hourly time
+  maximum in a block of observations necessarily leads to the reduction of our sample size by a factor
+  of $1/\text{block size}$. In problems where the data occur in natural blocks, such as an hourly time
   series where a natural block might be a day, this might be appropriate.  There is an implicit
   violation of the assumption of independence within a block, in most cases, but that violation is
   generally ignored. In data without a natural block, it may be difficult to justify an induced
   artitifial block.\makenote{need more better sentence.} Moreover, in general, retaining only one
   datum for each block increases the variability of the parameter estimates.
 
-\subsection{Univariate EVT - Thresholding}
-Another way we can conduct inference that is less wasteful of data, is to specify a threshold,
-  and consider observations \emph{extreme} if they are in excess of that threshold.  From the
-  start, if $F$ is in the domain of attraction of an EVD, then for a random variable $X\sim F$,
-  exceedances over a large threshold $u$ will similarly have a limiting distribution, and that
-  limiting distribution is in the Generalized Pareto family.  Again, let $X$ follow some distribution
-  function $F$. It follows that:
+\subsection{Univariate EVT - Peak Over Threshold}
+The \emph{Pickands-Balkema-de Haan Theorem}\citep{balkema1974,pickands1975} offers us another means
+  of conducting inference that will be less wasteful of data.  If the original distribution $F$ is
+  in the domain of attraction of the GEV, then excesses over a high threshold $u$ can be well modelled
+  using the Generalized Pareto distribution.  Again, let $X$ follow some distribution function $F$.
+  It follows that:
   \begin{equation*}
     \text{Pr}\left[X > u + y\mid X > u\right] = \frac{1 - F(u + y)}{1 - F(u)}
   \end{equation*}
   for $y > 0$.  If $F$ is in the domain of attraction of an EVD, then
-  $\lim\limits_{u\to\infty}\text{Pr}\left[X > u + y\mid X > u\right]$
-  has a functional form--the survival function of a Pareto distribution. Let $X_1,\ldots,X_n$ be a
-  sequence of random variables with the distribution function $F$.  Let $M_n = \max[x_1,\ldots,x_n]$.
-  Suppose that $F$ is in the domain of attraction of the GEV, such that for large $n$,
-  $\text{Pr}[M_n \leq z]\approx G(z)$.  Then, for large enough $u$, $\text{Pr}[X > u+y\mid x > u]$
-  approximates to
+  \begin{equation*}
+    \lim\limits_{u\to u^{\prime}}\text{Pr}\left[X > u + y\mid X > u\right] = H(y)
+  \end{equation*}
+  where $u^{\prime}$ represents some upper boundary of $X$ has a functional form--the survival
+  function of a Pareto distribution. We approximate this asymptotic relationship by setting some
+  large threshold $u$, and then threshold exceedences $Y = X - u$ are modelled under the distrribution
+  function
   \begin{equation*}
     \label{eqn:gp}
-    H(y) = 1 - \left(1 + \frac{\xi y}{\sigma}\right)^{-\frac{1}{\xi}}.
+    H(y) = 1 - \left(1 + \xi\frac{y}{\sigma}\right)^{-\frac{1}{\xi}}.
   \end{equation*}
   This defines the generalized Pareto family of distributions.  Thus, if block maxima have a
   limiting distribution $G$ within the EVD family, then threshold exceedances for a sufficiently
@@ -137,155 +132,155 @@ Another way we can conduct inference that is less wasteful of data, is to specif
   identify $\sigma$ as a scale parameter, but $\xi$ deserves special mention as the extremal index.
   We can interpret the Pareto tail probability as
   \begin{equation*}
-    \lim\limits_{t\to\infty}\frac{1 - F(tx)}{1 - F(t)} = x^{-\frac{1}{\xi}}
+    \lim\limits_{t\to\infty}\frac{1 - F(ty)}{1 - F(t)} = y^{-\frac{1}{\xi}}
   \end{equation*}
-  for $x > 1$.  Importantly, $\xi$ from the limiting distribution of excesses over a threshold is the
+  for $y > 1$.  Importantly, $\xi$ from the limiting distribution of excesses over a threshold is the
   same parameter, and has the same value as the $\xi$ from the limiting distribution of the maximum
-  observation of a sample.  Pickand\needcite and Hill\needcite provide estimators for this value
+  observation of a sample.  Pickands\needcite and Hill\needcite provide estimators for this value
   relying on this result.
-
-  \makenote{I need to add some sources for
-  Pareto distribution, as well as further explanation.  minor explanation of the existence for
-  various estimators beyond ML for chi as well.}
 
 One other point of note is that for time series, the implicit assumption of independence for those
   observations in excess of a threshold is violated.  One means of dealing with this violation is
   to consider a string of observations in excess of a threshold as correlated, and only keep one
   of the string.\makenote{Need citation of paper that uses this approach...as we do as well.}
 
-\subsection{Multivariate EVT - Maxima}
-There is inherent difficulty in establishing what it means to be \emph{extreme} in multiple dimensions.
-  \makenote{This needs rewriting}.  Multivariate EVT then splits into two components--establishing the
-  marginal distributions, then estimating the dependence structure.  By establishing the marginal
-  distributions, we can translate or standardize the margins to a common scale--allowing us to then
-  estimate the dependence structure without having to deal with disparate scales.  This path of analysis
-  is born out in the literature\needcite.
-
-
-\subsection{Multivariate Threshold EVT}
-\makenote{Rewrite is done to this point.}
-\bruno{At this point you need to say that in this work we will focus on the methods based on
-  threshold exceedance in a multivariate setting. You should introduce the topic (although you might
-  have already done that in the introduction) indicating the difficulties that there exist in the
-  generalization of a Pareto distribution in the multivariate case. Cite some papers, of course.
-  You can then say that the traditional approach consists on focusing on the estimation of the
-  joint tail behavior, separate from the marginal behavior. }
-
-Assume that the $d$-dimensional vector ${\bf Z}$, after standardization, for some distribution $\mu$
-  defined on the positive orthant of $\mathcal{R}^d$, then
+\subsection{Multivariate EVT}
+The generalization of EVT to multiple dimensions presents a unique challenge in the case of maxima--how
+  do we define the maximum of a sample?  How can we order observations in a multivariate scenario?
+  \cite{rootzen2006} offers a brief review of the subject.  One possible treatment sidesteps this
+  conundrum by using component maxima--let ${\bf M}_n = \left(\vee_i X_{i1},\ldots,\vee_i X_{id}\right)$.
+  Then the multivariate GEV establishes the limiting behavior of ${\bf M}_n$ as $n\to\infty$.  Note
+  that ${\bf M}_n$ need not be in the observed $\left\lbrace{\bf X}_i; i = 1,\ldots,n\right\rbrace$.
+  Then, if there is a set of constants ${\bf a}_n > {\bf 0}$, ${\bf b}_n$ such that
   \begin{equation*}
-    \lim_{n\to\infty} n\text{Pr}\left(\frac{1}{n}{\bf Z}\geq {\bf z}\right) = \mu\left([{\bf 0},{\bf z}]^c).
+    \lim\limits_{n\to\infty}\text{P}\left(\cap_{l = 1}^d \frac{M_{nl} - b_{nl}}{a_{nl}} \leq x_l\right) = G({\bf x})
   \end{equation*}
-  In this setting, $\mu$ corresponds to the asymptotic distribution of ${\bf Z}$ in extreme regions.
-  In the terminology of EVT, this is known as the exponent measure.  This will feature the homogeneity
-  property, such that $\mu(tA) = \frac{1}{t}\mu(A)$.  This implies that ${\bf Z}$ can be factorized
-  as ${\bf Z} = R{\bf V}$, where $R = \pnorm{{\bf Z}}{\infty} > 1$, and
-  ${\bf V} = {\bf Z}/\pnorm{{\bf Z}}{\infty} \in \mathcal{S}_{\infty}^{d-1}$.
+  with non-degenerate marginals, then $G({\bf x})$ is a \emph{multivariate extreme value distribution}.
+  The marginal distribution of $M_{nl}$ is by construction a GEV with the parameters $a_{nl}, b_{nl}, \xi$.
+  With the existence of the marginal distributions established as a consequence of the existence of the
+  GEV, multivariate EVT then splits into two components--estimation of the marginal parameters, and
+  estimation of the dependence structure.  This separation is born out extensively in the literature.
 
+\makenote{Need to add in further work on multivariate Pareto origin; exponent measure}
 
+In the same manner we extended the single variable peaks over threshold approach to the GEV, we can
+  extend a multivariate peaks over threshold approach to the multivariate GEV.  \cite{rootzen2006}
+  defines the multivariate generalized Pareto from a theoretical starting point in the GEV.  Indeed,
+  they define of the generalized Pareto in the form:
+  \begin{equation*}
+    H({\bf x}) = \frac{1}{-\log G({\bf 0})}\log\frac{G({\bf x}}{G({\bf x}\wedge {\bf 0})},
+  \end{equation*}
+  where $G$ is a GEV as previously defined.  Further analysis is provided in \cite{falk2008}.
+  \cite{rootzen2018} provides a modern review of state of the art multivariate peaks over thresholds
+  modelling using the generalized Pareto.
 
+As in the multivariate extrema case, analysis in peaks over thresholds modelling generally first
+  develops the marginal distributions, then establishes the dependence structure.  In extreme analysis,
+  a frequently used method for describing the dependence structure is the copula\needcite, but we
+  propose a novel method based on the constructive definition of the multivariate Pareto presented in
+  \cite{ferreira2014}.  We follow the approach used in Section~2.2 of \cite{goix2015}.  Assume that
+  the $d$-dimensional vector ${\bf Z}$, after standardization is such that for some distribution
+  $\mu$ defined on the positive quadrant of $\mathcal{R}^d$,
+  \begin{equation}
+    \lim\limits_{n\to\infty}n\text{Pr}\left(\frac{1}{n}{\bf Z}\geq {\bf z}) = \mu\left([{\bf 0},{\bf z}]^c\right).
+  \end{equation}
+  In this setting, $\mu$ is the asymptotic distribution of ${\bf Z}$ in extreme regions--the
+  \emph{exponent measure}.  $\mu$ features the homogeneity property $\mu(tA) = \frac{1}{t}\mu(A)$.
+  By this property, \cite{ferreira2014} factorize ${\bf Z}\to R{\bf V}$, where
+  $R = \pnorm{{\bf Z}}{\infty} > 1$ describes the radial component, and
+  ${\bf V} = {\bf Z}/\pnorm{{\bf Z}}{\infty} \in \mathcal{S}_{\infty}^{d-1}$ the angular component of
+  ${\bf Z}$ in $\mathcal{R}_+^d$.  $\mu(\cdot)$ is similarly factorized as
+  \begin{equation}
+    \mu\left( [{\bf Z} : R({\bf Z}) > r, V({\bf Z}) \in A ] \right) = r^{-1}\Phi(A),
+  \end{equation}
+  where $\Phi(\cdot)$ is the \emph{spectral measure}.  The spectral measure is thus independent and
+  separable from the radial component.  Furthermore,
+  \begin{equation}
+    \text{P}\left({\bf V} \in A \mid R > r\right)
+      = \frac{r\text{P}\left({\bf V} \in A, R > r\right)}{r\text{P}(R > r)}
+      \rightarrow_{r\to\infty} \frac{\Phi(A)}{\Phi(\mathcal{S}_{\infty}^{d-1})}
+  \end{equation}
+  Describing the dependence structure of ${\bf Z}$, equivalently describing the spectral measure
+  $\Phi$.  Much literature exists describing this dependence structure using copulas\needcite.
+  We seek instead to establish a distribution on ${\bf V} \in \mathcal{S}_{\infty}^{d-1}$.
 
-
-
-
-
-
-Our motivating example lies in the domain of multivariate EVT, where we make inference about the
-  distribution conditional on at least one threshold exceedance.  In multivariate EVT, the standard
-  practice is to first standardize each dimension according to its marginal distribution, then
-  estimate its dependence structure.\findcite  As has been stated, if each marginal distribution falls
-  into the domain of attraction of the GEV, then threshold exceedances for a sufficiently
-  \emph{sufficiently high} threshold will have a limiting distribution in the GP family\cite{beirlant2006}.
-  Therefore, we estimate parameters for those marginal distributions considering only those
-  observations that exceed the threshold.  For ${\bf x}$, for which the marginal distributions of its
-  dimensions are within the domain of attraction of a GEV, standardization occurs as
+To accomplish this task, first we must standardize ${\bf X}$ to a common marginal distribution.
+  Following the work of \cite{ferreira2014}, if the marginal distributions $F_{l}$ fall into the domain
+  of attraction of some GEV $G_l$, then threshold exceedences for a sufficiently high threshold can
+  be modelled as generalized Pareto $H_l$.  Standardization occurs as
   \begin{equation}
     Z_l = \left(1 + \xi_l\frac{X_l - b_{t,l}}{a_{t,l}}\right)_{+}^{1/\xi_l}.
   \end{equation}
-  In practice, as estimation of these parameters is not the focus of this paper, we specify
-  $b_{t,l} := \hat{F}_l^{-1}\left(1 - \frac{1}{l}\right)$, then fit the scale parameter $a_{t,l}$,
-  and extremal index $\xi_l$ via maximum likelihood.  Note that $z_l > 1$ implies that $x_l > b_{t,l}$,
-  meaning that the observation ${\bf x}$ is extreme in the $l$'th dimension.  Note also that
-  $\sup_j Z_j$ follows a simple Pareto distribution.
+  We establish the marginal thresholds $b_{t,l} := \hat{F}_l^{-1}\left(1 - \frac{1}{l}\right)$,
+  then fit the scale parameters $a_{t,l}$, and extremal index $\xi_l$ via maximum likelihood.
+  Note that $z_l > 1$ implies that $x_l > b_{t,l}$, meaning that the observation ${\bf x}$ is
+  extreme in the $l$'th dimension.  Note also that $\sup_j Z_j$ follows a simple Pareto distribution.
+  Fitting of the marginal extremal index and scale parameters uses only observations in excess of the
+  marginal threshold.  Also of note is that $\sup_l Z_l$ follows a simple Pareto distribution.
+  Following standardization, condition further analysis on $R \geq 1$.
 
-\subsubsection{Limit Measures}
-Multivariate EVT assumes the existence of a probability measure $\mu$ on ${\bf Z}$ such that
-  \begin{equation}
-    \lim_{n\rightarrow\infty}n\text{Pr}\left[\frac{1}{n}{\bf Z} \geq {\bf z}\right] = \mu\left([{\bf 0}, {\bf z}]^c\right).
-    \label{eq:standard}
-  \end{equation}
-  $\mu$ is thus the asymptotic distribution of ${\bf Z}$ in extreme regions.  It exhibits the
-  homogeneity property, such that for any region A, $\mu(rA) = r^{-1}\mu(A)$.  By this property we
-  thus factorize ${\bf Z}$ into two components:
-  \begin{equation}
-    \begin{aligned}
-      R &= \inorm{{\bf Z}} \in [1, \infty),\\
-      {\bf V} &= \frac{{\bf Z}}{R} \in S_{\infty}^{d-1}.
-    \end{aligned}
-  \end{equation}
-  That is, to say, we factorize ${\bf Z}$ into a radial component $R$, and an angular component,
-  ${\bf V}$, which is the projection of ${\bf Z}$ onto the positive orthant of the $d$-dimensional
-  unit hypersphere defined by the infinity norm, $S_{\infty}^{d-1}$. The radial component $R$, as we
-  have stated, follows a simple pareto distribution, and as a consequence of the homogeneity property,
-  is independent of the angular component ${\bf V}$.
 
-As the angular component is now independent of the radial component, we can establish a distribution
-  on solely the angular component.  For  $B\subset S_{\infty}^{d-1}$, We define the spectral
-  (or angular) measure, $\Omega(B)$, as
-  \begin{equation}
-    \Omega(B) = \mu[{\bf z}: R({\bf z}) > 1, {\bf V} \in B].
-  \end{equation}
-  \bruno{This needs t be sharpened. I don't see why $R({\bf z})>1$ is needed. Also
-  \[	\mu([0,1/\bm{z}]^c) = \int_{{\mathbb S}_\infty^{d-1}}
-  \left(\bigvee_{j} \theta_jz_j\right) d\Omega(\theta)\; ,\]
-  which is the reason $\Omega$ is a spectral measure.}
-  Then we can think of the spectral measure in terms of the limit measure $\mu$, and:
-  \begin{equation}
-    \mu[{\bf z}:R(z)>t, {\bf V}\in B] = t^{-1}\Omega(B).
-  \end{equation}
-  Thus we see a one-to-one correspondance between the limit measure $\mu$ and the
-    spectral measure $\phi$, and by factoring out the Pareto distributed radial
-    component, we can establish a distribution on the angular component
-  \begin{equation}
-    \text{Pr}\left({\bf V} \in B \mid r > 1\right) = \frac{\Omega(B)}{\Omega(S_{\infty}^{d-1})},
-  \end{equation}
-  \bruno{Again, this needs sharpening, I don't get the $r>1$. What you have is that, for any value of $r$.
-  \begin{equation}
-   \lim_{r\rightarrow\infty} \text{Pr}\left({\bf V} \in B \mid R > r\right) =
-              \frac{\Omega(B)}{\Omega(S_{\infty}^{d-1})},
-  \end{equation}
-  So, the point here is what we do in practice. We start by doing the univariate analysis for each
-  component. Take $b_{t,j} = F^{-1}(1 - 1/t)$ as the threshold. So
-  \begin{equation}
-   \lim_{t\rightarrow\infty} \text{Pr}\left({\bf V} \in B \mid R_t > 1\right) =
-            \frac{\Omega(B)}{\Omega(S_{\infty}^{d-1})},
-  \end{equation}.
-  What this means in practice is that we take high thresholds in each dimension, and then take the standardized vectors for which $R>1$.}
-  \makenote{Paraphrasing from Goix et. al., figure if/how to cite}
-  conditioned on at least one of the components being extreme in the marginal
-  sense.  It is using this property that we will establish our method.
-
-For each $\nu\subset\lbrace{1,\ldots,d}, \nu \neq \emptyset$, we define the
-    \emph{truncated cone} $\mathcal{C}_{\nu}$, where
-  \begin{equation}
-      \mathcal{C}_{\nu} = \left\lbrace {\bf z} \geq 0 : \lVert z\rVert_{\infty}\geq 1, z_j \geq 0 \forall j \in \nu, z_j = 0 \forall j \not\in \nu\right\rbrace.
-  \end{equation}
-  That is, $\nu$ identifies a set index specifying components of the standardized
-  data for which the observation is greater than 0.  The observation is greater
-  than 0 for columns within that index, and 0 outside that index.  By
-  construction, we're also requiring that the observation is greater than 1 in
-  at least one of those dimensions.  By this definition, we observe that each
-  $\mathcal{C}_{\nu}$ is distinct and disjoint from any other
-  $\mathcal{C}_{\nu}$.  Now, defining $\Omega_{\nu}$ as the projection of
-  $C_{\nu}$ onto $S_{\infty}^{d-1}$,
-  \begin{equation}
-      \Omega_{\nu} = \left\lbrace {\bf v} \in S_{\infty}^{d-1} : x_i > 0 \forall i \in \nu, x_i = 0 \forall i \not\in \nu\right\rbrace,
-  \end{equation}
-  we can clearly see $\mu(\mathcal{C}_\nu) = \Phi(\Omega_{\nu})$ for all
-  $\alpha \subset\lbrace1,\ldots,d\rbrace$.  Where we call $\mu(\dot)$ the limit
-  measure, we refer to $\Phi(\dot)$ as the \emph{spectral} or
-  \emph{angular measure}.  Our goal is establishing statistical inference on this
-  angular measure.
+%
+% As the angular component is now independent of the radial component, we can establish a distribution
+%   on solely the angular component.  For  $B\subset S_{\infty}^{d-1}$, We define the spectral
+%   (or angular) measure, $\Omega(B)$, as
+%   \begin{equation}
+%     \Omega(B) = \mu[{\bf z}: R({\bf z}) > 1, {\bf V} \in B].
+%   \end{equation}
+%   \bruno{This needs t be sharpened. I don't see why $R({\bf z})>1$ is needed. Also
+%   \[	\mu([0,1/\bm{z}]^c) = \int_{{\mathbb S}_\infty^{d-1}}
+%   \left(\bigvee_{j} \theta_jz_j\right) d\Omega(\theta)\; ,\]
+%   which is the reason $\Omega$ is a spectral measure.}
+%   Then we can think of the spectral measure in terms of the limit measure $\mu$, and:
+%   \begin{equation}
+%     \mu[{\bf z}:R(z)>t, {\bf V}\in B] = t^{-1}\Omega(B).
+%   \end{equation}
+%   Thus we see a one-to-one correspondance between the limit measure $\mu$ and the
+%     spectral measure $\phi$, and by factoring out the Pareto distributed radial
+%     component, we can establish a distribution on the angular component
+%   \begin{equation}
+%     \text{Pr}\left({\bf V} \in B \mid r > 1\right) = \frac{\Omega(B)}{\Omega(S_{\infty}^{d-1})},
+%   \end{equation}
+%   \bruno{Again, this needs sharpening, I don't get the $r>1$. What you have is that, for any value of $r$.
+%   \begin{equation}
+%    \lim_{r\rightarrow\infty} \text{Pr}\left({\bf V} \in B \mid R > r\right) =
+%               \frac{\Omega(B)}{\Omega(S_{\infty}^{d-1})},
+%   \end{equation}
+%   So, the point here is what we do in practice. We start by doing the univariate analysis for each
+%   component. Take $b_{t,j} = F^{-1}(1 - 1/t)$ as the threshold. So
+%   \begin{equation}
+%    \lim_{t\rightarrow\infty} \text{Pr}\left({\bf V} \in B \mid R_t > 1\right) =
+%             \frac{\Omega(B)}{\Omega(S_{\infty}^{d-1})},
+%   \end{equation}.
+%   What this means in practice is that we take high thresholds in each dimension, and then take
+%       the standardized vectors for which $R>1$.}
+%   \makenote{Paraphrasing from Goix et. al., figure if/how to cite}
+%   conditioned on at least one of the components being extreme in the marginal
+%   sense.  It is using this property that we will establish our method.
+%
+% For each $\nu\subset\lbrace{1,\ldots,d}, \nu \neq \emptyset$, we define the
+%     \emph{truncated cone} $\mathcal{C}_{\nu}$, where
+%   \begin{equation}
+%       \mathcal{C}_{\nu} = \left\lbrace {\bf z} \geq 0 : \lVert z\rVert_{\infty}\geq 1, z_j \geq 0
+%            \forall j \in \nu, z_j = 0 \forall j \not\in \nu\right\rbrace.
+%   \end{equation}
+%   That is, $\nu$ identifies a set index specifying components of the standardized
+%   data for which the observation is greater than 0.  The observation is greater
+%   than 0 for columns within that index, and 0 outside that index.  By
+%   construction, we're also requiring that the observation is greater than 1 in
+%   at least one of those dimensions.  By this definition, we observe that each
+%   $\mathcal{C}_{\nu}$ is distinct and disjoint from any other
+%   $\mathcal{C}_{\nu}$.  Now, defining $\Omega_{\nu}$ as the projection of
+%   $C_{\nu}$ onto $S_{\infty}^{d-1}$,
+%   \begin{equation}
+%       \Omega_{\nu} = \left\lbrace {\bf v} \in S_{\infty}^{d-1} :
+%                x_i > 0 \forall i \in \nu, x_i = 0 \forall i \not\in \nu\right\rbrace,
+%   \end{equation}
+%   we can clearly see $\mu(\mathcal{C}_\nu) = \Phi(\Omega_{\nu})$ for all
+%   $\alpha \subset\lbrace1,\ldots,d\rbrace$.  Where we call $\mu(\dot)$ the limit
+%   measure, we refer to $\Phi(\dot)$ as the \emph{spectral} or
+%   \emph{angular measure}.  Our goal is establishing statistical inference on this
+%   angular measure.
 
 
 
