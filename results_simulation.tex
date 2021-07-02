@@ -26,14 +26,34 @@ We have introduced this projected gamma distribution existing on $\mathcal{S}_{\
   The choice of generation routine for $\beta$ is $\beta\sim\text{Unif}(\beta\mid 0.25, 2.5)$.
   This choice was made to ensure that $\beta$ does not approach 0 in the generation routine.
 
-Our presented model, along with a couple comparative models is presented in Table~\makenote{still to do}.
-  Interestingly, the performance of the restricted Gamma model seems to be better across the board.
+\begin{figure}[h]
+  \label{fig:simes}
+  \caption{Simulation Energy Score versus Column Count, by Mixture Component Count}
+  \centering
+  \includegraphics{./images/simulation_es}
+\end{figure}
 
+Figure~\ref{fig:simes}. In Figure~\ref{fig:simes}, we fit DP Mixtures of the various models presented
+  and plot the resulting energy score against the number of columns, grouped by the number of mixture
+  components used in dataset generation.  The \emph{Generative} model refers to a dataset generated
+  in the same manner, from the same parameters as was used to create the original dataset.  Against
+  this generative dataset, we compare DP Mixtures of projected gamma, projected restricted gamma, and
+  projected restricted gamma with a multivariate log-normal prior.  We observe that the projected
+  restricted Gamma model dominates in all situations, but the difference between projected restricted
+  Gamma and other models tends to shrink as the number of columns increases.  Alternatively, that
+  difference appears to grow as the number of mixture components increases.
 
-
-
-
-
-
+We frequently see all of the DP mixture models accomplish a lower energy score than the generative
+  dataset.  As \cite{nunez2019} noted, the projected Gamma model is very flexible and can generate
+  multimodal distributions from a single mixture component.  When we allow a mixture model, we allow
+  the possibility to break those modes into two different mixture components.  This will tend to
+  result in a better energy score, as posterior predictive replicates for a given observation will
+  tend to be concentrated in that observations' local mode rather than being spread between multiple
+  modes.  As for the dominance of projected restricted Gamma, By specifying $\beta_l := 1$ for all
+  $l$, we are in effect forcing unimodal mixture components, which may not have been the case under
+  the generative model.  As for whether this represents \emph{overfitting}, If we had reason to
+  believe that the generative distribution for real data followed this form, then this probably would
+  represent overfitting.  However, we are using projected Gamma as a parametric stand-in for an unknown
+  distribution.  In this case, the argument for overfitting is less clear.
 
 % EOF
