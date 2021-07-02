@@ -35,13 +35,14 @@ After the thresholding and maximum likelihood estimation of the parameters of th
     }
   \For{$i = 1,\ldots,n$}{
     Define $z_{il} = \left(1 + \xi_l\frac{x_{il} - b_{t,l}}{a_{t,l}}\right)_{+}^{1/\xi_l}$\\
-    Define $r_i = \pnorm{{\bf z}_i}{\infty}$, ${\bf V}_i = \frac{{\bf z}_i}{\pnorm{{\bf z}_i}}$\\
+    Define $r_i = \pnorm{{\bf z}_i}{\infty}$, ${\bf V}_i = \frac{{\bf z}_i}{\pnorm{{\bf z}_i}{\infty}}$\\
     }
   Subset ${\bf r},{\bf v}$ such that $r_i \geq 1$ for all $r_i\in {\bf r}$.\\
   \If{declustering}{
     \For{$i = 1,\ldots,n$}{
-      If $r_i \geq 1$ and $r_{i-1} \geq 1$, drop the lesser (and associated $v_i$) from dataset.
+      If $r_i \geq 1$ and $r_{i-1} \geq 1$, drop the lesser (and associated $v_i$) from dataset.\\
     }
+  }
 \end{algorithm}
 
 Post-standardization, we assume the radial component to follow a standard Pareto distribution.  The
