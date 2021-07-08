@@ -14,21 +14,23 @@ One metric by which we might identify and declare atmospheric rivers is the inte
   vapor being transported in an atmospheric column--that is, a column of the troposphere of particular
   size. These values can be measured by dropsondes, but the values we are using are estimated as part
   of a data product\makenote{needs citation}.  An observation from these data includes a reading (estimated
-  or measured) at grid cell at a period in time; where a grid cell represents the surface of the
-  earth associated with the atmospheric column.  Our specific data comes from the coast of California,
-  with daily readings of IVT covering 30 years, omitting leap days.
+  or measured) at grid cell at a period in time; where a grid cell specifies the surface of the
+  earth under the atmospheric column.  Our specific data comes from the coast of California,
+  with daily readings of IVT covering 30 years, omitting leap days.  We have two such datasets, in
+  differing spatial resolutions.  The lower resolution splits the coast of california into 8 grid
+  cells, while the higher resolution does so into 46 grid cells.
 
-We have two such datasets, in differing spatial resolutions.  The lower resolution splits the coast
-  of california into 8 grid cells, while the higher resolution does so into 46 grid cells.
-  \bruno{
-  At this point you have to say what is the problem with these data that is relevant for this work.
-  I suppose the story could something like: we are interested is extreme values of IVT, and in how
-  likely it is that an extreme IVT will happen jointly in more than one location, as well as in
-  identifying configurations of the IVT values at the different location that may be anomalous.
-  The you say that you will propose different models and that you will evaluate them using
-  the two different datasets.
-  }
-  We will be looking at relative model performance on these two datasets as a means of evaluating
+As IVT tracks concentrations of water vapor in the atmosphere, extreme values in IVT can lead to
+  extreme precipitation events.  Atmosphereic rivers are necessary events, in that they carry the
+  bulk of precipitation that California recieves, but extreme precipitation events can be extremely
+  destructive as well.  Thus, we are interested in the distribution of extreme precipitation events,
+  including their depenedence structure.  This tells us about the probability of jointly extreme
+  events--where IVT is extreme in two or more grid cells, as well as identifying particular
+  configurations of IVT that may be anomalous.  In California, groundwater is a managed resource.
+  Extreme precipitation events significantly affect groundwater, so anomalous precipitation events
+  can produce anomalous configurations of groundwater, leading to destructive flooding.
+
+We will be looking at relative model performance on these two datasets as a means of evaluating
   how well any model we propose scales.  We are specifically interested in extremal dependence--the
   relationship between the upper tails of dimensions of the distribution.  In this case, that means
   the relationship between extreme values in different grid cells.  We are going to be looking at
@@ -153,7 +155,7 @@ The generalization of EVT to multiple dimensions presents a unique challenge in 
   that ${\bf M}_n$ need not be in the observed $\left\lbrace{\bf X}_i; i = 1,\ldots,n\right\rbrace$.
   Then, if there is a set of constants ${\bf a}_n > {\bf 0}$, ${\bf b}_n$ such that
   \begin{equation*}
-    \lim\limits_{n\to\infty}\text{P}\left(\cap_{l = 1}^d \frac{M_{nl} - b_{nl}}{a_{nl}} \leq x_l\right) = G({\bf x})
+    \lim\limits_{n\to\infty}\text{P}\left(\bigcap_{l = 1}^d \frac{M_{nl} - b_{nl}}{a_{nl}} \leq x_l\right) = G({\bf x})
   \end{equation*}
   with non-degenerate marginals, then $G({\bf x})$ is a \emph{multivariate extreme value distribution}.
   The marginal distribution of $M_{nl}$ is by construction a GEV with the parameters $a_{nl}, b_{nl}, \xi$.
@@ -198,7 +200,7 @@ As in the multivariate extrema case, analysis in peaks over thresholds modelling
   \begin{equation}
     \text{P}\left({\bf V} \in A \mid R > r\right)
       = \frac{r\text{P}\left({\bf V} \in A, R > r\right)}{r\text{P}(R > r)}
-      \rightarrow_{r\to\infty} \frac{\Phi(A)}{\Phi(\mathcal{S}_{\infty}^{d-1})}
+      \longrightarrow\limits_{r\to\infty} \frac{\Phi(A)}{\Phi(\mathcal{S}_{\infty}^{d-1})}
   \end{equation}
   Describing the dependence structure of ${\bf Z}$, equivalently describing the spectral measure
   $\Phi$.  Much literature exists describing this dependence structure using copulas\needcite.

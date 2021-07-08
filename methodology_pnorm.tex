@@ -1,5 +1,4 @@
 \subsection{Projection onto an arbitrary unit hypersphere}
-\bruno{\bf How do we get here? I mean, why do we need to talk about hyperspheres? We need a connection with the stuff that comes before this section. }
 A hypersphere is a geometric object such that the distance from any point to the center takes a fixed,
   constant value.  The unit hypersphere is a hypersphere where that distance is 1. We can define the
   hypersphere under an arbitrary distance measurement, but let's take the $\mathcal{L}_p$ norm. Let
@@ -7,9 +6,9 @@ A hypersphere is a geometric object such that the distance from any point to the
   \begin{equation*}
     \lVert {\bf s} \rVert_p = \left(\sum_{l = 1}^d \lvert s_l\rvert^p\right)^{\frac{1}{p}}.
   \end{equation*}
-  From this, we establish the $\mathcal{L}_1$ norm as $p = 1$, or the absolute sum, equivalently called
-  Manhattan distance; the $\mathcal{L}_2$ norm, as $p = 2$, the Euclidean distance.  From this we
-  also establish the $\mathcal{L}_{\infty}$ norm, as
+  From this, we establish the $\mathcal{L}_1$ norm as $p = 1$, or the absolute sum, the
+  $\mathcal{L}_2$ norm, as $p = 2$, the Euclidean distance.  From this we also establish the
+  $\mathcal{L}_{\infty}$ norm, as
   \begin{equation*}
     \lVert {\bf s} \rVert_{\infty}
       = \lim\limits_{p\to\infty} \lVert {\bf s} \rVert_p
@@ -22,10 +21,9 @@ A hypersphere is a geometric object such that the distance from any point to the
   I didn't want to end the paragraph on an equation.  suggestions?}
 
 We are interested in the direction, or angular component, of vectors described in the positive
-  orthant, $\mathcal{R}_{+}^d$.  This necessitates the loss of one degree of freedom relative to the
-  original vector in $\mathcal{R}_{+}^d$. As we are specifically interested in direction, we can
-  project any distribution defined in $\mathcal{R}_{+}^d$ onto the positive orthant of the unit
-  hypersphere defined on an $\mathcal{L}_p$-norm, denoted as $\mathcal{S}_{p}^{d-1}$.  That is,
+  orthant, $\mathcal{R}_{+}^d$.  One means of describing the direction of a vector in
+  $\mathcal{R}_+^d$ is to project that vector onto $\mathcal{S}_{p}^{d-1}$, the positive orthant of
+  the unit hypersphere defined on an $\mathcal{L}_p$-norm, denoted as $\mathcal{S}_{p}^{d-1}$.  That is,
   \begin{equation*}
     \mathcal{S}_{p}^{d-1} = \left\lbrace {\bf y} : {\bf y} \in \mathcal{R}_{+}^{d}, \lVert {\bf y}\rVert_{p} = 1\right\rbrace.
   \end{equation*}
