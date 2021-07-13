@@ -1,18 +1,17 @@
 \section{Model Comparison}
 It is not immediately obvious what criteria to use to judge these models and decide which best
-  represents the data's generating distribution.  As
+  represents the data's generating distribution.  As the task resides on $\mathcal{S}_{\infty}^{d-1}$,
+  our options are somewhat limited in terms of what model criteria we can use.  Because of the aforementioned
+  difficulty in evaluating a density directly in this space, we choose to use model evaluation
+  criteria that can operate on samples from the posterior predictive distribution.  For this reason,
+  we have opted to use the \emph{posterior predictive loss} criterion of \cite{gelfand1998} and the
+  \emph{energy score} criterion of \cite{gneiting2007}.  Both of these metrics require calculating
+  some distance in the target space, and this section will be devoted to that end.  As both these
+  metrics operate on the posterior predictive distribution for each observation, we will also be
+  including a metric operating on the overall posterior predictive distribution, in the form of a
+  modified Kullbeck-Liebler divergence.
 
-
-
-  We have opted to use the
-  \emph{posterior predictive loss} criterion of \cite{gelfand1998} and the
-  \emph{energy score} criterion of \cite{gneiting2007}.  Both of these
-  metrics require calculating some distance in the target space, and this section will be devoted
-  to that end.  As both these metrics operate on the posterior predictive distribution for each
-  observation, we will also be including a metric operating on the overall posterior predictive
-  distribution, in the form of a modified Kullbeck-Liebler divergence.
-
-\subsubsection{Posterior Predictive Loss Criterion}
+\subsection{Posterior Predictive Loss Criterion}
 The posterior predictive loss criterion, \emph{PPL} is introduced in \cite{gelfand1998}.  When we
   assume a squared error loss function, then for the $i$th observation, the posterior predictive
   loss criterion is computed as
@@ -35,7 +34,7 @@ The posterior predictive loss criterion, \emph{PPL} is introduced in \cite{gelfa
   \end{equation}
   Then we report the average $D_k$, taken over the whole dataset.
 
-\subsubsection{Energy Score}
+\subsection{Energy Score}
 The energy score of Gneiting, et al\cite{gneiting2007}, is a generalization of the continuous ranked
   probability score, or \emph{crps}, defined for a multi-dimensional random variable.
   \begin{equation}
@@ -56,6 +55,8 @@ Now here's the rub.  We are not aware of any established distance metrics develo
   $\mathcal{S}_{p}^{d-1}$ space, $p > 1$, Euclidean norm is going to under-report the actual distance
   required for travel between two points.  That distortion is maximized on
   $\mathcal{S}_{\infty}^{d-1}$
+
+\subsection{Distance on the positive orthant of the Hypercube}
 
 The positive orthant of the unit hypercube, defined in Euclidean geometry, is that structure for
   which, in a given point on the hypercube, all dimensions of that point are between 0 and 1, and
