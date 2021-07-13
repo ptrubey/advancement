@@ -182,7 +182,7 @@ As in the multivariate extrema case, analysis in peaks over thresholds modelling
   propose a novel method based on the constructive definition of the multivariate Pareto presented in
   \cite{ferreira2014}.  We follow the approach used in Section~2.2 of \cite{goix2015}.  Assume that
   the $d$-dimensional vector ${\bf Z}$, after standardization is such that for some distribution
-  $\mu$ defined on the positive quadrant of $\mathcal{R}^d$,
+  $\mu$ defined on $\mathcal{R}_+^d$,
   \begin{equation}
     \lim\limits_{n\to\infty}n\text{Pr}\left(\frac{1}{n}{\bf Z}\geq {\bf z}\right) = \mu\left([{\bf 0},{\bf z}]^c\right).
   \end{equation}
@@ -205,84 +205,6 @@ As in the multivariate extrema case, analysis in peaks over thresholds modelling
   Describing the dependence structure of ${\bf Z}$, equivalently describing the spectral measure
   $\Phi$.  Much literature exists describing this dependence structure using copulas\needcite.
   We seek instead to establish a distribution on ${\bf V} \in \mathcal{S}_{\infty}^{d-1}$.
-
-To accomplish this task, first we must standardize ${\bf X}$ to a common marginal distribution.
-  Following the work of \cite{ferreira2014}, if the marginal distributions $F_{l}$ fall into the domain
-  of attraction of some GEV $G_l$, then threshold exceedences for a sufficiently high threshold can
-  be modelled as generalized Pareto $H_l$.  Standardization occurs as
-  \begin{equation}
-    Z_l = \left(1 + \xi_l\frac{X_l - b_{t,l}}{a_{t,l}}\right)_{+}^{1/\xi_l}.
-  \end{equation}
-  We establish the marginal thresholds $b_{t,l} := \hat{F}_l^{-1}\left(1 - \frac{1}{l}\right)$,
-  then fit the scale parameters $a_{t,l}$, and extremal index $\xi_l$ via maximum likelihood.
-  Note that $z_l > 1$ implies that $x_l > b_{t,l}$, meaning that the observation ${\bf x}$ is
-  extreme in the $l$'th dimension.  Note also that $\sup_j Z_j$ follows a simple Pareto distribution.
-  Fitting of the marginal extremal index and scale parameters uses only observations in excess of the
-  marginal threshold. Following standardization, condition further analysis on $R \geq 1$.
-
-
-%
-% As the angular component is now independent of the radial component, we can establish a distribution
-%   on solely the angular component.  For  $B\subset S_{\infty}^{d-1}$, We define the spectral
-%   (or angular) measure, $\Omega(B)$, as
-%   \begin{equation}
-%     \Omega(B) = \mu[{\bf z}: R({\bf z}) > 1, {\bf V} \in B].
-%   \end{equation}
-%   \bruno{This needs t be sharpened. I don't see why $R({\bf z})>1$ is needed. Also
-%   \[	\mu([0,1/\bm{z}]^c) = \int_{{\mathbb S}_\infty^{d-1}}
-%   \left(\bigvee_{j} \theta_jz_j\right) d\Omega(\theta)\; ,\]
-%   which is the reason $\Omega$ is a spectral measure.}
-%   Then we can think of the spectral measure in terms of the limit measure $\mu$, and:
-%   \begin{equation}
-%     \mu[{\bf z}:R(z)>t, {\bf V}\in B] = t^{-1}\Omega(B).
-%   \end{equation}
-%   Thus we see a one-to-one correspondance between the limit measure $\mu$ and the
-%     spectral measure $\phi$, and by factoring out the Pareto distributed radial
-%     component, we can establish a distribution on the angular component
-%   \begin{equation}
-%     \text{Pr}\left({\bf V} \in B \mid r > 1\right) = \frac{\Omega(B)}{\Omega(S_{\infty}^{d-1})},
-%   \end{equation}
-%   \bruno{Again, this needs sharpening, I don't get the $r>1$. What you have is that, for any value of $r$.
-%   \begin{equation}
-%    \lim_{r\rightarrow\infty} \text{Pr}\left({\bf V} \in B \mid R > r\right) =
-%               \frac{\Omega(B)}{\Omega(S_{\infty}^{d-1})},
-%   \end{equation}
-%   So, the point here is what we do in practice. We start by doing the univariate analysis for each
-%   component. Take $b_{t,j} = F^{-1}(1 - 1/t)$ as the threshold. So
-%   \begin{equation}
-%    \lim_{t\rightarrow\infty} \text{Pr}\left({\bf V} \in B \mid R_t > 1\right) =
-%             \frac{\Omega(B)}{\Omega(S_{\infty}^{d-1})},
-%   \end{equation}.
-%   What this means in practice is that we take high thresholds in each dimension, and then take
-%       the standardized vectors for which $R>1$.}
-%   \makenote{Paraphrasing from Goix et. al., figure if/how to cite}
-%   conditioned on at least one of the components being extreme in the marginal
-%   sense.  It is using this property that we will establish our method.
-%
-% For each $\nu\subset\lbrace{1,\ldots,d}, \nu \neq \emptyset$, we define the
-%     \emph{truncated cone} $\mathcal{C}_{\nu}$, where
-%   \begin{equation}
-%       \mathcal{C}_{\nu} = \left\lbrace {\bf z} \geq 0 : \lVert z\rVert_{\infty}\geq 1, z_j \geq 0
-%            \forall j \in \nu, z_j = 0 \forall j \not\in \nu\right\rbrace.
-%   \end{equation}
-%   That is, $\nu$ identifies a set index specifying components of the standardized
-%   data for which the observation is greater than 0.  The observation is greater
-%   than 0 for columns within that index, and 0 outside that index.  By
-%   construction, we're also requiring that the observation is greater than 1 in
-%   at least one of those dimensions.  By this definition, we observe that each
-%   $\mathcal{C}_{\nu}$ is distinct and disjoint from any other
-%   $\mathcal{C}_{\nu}$.  Now, defining $\Omega_{\nu}$ as the projection of
-%   $C_{\nu}$ onto $S_{\infty}^{d-1}$,
-%   \begin{equation}
-%       \Omega_{\nu} = \left\lbrace {\bf v} \in S_{\infty}^{d-1} :
-%                x_i > 0 \forall i \in \nu, x_i = 0 \forall i \not\in \nu\right\rbrace,
-%   \end{equation}
-%   we can clearly see $\mu(\mathcal{C}_\nu) = \Phi(\Omega_{\nu})$ for all
-%   $\alpha \subset\lbrace1,\ldots,d\rbrace$.  Where we call $\mu(\dot)$ the limit
-%   measure, we refer to $\Phi(\dot)$ as the \emph{spectral} or
-%   \emph{angular measure}.  Our goal is establishing statistical inference on this
-%   angular measure.
-
 
 
 

@@ -4,40 +4,30 @@ A hypersphere is a geometric object such that the distance from any point to the
   hypersphere under an arbitrary distance measurement, but let's take the $\mathcal{L}_p$ norm. Let
   the $\mathcal{L}_p$-norm be defined as
   \begin{equation*}
-    \lVert {\bf s} \rVert_p = \left(\sum_{l = 1}^d \lvert s_l\rvert^p\right)^{\frac{1}{p}}.
+    \lVert \bm{s} \rVert_p = \left(\sum_{l = 1}^d \lvert s_l\rvert^p\right)^{\frac{1}{p}}.
   \end{equation*}
   From this, we establish the $\mathcal{L}_1$ norm as $p = 1$, or the absolute sum, the
   $\mathcal{L}_2$ norm, as $p = 2$, the Euclidean distance.  From this we also establish the
   $\mathcal{L}_{\infty}$ norm, as
   \begin{equation*}
-    \lVert {\bf s} \rVert_{\infty}
-      = \lim\limits_{p\to\infty} \lVert {\bf s} \rVert_p
-      = \max_{l\in\lbrace{1,\ldots,d}}s_l.
+    \lVert \bm{s} \rVert_{\infty}
+      = \lim\limits_{p\to\infty} \lVert \bm{s} \rVert_p
+      = \max_{l\in\lbrace1,\ldots,d\rbrace_l}s_l.
   \end{equation*}
-  In the three-dimensional setting, the set of hyperspheres established under $\mathcal{L}_p$,
-  $p = 1,2,\ldots,\infty$ will appear as a membrane stretched between $(0,0,1), (0,1,0), (1,0,0)$,
-  being blown outward towards $(1,1,1)$ as the pressure, $p$, increases.  At infinite pressure, the
-  membrane matches the containing vessel, the cube. \makenote{I don't think this is a good sentence.
-  I didn't want to end the paragraph on an equation.  suggestions?}
-
-We are interested in the direction, or angular component, of vectors described in the positive
+  We are interested in the direction, or angular component, of vectors described in the positive
   orthant, $\mathcal{R}_{+}^d$.  One means of describing the direction of a vector in
   $\mathcal{R}_+^d$ is to project that vector onto $\mathcal{S}_{p}^{d-1}$, the positive orthant of
   the unit hypersphere defined on an $\mathcal{L}_p$-norm, denoted as $\mathcal{S}_{p}^{d-1}$.  That is,
   \begin{equation*}
-    \mathcal{S}_{p}^{d-1} = \left\lbrace {\bf y} : {\bf y} \in \mathcal{R}_{+}^{d}, \lVert {\bf y}\rVert_{p} = 1\right\rbrace.
+    \mathcal{S}_{p}^{d-1} = \left\lbrace \bm{y} : \bm{y} \in \mathcal{R}_{+}^{d}, \lVert \bm{y}\rVert_{p} = 1\right\rbrace.
   \end{equation*}
-  We can project an observation onto this space by dividing said observation by its $p$-norm. Let
-  ${\bf x}\in \mathcal{R}_{+}^{d}$, then ${\bf y} = {\bf x} / \lVert {\bf x}\rVert_p \in \mathcal{S}_{p}^{d-1}$.
+  We project an observation onto this space by dividing said observation by its $p$-norm. Let
+  $\bm{x}\in \mathcal{R}_{+}^{d}$, then $\bm{y} = \bm{x} / \lVert \bm{x}\rVert_p \in \mathcal{S}_{p}^{d-1}$.
   We denote the $d-1$ to indicate the loss of one degree of freedom relative to the original vector.
+  Observations on one hypersphere can be projected without loss of information onto another by
+  dividing by the target hypersphere's defining norm.
 
-So $\mathcal{S}_{1}^{d-1}$ defines the unit simplex, $\mathcal{S}_{2}^{d-1}$ defines the generalization
-  of a circle--what we would generally refer to as a hypersphere, and $\mathcal{S}_{\infty}^{d-1}$
-  the surface of a hypercube. The hyperspheres defined by $\mathcal{L}_p$ as $p$ varies have a one
-  to one correspondance with one-another, meaning that observations on one can be projected onto
-  another without loss of information.
-
-Assuming ${\bf y} \in \mathcal{S}_{p}^{d-1}$, then for finite $p$, $y_d$ can always be represented
+Assuming $\bm{y} \in \mathcal{S}_{p}^{d-1}$, then for finite $p$, $y_d$ can always be represented
   as a function of the other dimensions.  That is,
   \begin{equation*}
     y_d = \left(1 - \sum_{l = 1}^{d-1}y_l^p\right)^{\frac{1}{p}}.
@@ -45,8 +35,8 @@ Assuming ${\bf y} \in \mathcal{S}_{p}^{d-1}$, then for finite $p$, $y_d$ can alw
   So the transformation
   \begin{equation}
     \label{eqn:pnormt}
-    T(x_1,\ldots,x_d) = \left(\pnorm{{\bf x}}{p}, \frac{x_1}{\pnorm{{\bf x}}{p}},
-                          \ldots , \frac{x_{d-1}}{\pnorm{{\bf x}}{p}}\right) = (r,y_1,\ldots,y_{d-1})
+    T(x_1,\ldots,x_d) = \left(\pnorm{\bm{x}}{p}, \frac{x_1}{\pnorm{\bm{x}}{p}},
+                          \ldots , \frac{x_{d-1}}{\pnorm{\bm{x}}{p}}\right) = (r,y_1,\ldots,y_{d-1})
   \end{equation}
   does not lose any information.  The reverse of this transformation,
   \begin{equation}
@@ -55,23 +45,23 @@ Assuming ${\bf y} \in \mathcal{S}_{p}^{d-1}$, then for finite $p$, $y_d$ can alw
       \left(ry_1,\ldots,ry_{d-1}, r\left(1 - {\scriptstyle\sum}_{l = 1}^{d-1}y_l^p\right)^{\frac{1}{p}}\right)
   \end{equation}
   equivalently recovers the original data.  Transforming random variables such that we want to recover
-  the new density requires calculating the Jacobian--the matrix of derivatives of the inverse
-  transformation--or rather, the determinant thereof.  The determinant of the Jacobian of this
-  transformation takes the form
+  the new density requires multiplying by the determinant of the Jacobian--the matrix of derivatives
+  of the inverse transformation.  For this transformation, that value takes the form:
   \begin{equation}
     \label{eqn:pnormjac}
     r^{d-1}\left[\left(1 - \sum_{l = 1}^{d-1}y_l^p\right)^{\frac{1}{p}} +
         \sum_{l = 1}^{d-1}y_l^p\left(1 - \sum_{l=1}^{d-1} y_l^p\right)^{\frac{1}{p} - 1}\right].
   \end{equation}
   Notice a factor of $r^{d-1}$ independent of $p$. We refer to $\bm{y}$ and $r$ as, respectively,
-  the angular and radial components of $\bm{x}$.  If we assume a distribution for ${\bf x}$, then
-  by transforming to $r, {\bf y}$ and integrating out $r$, we are left with a distribution on solely
-  the angular component, or, equivalently, the projection of the vector ${\bf x}$ onto
+  the angular and radial components of $\bm{x}$.  If we assume a distribution for $\bm{x}$, then
+  by transforming to $r, \bm{y}$ and integrating out $r$, we are left with a distribution on solely
+  the angular component, or, equivalently, the projection of the vector $\bm{x}$ onto
   $\mathcal{S}_{p}^{d-1}$.
-  \bruno{\bf The idea is there, but you need to make the explanation that starts at the beginning of the section and ends here much sharper. }
+  \bruno{\bf The idea is there, but you need to make the explanation that starts at the beginning
+  of the section and ends here much sharper. }
 
 Many of the models we present here follow this form, where we, for reasons to be elaborated, assume
-  a $d$-dimensional Gamma distribution on this hypothetical ${\bf x}$. For finite $p$, this has a
+  a $d$-dimensional Gamma distribution on this hypothetical $\bm{x}$. For finite $p$, this has a
   direct benefit in that it is easy to integrate out $r$.  As we saw with the Jacobian computed
   earlier, no matter what $p$, the Jacobian always has a factor of $r^{d-1}$.  With the independent
   Gamma model, $r$ easily integrates out as a gamma distribution.  We can also perform data
@@ -80,7 +70,8 @@ Many of the models we present here follow this form, where we, for reasons to be
   with support on $\mathcal{R}_+$ in the hopes we could perform the same dimension reduction with a
   different parameterization, but none offered the flexibility of the Gamma while allowing $r$ to be
   integrated out in closed form.
-  \bruno{\bf You can probably summarize this paragraph with two or three sentences saying that you use a product of independent gamma distributions on the components of $x_j$ for convenience and tractability.}
+  \bruno{\bf You can probably summarize this paragraph with two or three sentences saying that you
+   use a product of independent gamma distributions on the components of $x_j$ for convenience and tractability.}
 
 One might question why we don't use this method to construct a distribution directly on
   $\mathcal{S}_{\infty}^{d-1}$, the unit hypersphere under $\mathcal{L}_{\infty}$.  Put simply, we
@@ -91,68 +82,44 @@ One might question why we don't use this method to construct a distribution dire
   \end{equation*}
   which, if we take the limit as $p$ approaches infinity, if any other $y_l$ than $y_d$ is equal to
   1, then that value approaches $0^{-1}$--an impossibility.  Another way we can recognize the problem
-  is directly in the transformation--$T^{-1}(r,y_1,\ldots,y_{d-1})$ will not recover ${\bf x}$ if
+  is directly in the transformation--$T^{-1}(r,y_1,\ldots,y_{d-1})$ will not recover $\bm{x}$ if
   any $y_l$ other than $y_d$ is 1, or equivalently $\max_l x_l\neq x_d$.  Thus, we see a clear
   breaking point between inference conducted on the finite $p$ hypersphere, $\mathcal{S}_{p}^{d-1}$,
   and the $\mathcal{L}_{\infty}$ hypersphere, $\mathcal{S}_{\infty}^{d-1}$.
   \bruno{\bf I am not sure I understand what you are trying to say in the paragraph.}
-
-With this in mind, the way one might build a distribution on $\mathcal{S}_{\infty}^{d-1}$ that still
-  operates in Cartesian coordinate geometry might be to include an equal weighting mixture model,
-  where each component of the mixture represents the probability of an observation being on that face,
-  multiplied by the conditional density of the other dimensions given the face.  That is,
-  \begin{equation}
-    \label{eqn:mixconddensity}
-    f(y) = \sum_{l = 1}^{d}p(y_l = 1)f(y_{-l}\mid y_l = 1)
-  \end{equation}
-  Under this interpretation, we can consider $p(y_l = 1) = P(x_l = \max_i x_i)$.  Unfortunately,
-  this calculation is not straitforward. \bruno{\bf Did you pursue this? I don't think so, so drop it.}
-
-  \makenote{Include arguments from stackexchange thread; cite accordingly}
 
 As an alternative to this projected distribution model, one method we might consider would be to map
   to an alternative geometry, where we can express those $d-1$ degrees of freedom in a $d-1$
   dimensional vector.  In such a space, we can assign whatever model seems appropriate without the
   degrees of freedom restriction necessary in the projected gamma model.  Choosing what $\mathcal{L}_p$
   norm hypersphere we start mapping from identifies what possible geometries we might use.  For instance,
-  if we start from the $\mathcal{L}_1$ norm, a possible geometry we might use would be isometric or
-  additive logratios\cite{aitchison1982}.  A brief explanation of the additive logratio transformation
-  as follows.  For ${\bf x}\in \mathcal{S}_{1}^{d-1}$ (on the unit simplex, so $\sum_{l = 1}^d x_l = 1$),
-  let $y_l = \log\frac{x_l}{x_d}$ for $l = 1,\ldots,d-1$. This transformation, and those like it,
-  exhibit extreme edge effects.  In this case, if any $x_l\to0$ for $l \neq d$, then $y_l\to-\infty$.
-  If $x_d \to 0$, then ${\bf y}\to\infty$.
-  \bruno{\bf Did you implement this approach? If not, then drop it as well. You need to focus on the
-   approaches that you took. You may add some discussion at the end. Otherwise the narrative becomes confusing.}
-
-\bruno{An example of the approach of using the angular transformation to obtain a distribution on the
-hypershere is given by the }i\st{On the} $\mathcal{L}_2$ norm\st{, we consider spherical coordinates}.
-  Let ${\bf y} \in \mathcal{S}_{2}^{d-1}$. Then, we transform ${\bf y}$ to spherical coordinates as
+  on the $\mathcal{L}_1$ norm, a possible geometry might be isometric or additive
+  logratios~\citep{aitchison1982}.  On the $\mathcal{L}_2$ hypersphere, we consider spherical
+  coordinate transformation. Let $\bm{\y} \in \mathcal{S}_{2}^{d-1}$. Then, we transform $\bm{\y}$
+  to spherical coordinates as
   \begin{equation*}
-    \theta_l = \arccos\frac{y_l}{\pnorm{{\bf y}_{l:d}}{2}},
+    \theta_l = \arccos\frac{y_l}{\pnorm{\bm{y}_{l:d}}{2}},
   \end{equation*}
-  for $l = 1,\ldots, d-1$. That is, the arccosine of the ratio of the mass of a given dimension,
-  versus the \emph{combined} mass of that dimension and subsequent dimensions.  If $x_l = 0$, and
-  $\pnorm{{\bf x}_{l:d}}{2} > 0$, then $\theta_l = \frac{\pi}{2}$, indicating that all the mass was
+  for $l = 1,\ldots, d-1$. That is, the arccosine of the ratio of the mass of a given element,
+  versus the \emph{combined} mass of that and subsequent elements.  If $x_l = 0$, and
+  $\pnorm{\x}_{l:d}}{2} > 0$, then $\theta_l = \frac{\pi}{2}$, indicating that all the mass was
   in later dimensions.  Alternatively, if $\theta_l = 0$, then that indicates all the mass was in
-  the current dimension.  One can see here that ordering of the axes has a great effect on the
+  the current element.  One can see here that ordering of the axes has a great effect on the
   resulting coordinates.  The inverse of this transformation takes the form:
   \begin{equation}
     \label{eqn:spherical}
     \begin{aligned}
       y_1 &= \cos\theta_1\\
-      y_2 &= \sin\theta_1\cos\theta_2\\
-      &\vdots\\
-      y_{d-1} &= \sin\theta_1\ldots\sin\theta_{d-2}\cos\theta_{d-1}\\
-      y_d &= \sin\theta_1\ldots\sin\theta_{d-1}
+      y_l &= \prod_{k = 1}^{l-1}\sin\theta_k\cos\theta_l \hspace{1cm}\text{for } l = 2,\ldots,d-1\\
+      y_d &= \prod_{k = 1}^{d-1}\sin\theta_k
+      % y_2 &= \sin\theta_1\cos\theta_2\\
+      % &\hspace{0.2cm}\vdots\\
+      % y_{d-1} &= \sin\theta_1\ldots\sin\theta_{d-2}\cos\theta_{d-1}\\
+      % y_d &= \sin\theta_1\ldots\sin\theta_{d-1}
     \end{aligned}
   \end{equation}
-  \bruno{Something is weird with the alignement in this equation. Also, the index of $x$ gets all the way to $d$, but you said $\bm{x} \in S^{d-1}_2$, so $x$ has dimension $d-1$.}
-  In this way, we map $\mathcal{S}_2^{d-1}$ to $[0,\pi/2]^{d-1}$.
-  \cite{nunez2019} \bruno{use this transformation to obtain a distribution on $[0,2\pi]^{d-1}$}
-  \st{follow this course}, starting with \st{the} $d$ independent Gamma distributions and \st{still} integrating out
-  $r$ \st{to create an angular distribution constructed on $[0,\pi/2]^{d-1}$}. \bruno{Alternatively, we} can \st{also construct} \bruno{obtain}
-  a distribution \bruno{for $\bm{x}$ by considering a multivariate normal distribution for the } \st{directly in this space.  Along this idea, via} probit transformation \bruno{of $\theta_i ,i=1, \ldots , d-1$.} \st{we map
-  $[0,\pi/2]^{d-1}$ to $(-\infty, \infty)^{d-1}$, and construct a multivariate normal distribution
-  in this geometry.}
+  \cite{nunez2019} use this transformation to project a product of Gammas distribution in
+  $\mathcal{R}^d$ onto $[0,2\pi]^{d-1}$ Alternatively, we then map these spherical coordiates via
+  probit transformation to $(-\infty,\infty)$ to consider a multivariate normal distribution.
 
 % EOF
