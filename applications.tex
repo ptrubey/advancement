@@ -1,6 +1,8 @@
-\subsection{Applications of EVT Analysis}
+\section{Applications of EVT Analysis}
+Representing the angular component of the Pareto process with a (semi) parametric distribution grants
+  us opportunities in posterior analysis.
 
-\subsubsection{Face Probabilities}
+\subsection{Face Probabilities}
 One of the simplest inferences we can make from this model would be the probability of a particular
   dimension being max--the probability of falling on a particular face.  This provides us an
   understanding on which dimensions are more likely to be extreme.
@@ -13,31 +15,31 @@ One of the simplest inferences we can make from this model would be the probabil
   Monte Carlo integration; in much the same manner as we will calculate the other inferences in this
   section.
 
-\subsubsection{Pairwise Extremal Dependence Coefficients}
+\subsection{Pairwise Extremal Dependence Coefficients}
 A summary measure of extremal dependence between dimensions can be offered by the extremal dependence
   coefficient.  This can be thought of as something like a correlation coefficient for extreme
-  observations.  For a random variable ${\bf W}$, which has been standardized such that the marginal
+  observations.  For a random variable $\bm{Z}$, which has been standardized such that the marginal
   distributions are common between dimensions, it is defined as
   \begin{equation}
-    \chi_{kl} = \lim\limits_{u\to\infty}\text{P}\left(W_k > u\mid W_l > u\right).
+    \chi_{kl} = \lim\limits_{u\to\infty}\text{P}\left(Z_k > u\mid Z_l > u\right).
   \end{equation}
   The value $\chi_{kl} \in [0,1]$.  When $\chi_{kl}$ approaches 1, that indicates complete dependence;
   the variables are linked, in much the same manner as if a correlation coefficient approaches 1.
   When $\chi_{kl}$ is greater than 0, $X_k$ and $X_l$ are considered asymptotically dependent.  For
-  a ${\bf W}$ descended from a Pareto process, Warner and Sans{\'o}\cite{warner2018} transform $W$
-  to the unit square, and describe another representation of this quantity, such that
+  a $\bm{Z}$ distributed by a Pareto process, Warner and Sans{\'o}\cite{warner2018} transform $Z$
+  to the unit square to re-express this quantity,
   \begin{equation}
     \label{eqn:extdepcoef}
     \chi_{kl} = \text{E}\left[\frac{V_k}{\text{E}(V_k)}\wedge\frac{V_l}{\text{E}(V_l)}\right]
   \end{equation}
   for $V_k,V_l \in [0,1]$.  This calculation is wholely dependent on the angular component, as radial
-  measure is independent of angular measure.  Important to note, however, is that asymptotic
-  independence, where $\chi_{kl} = 0$, can not be described under a Pareto process based model.
+  measure is independent of angular measure.  Important to note, however, is that complete asymptotic
+  independence, where $\chi_{kl} := 0$, can not be described under a Pareto process based model.
 
-\subsubsection{Conditional Survival Curves}
+\subsection{Conditional Survival Curves}
 Another interesting inference we can make from a fitted model is a conditional survival curve.
-  Following basic rules of conditional probability, we can develop survival curves based on
-  threshold exceedences. Assume ${\bf Z} = (Z_1,\ldots,Z_d)$ follows a $d$-variate Pareto distribution.
+  Following rules of conditional probability, we can develop survival curves based on
+  threshold exceedences. For ${\bf Z} = (Z_1,\ldots,Z_d)$ following a $d$-variate Pareto distribution,
   In 1 dimension, the conditional survival function can be developed as
   \begin{equation}
     \label{eqn:condsurv1d}

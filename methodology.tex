@@ -6,45 +6,30 @@ To establish a distribution on this extremal dependence structure, first we must
   can be modelled as generalized Pareto $H_l$.  Standardization--transforming threshold exceedences to
   standard Pareto--occurs as
   \begin{equation}
+    \label{eqn:standardization}
     Z_l = \left(1 + \xi_l\frac{X_l - b_{t,l}}{a_{t,l}}\right)_{+}^{1/\xi_l}.
   \end{equation}
-  We establish the marginal thresholds $b_{t,l} := \hat{F}_l^{-1}\left(1 - \frac{1}{l}\right)$,
-  then fit the scale parameters $a_{t,l}$, and extremal index $\xi_l$ via maximum likelihood.
-  Note that $z_l > 1$ implies that $x_l > b_{t,l}$, meaning that the observation ${\bf x}$ is
-  extreme in the $l$'th dimension.  Note also that $\sup_j Z_j$ follows a simple Pareto distribution.
-  Fitting of the marginal extremal index and scale parameters uses only observations in excess of the
-  marginal threshold. Following standardization, further analysis is conditioned on $R \geq 1$.
+  We begin this transformation by establishing the marginal thresholds
+  $b_{t,l} := \hat{F}_l^{-1}\left(1 - \frac{1}{l}\right)$, then for those observations in excess of
+  the marginal threshold, we fit the scale parameters $a_{t,l}$, and extremal index $\xi_l$ via
+  maximum likelihood. Note that $z_l > 1$ implies that $x_l > b_{t,l}$, meaning that the observation
+  ${\bf x}$ is extreme in the $l$'th dimension.  Note also that $\sup_j Z_j$ follows a simple Pareto
+  distribution. Fitting of the marginal extremal index and scale parameters uses only observations in
+  excess of the marginal threshold. Following standardization, further analysis is conditioned on
+  $R \geq 1$.
 
 After standardization and transformation, we are left with $R\sim\text{Pareto}(1)$, and, independently,
-  ${\bf V}\in\mathcal{S}_{\infty}^{d-1}$, the positive orthant of the hypersphere under the
-  $\mathcal{L}_{\infty}$ norm.  This distribution of ${\bf V}$ effectively describes the dependence
-  structure of ${\bf Z}$, so establishing a distribution on ${\bf V}$ becomes the goal of our analysis.
-  We are as yet unaware of any known distributions established on this support, so we propose projecting
-  a distribution on $\mathcal{R}_{+}^{d}$ onto $\mathcal{S}_{\infty}^{d-1}$, the unit hypersphere
-  established under the $\mathcal{L}_{\infty}$ norm.
+  ${\bf V}\in\mathcal{S}_{\infty}^{d-1}$, the positive orthant of the unit hypersphere under the
+  $\mathcal{L}_{\infty}$ norm.  The distribution of ${\bf V}$ effectively describes the dependence
+  structure of ${\bf Z}$, so the goal of our analysis subsequently becomes establishing a
+  distribution on ${\bf V}$.  We are as yet unaware of any known distributions established with a support
+  natively in this space, so we propose projecting a distribution defined on $\mathcal{R}_{+}^{d}$ onto
+  $\mathcal{S}_{\infty}^{d-1}$, the unit hypersphere established under the $\mathcal{L}_{\infty}$ norm.
 
 \input{methodology_pnorm}
 
 \input{methodology_projgamma}
 
 \input{methodology_probit}
-
-% \input{methodology_deviance}
-
-\input{methodology_applications}
-
-\subsection{Spatial Threshold Modeling}
-Following the work of \cite{ferreira2014}, any of the above methods can be
-  extended to the spatial domain by modification of the marginalization process.
-  Assume a spatial process $X({\bf s})$, ${\bf s}\in {\bf S}$.  Then take the
-  transformation
-\begin{equation}
-  \label{eqn:spatial}
-  Z({\bf s}) = \left(1 + \gamma({\bf s})\frac{X({\bf s}) - b_t({\bf s})}{a_t({\bf s})}\right)_{+}^{1/{\gamma({\bf s})}}
-\end{equation}
-  where $b_t({\bf s})$ is a function corresponding to a high threshold at location
-  ${\bf s}$, analogous to the role $b_t$ played previously. $a_t({\bf s})$
-  corresponds to a scaling function, and $\gamma({\bf s})$ an extremal value index
-  function.
 
 % EOF

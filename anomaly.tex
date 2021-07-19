@@ -1,24 +1,38 @@
 \section{Applications to Anomaly Detection}
-\subsection{Background}
 Anomaly detection describes a field of methods for identifying observations as \emph{anomalous}.  That
   is to say, observations which do not fit the general distribution of the data from which they came.
   Equivalent names for this field are \emph{outlier detection}, and \emph{novelty detection}, though
-  some authors in this field will separate the use of those terms by whether or not it is assumed
-  that anomalous observations are included in the training dataset.  Crucial to this distinction is
-  the existence of a labelled training data set, so that one could effect supervised learning.
+  some authors will separate the use of those terms by whether or not it is assumed that anomalous
+  observations are included in the training dataset.  Crucial to this distinction is the assumption
+  of a \emph{clean} training data set.
+
+The applicability of extreme value theory to anomaly detection is predicated on the belief that
+  extreme observations are more susecptible to anomalies.  \cite{goix2017} provides a discussion to
+  this effect, that extreme observations exist at the border between anomalous and non-anomalous regions.
 
 For our purpose, we do not assume the existence of labels in the training dataset, and seek an
   algorithm that can produce anomaly scores in the absence of class labels. As such, we will offer
   a brief overview of unsupervised anomaly detection methods, as well as discussion of the methods
   we are preparing here as competing models.
 
+\subsection{Existing Methods}
+The complete field of anomaly detection is wide, and we could not hope to provide a comprehensive review
+  it.  However, most methods can be roughly grouped into three main ideas: statistical models, clustering
+  methods, and non-statistical models. Core to the development of a method lies a basic question,
+  \emph{what is an anomaly?}  The answer to this question depends on application and what we hope to
+  learn.  For instance, in a regression setting, observations that produce large outliers may be considered
+  anomalous.  In a classification setting, common to most methods of anomaly detection is the belief
+  that data belonging to regions of relative data sparsity are more likely to be anomalous.  Methods in
+  this space work to find these regions of relative data sparsity, or equivalently, regions of relative
+  data abundance.
+
 \subsubsection{Statistical Models}
-Common to most methods of anomaly detection is the belief that data in regions of relative data sparsity
-  are more likely to be anomalous.   To find these regions of sparsity--or more accurately, to find
-  which observations are in these regions of sparsity--we generate models to describe the distributional
-  density around each observation.  Observations in region of low estimated density are more likely to
-  be anomalous.  This subfield includes all manner of non-parametric kernel density estimation such
-  as binned histograms, Parzen window methods, along with parametric methods.
+Statistical modelling for anomaly detection employs statistical models to describe the distribution of
+  data.  The goal from the model can be to estimate the data density around an observation (knn, )\findcite.
+  The assumption made is that observations in regions of low estimated density are more likely to be
+  anomalous.  Statistical modelling as a field includes parametric density estimation routines This
+  subfield includes all manner of non-parametric density estimation such as binned histograms, kernel
+  methods such as the Parzen window method, along with parametric methods such as Gaussian mixture models.
 
 \subsubsection{Clustering Methods}
 Clustering methods tend to sort data into groups \emph{near} each-other.  These rely on \emph{distance}
@@ -47,6 +61,44 @@ There are additional non-statistical families of methods beyond clustering, adap
   of general classification models to unsupervised learning.  The Isolation Forest,\citep{liu2000}
   adapted from random forests~\citep{breiman2001} uses decision trees to isolate observations.  Those
   observations that are more easily isolable are regarded as more anomalous.  One-class SVM is a
-  variant of the support vector machine classification system, where instead of optimizing a
-  decision boundary between labelled data, it wraps observed data in a decision boundary.  The
-  anomaly score details how close an observation comes to the decision boundary.
+  variant of the support vector machine classification system optimized towards anomaly detection.
+  In a similar manner to the support vector machine using support vectors to describe a decision
+  boundary separating classes of data, the one-class SVM uses support vectors to describe a decision
+  boundary around \emph{normal} behavior.  A higher distance to that decision boundary on the
+  anomalous side is regarded as \emph{more anomalous}.
+
+\subsection{Proposed Scoring Methods}
+
+\subsubsection{Kernel Density on the hypersphere}
+One way we can look at anomalies are observations that are unlikely to occur.  Given a fitted model,
+  those observations that come from a low density area may be more likely to be \emph{anomalous}.
+  As we do not have a density available in closed form, we turn to a non-parametric kernel density
+  estimation method for establishing local density, based on KNN.  We generate the inverse scores as
+  local posterior predictive density (as established by the KNN estimator), times the probability of
+  observing
+
+  We establish the local posterior predictive density under the KNN estimator as assuming a locally
+  uniform distribution within a $d-1$ dimensional ball, centered on $V_i$, with a radius defined by
+  the hypercube distance estimation metric detailed in~\ref{subsec:distance}.
+
+  \begin{equation}
+    \label{eqn:ad_knn}
+      S_{i,(k)}^{-1} = \frac{k}{N}\frac{\Gamma\left(\frac{d-1}{2} - 1\right)}{\pi^{\frac{d-1}{2}}D_{k}^{d-1}(V_i)
+          \times\frac{1}{R_i}
+  \end{equation}
+
+\subsubsection{Contribution to posterior predictive loss}
+Another way we can look at anomalies are those observations that are difficult to fit--difficult for
+  a fitted model to predict.  We assume that the greater the difficulty encountered in fitting a given
+  observation, the more anomalous it is.  The posterior predictive loss criterion in Equation~\ref{eq:ppl}
+  provides one such metric.  The first term measures the posterior predictive variance--a larger variance
+  corresponds to less precision in the prediction.  The second term measures squared bias--the distance
+  between the average predicted value, and the observation.  Both of these terms provide a metric of
+  how \emph{difficult} a particular observation is to fit.
+
+
+
+
+
+
+%

@@ -11,5 +11,19 @@ exhibit extreme edge effects.  In this case, if any $x_l\to0$ for $l \neq d$, th
 If $x_d \to 0$, then $\bm{y}\to\infty$.
 
 
+\subsection{Spatial Threshold Modeling}
+Following the work of \cite{ferreira2014}, any of the above methods can be
+  extended to the spatial domain by modification of the marginalization process.
+  Assume a spatial process $X({\bf s})$, ${\bf s}\in {\bf S}$.  Then take the
+  transformation
+\begin{equation}
+  \label{eqn:spatial}
+  Z({\bf s}) = \left(1 + \gamma({\bf s})\frac{X({\bf s}) - b_t({\bf s})}{a_t({\bf s})}\right)_{+}^{1/{\gamma({\bf s})}}
+\end{equation}
+  where $b_t({\bf s})$ is a function corresponding to a high threshold at location
+  ${\bf s}$, analogous to the role $b_t$ played previously. $a_t({\bf s})$
+  corresponds to a scaling function, and $\gamma({\bf s})$ an extremal value index
+  function.
+
 
 % EOF
