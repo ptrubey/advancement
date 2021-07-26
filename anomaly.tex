@@ -59,7 +59,7 @@ Density based methods will use pairwise distances to establish some measure of l
 \subsubsection{Non-Statistical Models}
 There are additional non-statistical families of methods beyond clustering, adapted from the realm
   of general classification models to unsupervised learning.  The Isolation Forest,\citep{liu2000}
-  adapted from random forests~\citep{breiman2001} uses decision trees to isolate observations.  Those
+  adapted from random forests~\citep{breiman2001} uses decision trees to isolate observations--the
   observations that are more easily isolable are regarded as more anomalous.  One-class SVM is a
   variant of the support vector machine classification system optimized towards anomaly detection.
   In a similar manner to the support vector machine using support vectors to describe a decision
@@ -68,37 +68,58 @@ There are additional non-statistical families of methods beyond clustering, adap
   anomalous side is regarded as \emph{more anomalous}.
 
 \subsection{Proposed Scoring Methods}
+We offer two adaptations of scoring methods for use on the hypersphere.  As we have previously
+  mentioned, an evaluable density is difficult to create on $\mathcal{S}_{\infty}^{d-1}$.
 
-\subsubsection{Kernel Density on the hypersphere}
-One way we can look at anomalies are observations that are unlikely to occur.  Given a fitted model,
+\subsubsection{Density Estimation on the hypersphere}
+One way we can think of anomalies is as observations that are unlikely to occur.  Given a fitted model,
   those observations that come from a low density area may be more likely to be \emph{anomalous}.
   As we do not have a density available in closed form, we turn to a non-parametric kernel density
   estimation method for establishing local density, based on KNN.  We generate the inverse scores as
   local posterior predictive density (as established by the KNN estimator), times the probability of
   observing
 
-  We establish the local posterior predictive density under the KNN estimator as assuming a locally
-  uniform distribution within a $d-1$ dimensional ball, centered on $V_i$, with a radius defined by
+We establish the local posterior predictive density under the KNN estimator by assuming a locally
+  uniform density within a $d-1$ dimensional ball, centered on $V_i$, with a radius defined by
   the hypercube distance estimation metric detailed in~\ref{subsec:distance}.
-
   \begin{equation}
     \label{eqn:ad_knn}
-      S_{i,(k)}^{-1} = \frac{k}{N}\frac{\Gamma\left(\frac{d-1}{2} - 1\right)}{\pi^{\frac{d-1}{2}}D_{k}^{d-1}(V_i)
-          \times\frac{1}{R_i}
+      S_{i,(k)}^{-1} =
+        \frac{k}{N}\frac{\Gamma\left(\frac{d-1}{2} - 1\right)}{\pi^{\frac{d-1}{2}}D_{k}^{d-1}(V_i)}
   \end{equation}
+  This provides a
 
 \subsubsection{Contribution to posterior predictive loss}
-Another way we can look at anomalies are those observations that are difficult to fit--difficult for
-  a fitted model to predict.  We assume that the greater the difficulty encountered in fitting a given
-  observation, the more anomalous it is.  The posterior predictive loss criterion in Equation~\ref{eq:ppl}
-  provides one such metric.  The first term measures the posterior predictive variance--a larger variance
-  corresponds to less precision in the prediction.  The second term measures squared bias--the distance
+Another way we can think of anomalies is as observations that are difficult to fit--that is, difficult
+  for a fitted model to predict.  We assume that the greater the difficulty encountered in fitting a
+  given observation, the more anomalous it is.  The posterior predictive loss criterion in
+  Equation~\ref{eq:ppl} provides one such metric.  The first term measures the posterior predictive
+  variance--a larger variance corresponds to less precision in the prediction, or alternatively, a lower
+  density in the predictive distribution.  The second term measures squared bias--the squared distance
   between the average predicted value, and the observation.  Both of these terms provide a metric of
   how \emph{difficult} a particular observation is to fit.
 
+\subsection{Anomaly Detection Performance on the hypersphere}
+In a relative dearth of real-valued \emph{labelled} sample anomaly detection datasets, we have chosen
+  to simulate AD datasets for comparison of our AD algorithms.  Generation of these datasets
+  follows Algorithm~\ref{algo:simulated} for 95 percent of the data, then mutates the generating
+  distribution by rotating axis labels by 1 for each mixture component--so $\beta{j,l}$ becomes
+  $\beta_{j,l+1}$.  The remaining 5 percent of the data is simulated from this mutation.
+  We have 5 and 10 column datasets, each with 5 and 10 mixture components in the \emph{normal} data.
+
+\begin{table}[h]
+  \centering
+  \label{tab:ad_sim_results}
+  \include{table_ad_sim_results}
+  \caption{Area under the ROC Curve}
+\end{table}
+
+The higher the number of mixture components, the more comparatively \emph{noisy} the data.  In such
+  an environment, anomalies are more difficult to spot.  We see a relative performance drop moving
+  from 5 to 10 mixture components, across all scoring algorithms.
 
 
 
 
 
-%
+% EOF
