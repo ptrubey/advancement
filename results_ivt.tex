@@ -3,12 +3,18 @@
 We use data from the integrated water vapor transport (\emph{IVT}) model\makenote{needs citation}
   of atmospheric rivers as a means of testing these models.  An atmospheric river is a meteorological
   event of local concentration of water vapor in the atmosphere that moves with wind patterns.
-  Understanding dependence among extreme events in atmospheric rivers \makenote{finish thought}.
+  Understanding extremal dependence in atmospheric rivers, for instance, grants hydrological engineers
+  a greater understanding of how and where to build ground water capacity to handle precipitation.
+  California suffers persistent, extended droughts--if ground water transportation and holding capacity
+  (canals, reservoirs) are not built to manage extreme precipitation without adequate understanding of
+  the extremal dependence, then we may not install adequate capacity and thus experience flooding.
+  Alternatively, if we install too much capacity everywhere, then we are wasting money that could be
+  better spent elsewhere.
 
 Fitting our models to this data requires some pre-processing.  The marginal distributions of the
   IVT data appear naturally log-normal, which falls into the domain of attraction of a Gumbel
   distribution.  Given that, we can apply a high threshold, and exceedances over that threshold can
-  be modelled as Generalized Pareto.  Our model begins with that assessment.  As estimating
+  be modelled as Generalized Pareto.  Our modelling begins with that assessment.  As estimating
   the Pareto parameters is not yet our focus in this analysis, we choose to apply the threshold
   using the empirical CDF.  That is, for a given $t$, let $b_{tl} = \hat{F}_l^{-1}(1 - t^{-1})$.  For
   this analysis, we set $t = 20$, indicating the marginal $95$ percentile.  The other parameters of the
@@ -19,25 +25,25 @@ Fitting our models to this data requires some pre-processing.  The marginal dist
 
 After the thresholding and maximum likelihood estimation of the parameters of the Pareto, we scale
   the data to the standard multivariate Pareto.  Dividing each standardized observation by its
-  $\mathcal{L}_{\infty}$ norm, we project the standardized data onto the hypercube.  Data in sequence
-  represents observations in time, and these are heavily correlated.  As such, we choose to
-  \emph{decluster} the observations, such that, by observing a sequence of observations ${\bf z}$
-  for which $\inorm{z_i} > 1$ for each observation in sequence, we keep only the observation with
-  the maximum observed $\mathcal{L}_{\infty}$ norm.  The complete procedure is outlined in
+  $\mathcal{L}_{\infty}$ norm, we project the standardized data onto $\mathcal{S}_{\infty}^{d-1}$.
+  Data in sequence represents observations in time, and these are heavily correlated.  As such, we
+  choose to \emph{decluster} the observations, such that, by observing a sequence of observations
+  $\bm{ z}$ for which $\inorm{z_i} > 1$ for each observation in sequence, we keep only the observation
+  with the greatest observed $\mathcal{L}_{\infty}$ norm.  The complete procedure is outlined in
   Algorithm~\ref{algo:processing}.
 
 \begin{algorithm}
   \label{algo:processing}
-  \KwResult{${\bf r} : r_i \sim \text{Pareto}(1)$, ${\bf v} \in \mathcal{S}_{\infty}^{d-1}$}
+  \KwResult{$\bm{ r} : r_i \sim \text{Pareto}(1)$, $\bm{ v} \in \mathcal{S}_{\infty}^{d-1}$}
   \For{$l = 1,ldots,d$}{
     Set $b_{tl} = \hat{F}_l^{-1}\left(1 - \frac{1}{t}\right)$.\\
-    With ${\bf x}_l > b_{tl}$, fit $a_{tl}$, $\chi_l$ via MLE according to generalized Pareto likelihood.\\
+    With $\bm{ x}_l > b_{tl}$, fit $a_{tl}$, $\chi_l$ via MLE according to generalized Pareto likelihood.\\
     }
   \For{$i = 1,\ldots,n$}{
     Define $z_{il} = \left(1 + \xi_l\frac{x_{il} - b_{t,l}}{a_{t,l}}\right)_{+}^{1/\xi_l}$\\
-    Define $r_i = \pnorm{{\bf z}_i}{\infty}$, ${\bf V}_i = \frac{{\bf z}_i}{\pnorm{{\bf z}_i}{\infty}}$\\
+    Define $r_i = \pnorm{\bm{ z}_i}{\infty}$, $\bm{ V}_i = \frac{\bm{ z}_i}{\pnorm{\bm{ z}_i}{\infty}}$\\
     }
-  Subset ${\bf r},{\bf v}$ such that $r_i \geq 1$ for all $r_i\in {\bf r}$.\\
+  Subset $\bm{ r},\bm{ v}$ such that $r_i \geq 1$ for all $r_i\in \bm{r}$.\\
   \If{declustering}{
     \For{$i = 1,\ldots,n$}{
       If $r_i \geq 1$ and $r_{i-1} \geq 1$, drop the lesser (and associated $v_i$) from dataset.\\
@@ -45,8 +51,8 @@ After the thresholding and maximum likelihood estimation of the parameters of th
   }
 \end{algorithm}
 
-Post-standardization, we assume the radial component to follow a standard Pareto distribution.  The
-  subject of this paper is a parametric representation of the angular component ${\bf v}$, to which
+Post-standardization, the radial component will follow a standard Pareto distribution.  The
+  subject of this paper is a parametric representation of the angular component $\bm{v}$, to which
   we fit the models presented.  We then generate samples from the posterior predictive
   distributions--both overall, for use with the KL divergence metric, and conditioned on individual
   observations, for use with the posterior predictive loss and energy score metrics.
@@ -58,14 +64,18 @@ We have, at our disposal, two datasets from the IVT model.  One records data fro
 \begin{table}[h]
   \label{tab:dev}
   \include{table_dev}
+  \caption{Model comparison metrics: Posterior Predictive Loss and Energy Score criteria from fitted
+    models against the IVT data.  All presented models are DP mixtures; the \emph{Model} field
+    identifies the kernel distribution.  For both criteria, lower is better.}
 \end{table}
 
-As is visible from Table~\ref{tab:dev}, we see a strong preference for the mixture models as
-  compared to the vanilla models both in posterior predictive loss and energy score.  As these
-  measure model performance conditional on the observed data's posterior mixture component flags,
-  it would likely be the case that a mixture model is preferred as compared to a single model.  We
-  also employ the KL divergence metric to look for differences in kernel density.
-
+In Table~\ref{tab:dev} we see the same model preference towards the projected restricted gamma models
+  that we saw in Figures~\ref{fig:simes,fig:simppl}.  The unrestricted gamma model is penalized much
+  more strongly on real data than we saw with our simulation, performing comparably to the probit-normal
+  model.  We also see the restricted gamma model with the log-normal prior performing significantly
+  better than the restricted gamma model with the gamma prior on the higher dimensional data, a reversal
+  of what we saw on the low dimensional data and indeed from what we saw in the simulation study.
+  
 That said, there is much we can glean from this table.  The normal model, which we developed after
   having cast the data from $S_{\infty}^{d-1}$ to the $d-1$ cube $[0,\pi/2]^{d-1}$ via spherical
   coordinate transformation, then scaled via probit transformation to $(-\infty,\infty)$, was not

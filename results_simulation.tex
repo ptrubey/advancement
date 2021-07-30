@@ -30,30 +30,43 @@ We have introduced this projected gamma distribution existing on $\mathcal{S}_{\
   \label{fig:simes}
   \caption{Simulation Energy Score versus Column Count, by Mixture Component Count}
   \centering
-  \includegraphics[width=0.9\textwidth]{./images/simulation_es}
+  \includegraphics[width=0.8\textwidth]{./images/simulation_es}
 \end{figure}
 
-Figure~\ref{fig:simes}. In Figure~\ref{fig:simes}, we fit DP Mixtures of the various models presented
-  and plot the resulting energy score against the number of columns, grouped by the number of mixture
-  components used in dataset generation.  The \emph{Generative} model refers to a dataset generated
+In Figure~\ref{fig:simes}, we fit DP Mixtures of the various models presented and plot the resulting
+  energy score against the number of columns, grouped by the number of mixture components used in
+  dataset generation.  The \emph{Generative} model refers to a dataset generated
   in the same manner, from the same parameters as was used to create the original dataset.  Against
   this generative dataset, we compare DP Mixtures of projected gamma, projected restricted gamma, and
   projected restricted gamma with a multivariate log-normal prior.  We observe that the projected
-  restricted Gamma model dominates in all situations, but the difference between projected restricted
-  Gamma and other models tends to shrink as the number of columns increases.  Alternatively, that
-  difference appears to grow as the number of mixture components increases.
+  restricted Gamma model dominates in most situations, but the difference between projected restricted
+  Gamma and the other gamma-based models tends to shrink as the number of columns increases.
+  Alternatively, that difference appears to grow as the number of mixture components increases.
 
-We frequently see all of the DP mixture models accomplish a lower energy score than the generative
-  dataset.  As \cite{nunez2019} noted, the projected Gamma model is very flexible and can generate
+\begin{figure}[h]
+  \label{fig:simppl}
+  \caption{Simulation Posterior Predictive Loss versus Column Count, by Mixture Component Count}
+  \centering
+  \includegraphics[width=0.8\textwidth]{./images/simulation_ppl}
+\end{figure}
+
+The posterior predictive loss criterion in Figure~\ref{fig:simppl} tells a similar story: the base
+  model is inadequate for describing a mixture; and the DP mixture of projected restricted gammas
+  performs the best of the presented models in most cases.  Interestingly, under both metrics we see
+  the probit-normal model has the best performance when the number of columns is low.  That is
+  unexpected behavior, as its performance very quickly degrades as the number of columns increases.
+
+We frequently see all of the gamma-based mixture models accomplish a lower energy score than the generative
+  distribution.  As \cite{nunez2019} noted, the projected Gamma model is very flexible and can generate
   multimodal distributions from a single mixture component.  When we allow a mixture model, we allow
   the possibility to break those modes into two different mixture components.  This will tend to
-  result in a better energy score, as posterior predictive replicates for a given observation will
-  tend to be concentrated in that observations' local mode rather than being spread between multiple
+  result in a better energy score, as posterior predictive replicates for a given observation in a local
+  model will tend to be concentrate in that local mode rather than being spread between multiple
   modes.  As for the dominance of projected restricted Gamma, By specifying $\beta_l := 1$ for all
   $l$, we are in effect forcing unimodal mixture components, which may not have been the case under
   the generative model.  As for whether this represents \emph{overfitting}, If we had reason to
-  believe that the generative distribution for real data followed this form, then this probably would
-  represent overfitting.  However, we are using projected Gamma as a parametric stand-in for an unknown
-  distribution.  In this case, the argument for overfitting is less clear.
+  believe that the generative distribution for real data followed this form, then such a case could
+  be made.  However, we are using projected Gamma as a parametric stand-in for an unknown distribution.
+  In this sense, the argument for overfitting is less clear.
 
 % EOF
