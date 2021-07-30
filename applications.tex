@@ -36,6 +36,30 @@ A summary measure of extremal dependence between dimensions can be offered by th
   measure is independent of angular measure.  Important to note, however, is that complete asymptotic
   independence, where $\chi_{kl} := 0$, can not be described under a Pareto process based model.
 
+  \begin{figure}[h]
+    \centering
+    \label{fig:chi_ij}
+    \begin{minipage}{.5\textwidth}
+      \centering
+      \includegraphics{./images/chi_ij_8}}
+    \end{minipage}
+    \begin{minipage}{.5\textwidth}
+      \centering
+      \includegraphics{./images/chi_ij_46}
+    \end{minipage}
+    \caption{Pairwise extremal dependence coefficients for IVT data, computed from fitted DP mixture
+      of projected restricted gamma model.  The left corresponds to the 8-cell data, the right the
+      46-cell data.}
+  \end{figure}
+
+Figure~\ref{fig:chi_ij} plots the pairwise extremal dependence coefficients for the IVT data, in 8
+  cells (left) and 46 cells (right), computed fom a fitted DP mixture of projected restricted gammas.
+  We see a higher extremal dependence between neighboring columns which is not unexpected, as
+  neighboring columns correspond to neighboring cells.  On the 8-cell data, we see a stronger
+  association between columns 5,6,7, indicating a greater dependence among these columns.
+
+
+
 \subsection{Conditional Survival Curves}
 Another interesting inference we can make from a fitted model is a conditional survival curve.
   Following rules of conditional probability, we can develop survival curves based on
@@ -79,8 +103,15 @@ Another interesting inference we can make from a fitted model is a conditional s
   ${\bf z}$, we can generate these curves from samples from the posterior predictive distribution of
   a fitted model.
 
+\begin{figure}[h]
+  \label{fig:condsurv1d}
+  \includegraphics{./images/condsurv_1d}
+\end{figure}
 
-
+\begin{figure}[h]
+  \label{fig:condsurv_2d}
+  \includegraphics{./images/condsurv_2d}
+\end{figure}
 
 
 

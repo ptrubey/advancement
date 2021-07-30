@@ -51,15 +51,9 @@ After the thresholding and maximum likelihood estimation of the parameters of th
   }
 \end{algorithm}
 
-Post-standardization, the radial component will follow a standard Pareto distribution.  The
-  subject of this paper is a parametric representation of the angular component $\bm{v}$, to which
-  we fit the models presented.  We then generate samples from the posterior predictive
-  distributions--both overall, for use with the KL divergence metric, and conditioned on individual
-  observations, for use with the posterior predictive loss and energy score metrics.
-
-We have, at our disposal, two datasets from the IVT model.  One records data from 8 grid cells,
-  covering generally the coast of California.  The other, with a higher resolution, records data
-  from 46 grid cells covering the same area.  We fit our models to both datasets.
+We have, at our disposal, two datasets from the IVT model.  One records data from 8 grid cells, covering
+  generally the coast of California.  The other, with a higher resolution, records data from 46 grid
+  cells covering the same area.  We fit our models to both datasets.
 
 \begin{table}[h]
   \label{tab:dev}
@@ -75,39 +69,16 @@ In Table~\ref{tab:dev} we see the same model preference towards the projected re
   model.  We also see the restricted gamma model with the log-normal prior performing significantly
   better than the restricted gamma model with the gamma prior on the higher dimensional data, a reversal
   of what we saw on the low dimensional data and indeed from what we saw in the simulation study.
-  
-That said, there is much we can glean from this table.  The normal model, which we developed after
-  having cast the data from $S_{\infty}^{d-1}$ to the $d-1$ cube $[0,\pi/2]^{d-1}$ via spherical
-  coordinate transformation, then scaled via probit transformation to $(-\infty,\infty)$, was not
-  competitive when we transform samples from its posterior predictive distribution back onto
-  $S_{\infty}^{d-1}$. The spherical coordinate transformation induces a high degree of dependence
-  between dimensions, so it is difficult to think of the geometry of that space as orthogonal.
-  Never the less, fitting a normal model in that space assumes something like orthogonality, which
-  obviously doesn't hold.  The resulting low model performance in the normal model is likely a
-  result of this distortion.
 
-Another inference to learn from this table is the generally better results of the restricted Gamma
-  models--Dirichlet, projected restricted Gamma--as compared to the Gamma models that allow for a
-  varying rate parameter--generalized Dirichlet and projected Gamma.  Note that regardless of what
-  prior was used for the shape parameter, we always assumed a Gamma prior for the rate parameter if
-  we allowed it to vary.  In one model formulation, we attempted a multivariate log-normal prior that
-  covered both the rate and shape parameters, but this overall resulted in worse model performance
-  even comparing to our current results.
+That said, there is much we can glean from this table.  The probit-normal model, developed on a mapping
+  from $\mathcal{S}_{2}^{d-1}$ to $(-\infty,\infty)^{d-1}$ via probit transformation of spherical coordinates
+  was not competitive with the gamma models on real data, similar to what we saw in the simulation study.
 
-It is no surprise that Dirichlet process models are generally preferred as compared to the finite
-  mixture models.  Properly tuned, finite mixture models will likely only do \emph{as well} as the
-  Dirichlet process mixture model when their number of extant model components are in rough
-  agreement.  The Dirichlet process just allows us to bypass to some extent that tuning process.
-  That said, for a given performance, the finite mixture model would be preferred, as much of the
-  model sampling can be accomplished in parallel.
-
-The final, and most important, revelation this table contains concerns relative model performance
-  between the incarnations of the restricted Gamma model.  Given the mixture method, the Dirichlet
-  and projected restricted Gamma model are effectively the same model, just built on a different
-  projection of the original data.  And indeed, on the 8 dimensional data, the model performance is
-  comparable.  But on the higher dimensional data, we see model performance favor the model built on
-  $S_{2}^{d-1}$ rather than $S_1^{d-1}$, the simplex.  That difference in model performance is of
-  interest.
+We should also note that we did conduct inference on projected gamma models established on
+  $\mathcal{S}_{1}^{d-1}$ and $\mathcal{S}_2^{d-1}$.  Posterior predictive loss and energy score criteria
+  favored the model established on $\mathcal{S}_{\infty}^{d-1}$.  We also established finite mixture
+  models for all presented distributions, but after tuning the number of mixture components, their
+  model performance was only \emph{as good} as the DP mixture.
 
 \begin{figure}[h]
   \centering
@@ -135,6 +106,7 @@ From this, we would interpret the \emph{best} model as that model which remains 
   increases, we see that the restricted Gamma models again become favored, indicating that the
   greater flexibility of the unrestricted Gamma models becomes burdensome to fit in a
   high-dimensional case.
+
 
 
 
