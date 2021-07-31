@@ -80,16 +80,16 @@ We should also note that we did conduct inference on projected gamma models esta
   models for all presented distributions, but after tuning the number of mixture components, their
   model performance was only \emph{as good} as the DP mixture.
 
-\begin{figure}[h]
-  \centering
-  \label{fig:knnkl}
-  \includegraphics[width = 5in]{./images/kl_divergence_curves}
-  \caption{KL Divergence Curves calculated through the KNN-KL Metric, evaluated between the empirical
-  dataset and posterior predictive datasets of various models.  The top row corresponds to the
-  8-dimensional data, while the bottom row the 46.  The left column corresponds to the vanilla models
-  with no mixture method; the middle column a Dirichlet process prior, and the right column a finite
-  mixture model.}
-\end{figure}
+% \begin{figure}[h]
+%   \centering
+%   \label{fig:knnkl}
+%   \includegraphics[width = 5in]{./images/kl_divergence_curves}
+%   \caption{KL Divergence Curves calculated through the KNN-KL Metric, evaluated between the empirical
+%   dataset and posterior predictive datasets of various models.  The top row corresponds to the
+%   8-dimensional data, while the bottom row the 46.  The left column corresponds to the vanilla models
+%   with no mixture method; the middle column a Dirichlet process prior, and the right column a finite
+%   mixture model.}
+% \end{figure}
 
 Interpreting the KL divergence curves in Figure~\ref{fig:knnkl}, KL divergence at its core is a
   log-ratio of densities.  We would prefer, all else being equal, a KL divergence near 0.
