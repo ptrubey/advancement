@@ -1,5 +1,27 @@
 
 \section{Introduction}
+In recent years much work has been done in the exploration of the definition and properties of an
+  appropriate generalization of the \emph{univariate} generalized Pareto distribution for exceedences over a
+  threshold, to a \emph{multivariate} setting.  For a short accounting of the topic, the work of
+  \cite{rootzen2006} defines the generalized Pareto distribution.  Further analysis on these classes
+  of distributions is presented in \cite{falk2008} and \cite{michel2008}.  A recent review of the state
+  of the art in multivariate peaks over threshold modelling using generalized Pareto is provided in
+  \cite{rootzen2018}.  \cite{ferreira2014} presents a constructive definition of the multivariate Pareto
+  where they decompose the random vector into independent radial and angular components; the latter
+  containing all and only information pertaining to the dependence structure of the random vector.
+  Based on this definition, we present a novel approach for modelling that angular component, and thus
+  the modelling the dependence structure of the random vector.
+
+To motivate the topic and our proposed solution, we acknowledge the relevance of extreme analysis to
+  climatological events.  Outcomes such as heat waves, extreme precipitation, storm surges, and
+  such present a similar challenge to investigators, in that the events of interest can be very destructive,
+  and occur in probability at the tail end of \emph{normal} behavior.  In this fashion, a model built
+  to capture \emph{normal} behavior may struggle to adequately represent extreme behavior.  More
+  specialized tools become necessary; especially so in a time of intensifying extreme weather
+  events.~\cite{jentsch2007,vousdoukas2018,li2019}  To this end, we use the integrated water vapor
+  transport data for observing atmospheric rivers as a test case for our methodology.
+
+\subsection{Background - Atmospheric Rivers}
 Atmospheric rivers are temporary events, where large elongated regions of high concentrations of
   water vapor are developed in the atmosphere and carry huge amounts of water potentially thousands
   of miles.  The amount of water in transit during these events dwarfs that of terrestrial rivers.
@@ -28,12 +50,10 @@ As IVT tracks concentrations of water vapor in the atmosphere, extreme values in
   Extreme precipitation events significantly affect groundwater, so anomalous precipitation events
   can produce anomalous configurations of groundwater, leading to destructive flooding.
 
-We will be looking at relative model performance on these two datasets as a means of evaluating
-  how well any model we propose scales.  We are specifically interested in extremal dependence--the
-  relationship between the upper tails of dimensions of the distribution.  In this case, that means
-  the relationship between extreme values in different grid cells.  We are going to be looking at
-  point-in-time behavior rather than considering the time series nature of the data--that
-  relationship may come later.
+We are specifically interested in extremal dependence--the relationship between the upper tails of
+  dimensions of the distribution.  In this case, that means the relationship between extreme values
+  in different grid cells.  We are going to be looking at point-in-time behavior rather than
+  considering the time series nature of the data--that relationship may come later.
 
 As we are interested in the extremal dependence, it makes sense that we would choose to represent
   this data using tools from extreme value theory.  Extreme value theory, or \emph{EVT}, seeks to
@@ -57,8 +77,8 @@ As we are interested in the extremal dependence, it makes sense that we would ch
 \subsection{Univariate EVT - Maxima}
 Regarding the asymptotic behavior of extreme events, there are a couple major strategies for conducting
   inference--developing probabilistic estimates of extreme behavior.  First developed is the theory
-  of a limiting distribution on maxima--the largest observation from a sample.  For a sample ${\bf x}$
-  where ${\bf x} = (x_1,\ldots,x_n)$ represents a sequence of $n$ independent random variables from a
+  of a limiting distribution on maxima--the largest observation from a sample.  For a sample $\bm{x}$
+  where $\bm{x} = (x_1,\ldots,x_n)$ represents a sequence of $n$ independent random variables from a
   distribution function $F$, the distribution of the maximum $M_n$ of this sequence can be derived
   as:
   \begin{equation*}
@@ -102,8 +122,8 @@ As this distribution specifies asymptotic behavior for the maximum of a set of o
   series where a natural block might be a day, this might be appropriate.  There is an implicit
   violation of the assumption of independence within a block, in most cases, but that violation is
   generally ignored. In data without a natural block, it may be difficult to justify an induced
-  artitifial block.\makenote{need more better sentence.} Moreover, in general, retaining only one
-  datum for each block increases the variability of the parameter estimates.
+  artitifial block. Moreover, in general, retaining only one datum for each block increases the
+  variability of the parameter estimates.
 
 \subsection{Univariate EVT - Peak Over Threshold}
 The \emph{Pickands-Balkema-de Haan Theorem}\citep{balkema1974,pickands1975} offers us another means
@@ -148,62 +168,61 @@ One other point of note is that for time series, the implicit assumption of inde
 The generalization of EVT to multiple dimensions presents a unique challenge in the case of maxima--how
   do we define the maximum of a sample?  How can we order observations in a multivariate scenario?
   \cite{rootzen2006} offers a brief review of the subject.  One possible treatment sidesteps this
-  conundrum by using component maxima--let ${\bf M}_n = \left(\vee_i X_{i1},\ldots,\vee_i X_{id}\right)$.
-  Then the multivariate GEV establishes the limiting behavior of ${\bf M}_n$ as $n\to\infty$.  Note
-  that ${\bf M}_n$ need not be in the observed $\left\lbrace{\bf X}_i; i = 1,\ldots,n\right\rbrace$.
-  Then, if there is a set of constants ${\bf a}_n > {\bf 0}$, ${\bf b}_n$ such that
+  conundrum by using component maxima--let $\bm{M}_n = \left(\vee_i X_{i1},\ldots,\vee_i X_{id}\right)$.
+  Then the multivariate GEV establishes the limiting behavior of $\bm{M}_n$ as $n\to\infty$.  Note
+  that $\bm{M}_n$ need not be in the observed $\left\lbrace\bm{X}_i; i = 1,\ldots,n\right\rbrace$.
+  Then, if there is a set of constants $\bm{a}_n > \bm{0}$, $\bm{b}_n$ such that
   \begin{equation*}
-    \lim\limits_{n\to\infty}\text{P}\left(\bigcap_{l = 1}^d \frac{M_{nl} - b_{nl}}{a_{nl}} \leq x_l\right) = G({\bf x})
+    \lim\limits_{n\to\infty}\text{P}\left(\bigcap_{l = 1}^d \frac{M_{nl} - b_{nl}}{a_{nl}} \leq x_l\right) = G(\bm{x})
   \end{equation*}
-  with non-degenerate marginals, then $G({\bf x})$ is a \emph{multivariate extreme value distribution}.
+  with non-degenerate marginals, then $G(\bm{x})$ is a \emph{multivariate extreme value distribution}.
   The marginal distribution of $M_{nl}$ is by construction a GEV with the parameters $a_{nl}, b_{nl}, \xi$.
   With the existence of the marginal distributions established as a consequence of the existence of the
   GEV, multivariate EVT then splits into two components--estimation of the marginal parameters, and
   estimation of the dependence structure.  This separation is born out extensively in the literature.
 
-\makenote{Need to add in further work on multivariate Pareto origin; exponent measure}
-
 In the same manner we extended the single variable peaks over threshold approach to the GEV, we can
-  extend a multivariate peaks over threshold approach to the multivariate GEV.  \cite{rootzen2006}
-  defines the multivariate generalized Pareto from a theoretical starting point in the GEV.  Indeed,
-  they define of the generalized Pareto in the form:
+  extend a multivariate peaks over threshold approach to the multivariate GEV.  \citet{rootzen2006}
+  defines the multivariate generalized Pareto from a theoretical starting point in the GEV, taking
+  the form:
   \begin{equation*}
-    H({\bf x}) = \frac{1}{-\log G({\bf 0})}\log\frac{G({\bf x}}{G({\bf x}\wedge {\bf 0})},
+    H(\bm{x}) = \frac{1}{-\log G(\bm{0})}\log\frac{G(\bm{x}}{G(\bm{x}\wedge \bm{0})},
   \end{equation*}
-  where $G$ is a GEV as previously defined.  Further analysis is provided in \cite{falk2008}.
-  \cite{rootzen2018} provides a modern review of state of the art multivariate peaks over thresholds
-  modelling using the generalized Pareto.
+  where $G$ is a multivariate GEV as previously defined.\footnote{Let $\bm{a}\wedge\bm{b}$ indicate
+  component-wise minima between $\bm{a}$ and $\bm{b}$.  Similarly, $\bm{a}\vee\bm{b}$ indicates
+  component-wise maxima, $\bigwedge_{i}a_i$ indicates series minima, and $\bigvee_ia_i$ indicates
+  series maxima.}
 
 As in the multivariate extrema case, analysis in peaks over thresholds modelling generally first
   develops the marginal distributions, then establishes the dependence structure.  In extreme analysis,
-  a frequently used method for describing the dependence structure is the copula\needcite, but we
-  propose a novel method based on the constructive definition of the multivariate Pareto presented in
-  \cite{ferreira2014}.  We follow the approach used in Section~2.2 of \cite{goix2017}.  Assume that
-  the $d$-dimensional vector ${\bf Z}$, after standardization is such that for some distribution
-  $\mu$ defined on $\mathcal{R}_+^d$,
+  a frequently used method for describing the dependence structure is the copula--a family of
+  multivariate cumulative distribution functions with uniform marginal distributions~\cite{renard2007,falk2019},
+  but this presents its own difficulties in modelling and interpretation.  Instead we propose a novel
+  method based on the constructive definition of the multivariate Pareto presented in
+  \cite{ferreira2014}, where we assume that the $d$-dimensional vector $\bm{Z}$, after standardization
+  is such that for some distribution $\mu$ defined on $\mathcal{R}_+^d$,
   \begin{equation}
-    \lim\limits_{n\to\infty}n\text{Pr}\left(\frac{1}{n}{\bf Z}\geq {\bf z}\right) = \mu\left([{\bf 0},{\bf z}]^c\right).
+    \lim\limits_{n\to\infty}n\text{Pr}\left(\frac{1}{n}\bm{Z}\geq \bm{z}\right) = \mu\left([\bm{0},\bm{z}]^c\right).
   \end{equation}
-  In this setting, $\mu$ is the asymptotic distribution of ${\bf Z}$ in extreme regions--the
+  In this setting, $\mu$ is the asymptotic distribution of $\bm{Z}$ in extreme regions--the
   \emph{exponent measure}.  $\mu$ features the homogeneity property $\mu(tA) = \frac{1}{t}\mu(A)$.
-  By this property, \cite{ferreira2014} factorize ${\bf Z}\to R{\bf V}$, where
-  $R = \pnorm{{\bf Z}}{\infty} > 1$ describes the radial component, and
-  ${\bf V} = {\bf Z}/\pnorm{{\bf Z}}{\infty} \in \mathcal{S}_{\infty}^{d-1}$ the angular component of
-  ${\bf Z}$ in $\mathcal{R}_+^d$.  $\mu(\cdot)$ is similarly factorized as
+  By this property, \cite{ferreira2014} factorize $\bm{Z}\to R\bm{V}$, where
+  $R = \pnorm{\bm{Z}}{\infty} > 1$ describes the radial component, and
+  $\bm{V} = \bm{Z}/\pnorm{\bm{Z}}{\infty} \in \mathcal{S}_{\infty}^{d-1}$ the angular component of
+  $\bm{Z}$ in $\mathcal{R}_+^d$.  $\mu(\cdot)$ is similarly factorized as
   \begin{equation}
-    \mu\left( [{\bf Z} : R({\bf Z}) > r, V({\bf Z}) \in A ] \right) = r^{-1}\Phi(A),
+    \mu\left( [\bm{Z} : R(\bm{Z}) > r, V(\bm{Z}) \in A ] \right) = r^{-1}\Phi(A),
   \end{equation}
   where $\Phi(\cdot)$ is the \emph{spectral measure}.  The spectral measure is thus independent and
   separable from the radial component.  Furthermore,
   \begin{equation}
-    \text{P}\left({\bf V} \in A \mid R > r\right)
-      = \frac{r\text{P}\left({\bf V} \in A, R > r\right)}{r\text{P}(R > r)}
+    \text{P}\left(\bm{V} \in A \mid R > r\right)
+      = \frac{r\text{P}\left(\bm{V} \in A, R > r\right)}{r\text{P}(R > r)}
       \longrightarrow_{r\to\infty} \frac{\Phi(A)}{\Phi(\mathcal{S}_{\infty}^{d-1})}
   \end{equation}
-  Describing the dependence structure of ${\bf Z}$, equivalently describing the spectral measure
-  $\Phi$.  Much literature exists describing this dependence structure using copulas\needcite.
-  We seek instead to establish a distribution on ${\bf V} \in \mathcal{S}_{\infty}^{d-1}$.
-
-
+  Describing the dependence structure of $\bm{Z}$, equivalently describing the spectral measure
+  $\Phi$.  Much literature exists describing this dependence structure using copulas--a family of
+  multivariate cumulative distribution functions with uniform marginal distributions.~\cite{renard2007,falk2019}.
+  Instead we seek to establish a distribution directlyh on $\bm{V} \in \mathcal{S}_{\infty}^{d-1}$.
 
 % EOF

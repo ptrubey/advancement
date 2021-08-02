@@ -1,5 +1,5 @@
 \section{Methodology}
-To establish a distribution on this extremal dependence structure, first we must standardize ${\bf X} \in R^d$
+To establish a distribution on this extremal dependence structure, first we must standardize $\bm{X} \in R^d$
   such that its marginal extreme distributions follow a common form.  Following the work of
   \cite{ferreira2014}, if the marginal distributions $F_{l}$ fall into the domain
   of attraction of some GEV $G_l$, then threshold exceedences for a sufficiently high threshold $b_{l}$
@@ -10,19 +10,19 @@ To establish a distribution on this extremal dependence structure, first we must
     Z_l = \left(1 + \xi_l\frac{X_l - b_{t,l}}{a_{t,l}}\right)_{+}^{1/\xi_l}.
   \end{equation}
   We begin this transformation by establishing the marginal thresholds
-  $b_{t,l} := \hat{F}_l^{-1}\left(1 - \frac{1}{l}\right)$, then for those observations in excess of
+  $b_{t,l} := \hat{F}_l^{-1}\left(1 - \frac{1}{t}\right)$, then for those observations in excess of
   the marginal threshold, we fit the scale parameters $a_{t,l}$, and extremal index $\xi_l$ via
   maximum likelihood. Note that $z_l > 1$ implies that $x_l > b_{t,l}$, meaning that the observation
-  ${\bf x}$ is extreme in the $l$'th dimension.  Note also that $\sup_j Z_j$ follows a simple Pareto
+  $\bm{x}$ is extreme in the $l$'th dimension.  Note also that $\sup_j Z_j$ follows a simple Pareto
   distribution. Fitting of the marginal extremal index and scale parameters uses only observations in
-  excess of the marginal threshold. Following standardization, further analysis is conditioned on
+  excess of the marginal threshold. Following standardization, further analysis is conditional on
   $R \geq 1$.
 
-After standardization and transformation, we are left with $R\sim\text{Pareto}(1)$, and, independently,
-  ${\bf V}\in\mathcal{S}_{\infty}^{d-1}$, the positive orthant of the unit hypersphere under the
-  $\mathcal{L}_{\infty}$ norm.  The distribution of ${\bf V}$ effectively describes the dependence
-  structure of ${\bf Z}$, so the goal of our analysis subsequently becomes establishing a
-  distribution on ${\bf V}$.  We are as yet unaware of any known distributions established with a support
+After standardization and transformation, we have $R\sim\text{Pareto}(1)$, and, independently,
+  $\bm{V}\in\mathcal{S}_{\infty}^{d-1}$, the positive orthant of the unit hypersphere under the
+  $\mathcal{L}_{\infty}$ norm.  The distribution of $\bm{V}$ effectively describes the dependence
+  structure of $\bm{Z}$, so the goal of our analysis subsequently becomes adequately describing the
+  distribution of $\bm{V}$.  We are as yet unaware of any known distributions established with a support
   natively in this space, so we propose projecting a distribution defined on $\mathcal{R}_{+}^{d}$ onto
   $\mathcal{S}_{\infty}^{d-1}$, the unit hypersphere established under the $\mathcal{L}_{\infty}$ norm.
 
