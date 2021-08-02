@@ -1,4 +1,4 @@
-\section{Model Comparison}
+\section{Model Comparison on the Hypersphere}
 It is not immediately obvious what criteria to use to judge these models and decide which best
   represents the data's generating distribution.  As the task resides on $\mathcal{S}_{\infty}^{d-1}$,
   our options are somewhat limited in terms of what model criteria we can use.  Because of the aforementioned
@@ -27,38 +27,28 @@ The posterior predictive loss criterion, \emph{PPL} is introduced in \cite{gelfa
   smaller is better.  Note that this is defined for a univariate distribution.  As we are dealing
   with a multivariate distribution, in keeping with our spatial statistics brethren
   \makenote{find a citation where they do this}, we will be taking the posterior predictive loss
-  averaged over all dimensions.  That is,
+  summed over all dimensions.  That is,
   \begin{equation}
     \label{eq:ppl2}
-    D_k^{i} = \frac{1}{d}\sum_{l = 1}^{d}\left[\text{Var}(X_{il}) + \frac{k}{k+1}\left(\text{E}[X_{il}] - x_{il}\right)^2\right]
+    D_k^{(i)} = \frac{1}{d}\sum_{l = 1}^{d}\left[\text{Var}(X_{il}) + \frac{k}{k+1}\left(\text{E}[X_{il}] - x_{il}\right)^2\right]
   \end{equation}
-  Then we report the average $D_k$, taken over the whole dataset.
+  Then we report the average $D_k$, taken over all $i$.
 
 \subsection{Energy Score}
 The energy score of Gneiting, et al\cite{gneiting2007}, is a generalization of the continuous ranked
   probability score, or \emph{crps}, defined for a multi-dimensional random variable.
   \begin{equation}
     \label{eq:es}
-    \text{ES}(P,x_i) = \frac{1}{2}\text{E}_p\lVert {\bf X}_i,{\bf X}_i^{\prime}\rVert_{\Omega}^{\beta} -
-                            \text{E}_p\lVert {\bf X}_i - {\bf x}_i\rVert_{\Omega}^{\beta}
+    \text{ES}(P,x_i) = \frac{1}{2}\text{E}_p g(\bm{X}_i,\bm{X}_i^{\prime}) - \text{E}_p g(\bm{X}_i, \bm{x}_i)
   \end{equation}
-  \bruno{I don't understand the first term of this expression.}
-  where ${\bf X}_i^{\prime}$ is another replicate from the posterior predictive distribution
-  of ${\bf x}_i$. This means, rather than relying on the first and second moments of the posterior
-  predictive distribution as in the case of posterior predictive loss\cite{gelfand1998}, we are
-  instead calculating pairwise distances between the observation and draws from the posterior
-  predictive distribution, as well as pairwise distances between those replicates themselves.
-
-Now here's the rub.  We are not aware of any established distance metrics developed on the
-  positive orthant of the unit hypercube.  In the unit simplex, we can assume the use of
-  Euclidean norm as accurately representing the distance between two points.  For any
-  $\mathcal{S}_{p}^{d-1}$ space, $p > 1$, Euclidean norm is going to under-report the actual distance
-  required for travel between two points.  That distortion is maximized on
-  $\mathcal{S}_{\infty}^{d-1}$
+  where $g(\cdot)$ identifies a negative definite kernel, and $\bm{X}_i^{\prime}$ represents another
+  replicate from the posterior predictive distribution of $\bm{x}_i$. The negative definite kernel
+  most often used is Euclidean distance.  However,on $\mathcal{S}_p^{d-1}$ for $p > 1$, Euclidean
+  distance can under-report the actual distance required for travel between two points. That distortion
+  is maximized on $\mathcal{S}_{\infty}^{d-1}$.
 
 \subsection{Distance on the positive orthant of the Hypercube}
   \label{subsec:distance}
-
 The positive orthant of the unit hypercube, defined in Euclidean geometry, is that structure for
   which, in a given point on the hypercube, all dimensions of that point are between 0 and 1, and
   at least one dimension must be 1.  Developing terminology, we can consider observations for which
@@ -139,9 +129,9 @@ Consider a 3-dimensional cube.  Consider 2 points on this 3-dimensional cube,
 Every successive rotation is relative to the last face.  So, as the number of dimensions grows, the
   number of possible rotations grows as well.  As we have $d$ faces, if 2 observations are on
   different faces, then there are $\sum_{j = 1}^{d-2}\binom{d-2}{j} + 1$ possible rotations to
-  consider. \makenote{There are truly $d!$ possible nets, but when we consider starting and ending
+  consider. \footnote{There are truly $d!$ possible nets, but when we consider starting and ending
   faces fixed, and that portions of the net that diverge after the ending face are irrelevant,
-  we arrive at that number of rotations that we actually need consider}.  While this is not
+  we arrive at that number of rotations that we need consider}.  While this is not
   insurmountable, it is numerically difficult, and developing the generalized rotation strategies
   for $d$ dimensions is beyond the scope of this analysis. However, we are in luck in that all we
   need for a valid energy score is a \emph{negative definite kernel}.  This is defined as a function
@@ -169,16 +159,16 @@ Let's go back to that first rotation--we held that as a numerically easier analo
          proposition proving that it is negative definite, then comment on how you calculate it.
          BTW, I still don't understand the notation ||a,b||.}
 
-\subsubsection{Intrinsic Energy Score}
-While we have at length discussed our means of comparison between models, we have limited means of
-  comparing how our model is doing relative to the data.  We introduce the
-  \emph{intrinsic energy score} to offer a baseline energy score \emph{in the data}, against which
-  we might compare candidate models.  This allows us to see how well our model is doing relative
-  to the data, rather than just relative to other models.  We construct this using the energy score
-  metric, but for any particular observation in the data, we compare that observation against all
-  other observations in the data.  That is, for a given observation, treat other observations as
-  replicates of that observation.  Comparing our energy score results against this value offers a
-  metric of how well we are partitioning the data into separate distributions to be evaluated.
+% \subsubsection{Intrinsic Energy Score}
+% While we have at length discussed our means of comparison between models, we have limited means of
+%   comparing how our model is doing relative to the data.  We introduce the
+%   \emph{intrinsic energy score} to offer a baseline energy score \emph{in the data}, against which
+%   we might compare candidate models.  This allows us to see how well our model is doing relative
+%   to the data, rather than just relative to other models.  We construct this using the energy score
+%   metric, but for any particular observation in the data, we compare that observation against all
+%   other observations in the data.  That is, for a given observation, treat other observations as
+%   replicates of that observation.  Comparing our energy score results against this value offers a
+%   metric of how well we are partitioning the data into separate distributions to be evaluated.
 
 \subsection{Kullbeck Liebler Divergence}
 The \emph{Kullbeck Liebler divergence} $D_{\text{KL}}$ offers a means of comparing two densities.
@@ -187,40 +177,28 @@ The \emph{Kullbeck Liebler divergence} $D_{\text{KL}}$ offers a means of compari
     \label{eqn:kld}
     D_{\text{KL}}(A,B) = \int_{x\in \Omega(A)}A(x)\log\left(\frac{A(x)}{B(x)}\right)dx
   \end{equation}
-  where $\Omega(\cdot)$ indicates the support, and $A,B$ are densities.  In our case, as the
-  densities are intractible, we will be estimating the densities using a numerical
-  method.  There is a wealth of literature on this topic, but for reasons to be made clear, I will
-  discuss two and use one.
-  \bruno{You need to sharpen this explanation and possibly include a formula.}
+  where $\Omega(\cdot)$ indicates the support, and $A,B$ are densities.  As the KL divergence is not
+  symmetric, it is not referred to as a \emph{distance} between densities, but it is often employed
+  as a means of comparison.  In our case, as the densities are intractible, we will be computing an
+  estimate of the KL divergence using a numerical method of estimating the density.
 
 Parzen \cite{parzen1962} offers a method of density estimation involving setting a window with
   radius $\sigma$ around a point, and counting observations within that window.  The number of
   observations within the window, divided by the total number of observations within the dataset,
   and the area of the window provides an estimate of the density at that point. This is highly
-  dependent upon the choice of window radius $\sigma$, but importantly for our purpose, the
-  \emph{area} of the window on $S_{\infty}^{d-1}$ is not well defined.  Consider $S_{\infty}^{2}$,
-  the surface of the positive orthant of the cube.  Now imagine a circle.  Imagine plastering that
-  circle on different points of the cube.  If the circle is entirely contained on one face of the
-  cube, it can spread out and exhibit its full area.  If it crosses between 2 faces, it can still
-  exhibit its full area. But if we place that circle with its center at $(1,1,1)$, then plaster down
-  the sides, we are left with 1/4 of the circle unable to be pasted down.  That is, The circle at
-  that point has an area of only $\frac{3}{4}\pi r^2$ whereas a circle of radius $r$ not
-  intersecting that point will have an area of $\pi r^2$.  In higher dimensions, this relationship
-  becomes more murky.
-
-Even outside of our specific geometry, the Parzen method suffers another issue--the curse of
-  dimensionality.  \cite{boltz2009} shows, for finite sample size, that as the number of dimensions
-  increases, the probability of observations falling into the window on the other dataset decreases.
-  Effectively, the quality of density estimation goes down as dimensionality goes up.
+  dependent upon the choice of window radius $\sigma$.  Furthermore, the Parzen method suffers
+  another issue--the curse of dimensionality.  \cite{boltz2009} shows, for finite sample size, that
+  as the number of dimensions increases, the probability of observations falling into the window on
+  the other dataset decreases. Effectively, the quality of density estimation goes down as
+  dimensionality goes up.
 
 An alternative to this method that we will use is based on distance between observations from the
   empirical and posterior predictive distributions.  Similar to the Parzen method, we're working
-  with samples from the distribution, but instead of establishing a window of some width, we're
-  using distance from the target observation to its $k$ nearest neighbors in the dataset.
-  From hence, we get the name \emph{KNN Based KL Divergence}.  The \emph{FNN} package in R implements
-  a Euclidean distance based version of this approach.  As we operate on the hypersphere, we again
-  recognize that the Euclidean distance metric is not appropriate, delivering results strongly
-  biased downwards.  Our one-rotation norm method described previously is employed here as a
+  with samples from the distribution, but instead of establishing a window of some width, we are
+  using distance from the target observation to its $k$th nearest neighbor in the dataset.
+  From hence we get the name \emph{KNN Based KL Divergence}.  As we operate on the hypersphere,
+  we again recognize that the Euclidean distance metric is not appropriate, delivering results strongly
+  biased downwards.  Our one-rotation kernel method described previously is employed here as a
   distance.  We recognize that the one-rotation norm is on average biased slightly longer as
   compared to a proper geodesic, but it is closer to truth than any other distance metric we are
   aware of.  To that end, we employ it as the pairwise distance measure required by KNN for this KNN

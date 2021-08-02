@@ -1,19 +1,19 @@
 \section{Applications of EVT Analysis}
 Representing the angular component of the Pareto process with a (semi) parametric distribution grants
   us opportunities in posterior analysis.
-
-\subsection{Face Probabilities}
-One of the simplest inferences we can make from this model would be the probability of a particular
-  dimension being max--the probability of falling on a particular face.  This provides us an
-  understanding on which dimensions are more likely to be extreme.
-  \begin{equation}
-    \text{P}\left(Z_l = \max_{i}Z_i\right) = \text{P}\left(V_l = 1\right) = \text{E}\left[1_{V_l = 1}\right]
-  \end{equation}
-  Even in the gamma case, this is difficult to calculate directly. Were we to find an analytic form
-  of this quantity, we could approach the problem of establishing a density on $\mathcal{S}_{\infty}^{d-1}$
-  in the manner outlined in Eqn.~\ref{eqn:mixconddensity}.  However, we can calculate this via
-  Monte Carlo integration; in much the same manner as we will calculate the other inferences in this
-  section.
+%
+% \subsection{Face Probabilities}
+% One of the simplest inferences we can make from this model would be the probability of a particular
+%   dimension being max--the probability of falling on a particular face.  This provides us an
+%   understanding on which dimensions are more likely to be extreme.
+%   \begin{equation}
+%     \text{P}\left(Z_l = \max_{i}Z_i\right) = \text{P}\left(V_l = 1\right) = \text{E}\left[1_{V_l = 1}\right]
+%   \end{equation}
+%   Even in the gamma case, this is difficult to calculate directly. Were we to find an analytic form
+%   of this quantity, we could approach the problem of establishing a density on $\mathcal{S}_{\infty}^{d-1}$
+%   in the manner outlined in Eqn.~\ref{eqn:mixconddensity}.  However, we can calculate this via
+%   Monte Carlo integration; in much the same manner as we will calculate the other inferences in this
+%   section.
 
 \subsection{Pairwise Extremal Dependence Coefficients}
 A summary measure of extremal dependence between dimensions can be offered by the extremal dependence
@@ -26,8 +26,8 @@ A summary measure of extremal dependence between dimensions can be offered by th
   The value $\chi_{kl} \in [0,1]$.  When $\chi_{kl}$ approaches 1, that indicates complete dependence;
   the variables are linked, in much the same manner as if a correlation coefficient approaches 1.
   When $\chi_{kl}$ is greater than 0, $X_k$ and $X_l$ are considered asymptotically dependent.  For
-  a $\bm{Z}$ distributed by a Pareto process, Warner and Sans{\'o}\cite{warner2018} transform $Z$
-  to the unit square to re-express this quantity,
+  a $\bm{Z}$ distributed by a Pareto process, \cite{warner2018} transform $Z$ to the unit square to
+  re-express this quantity,
   \begin{equation}
     \label{eqn:extdepcoef}
     \chi_{kl} = \text{E}\left[\frac{V_k}{\text{E}(V_k)}\wedge\frac{V_l}{\text{E}(V_l)}\right]
@@ -79,27 +79,27 @@ Another interesting inference we can make from a fitted model is a conditional s
   \end{equation}
   Also, for standard Pareto, recall that $\text{P}(R > r) = 1\wedge\frac{1}{r}$.  Then,
   \begin{equation}
-    \text{P}\left(\cap_{k = 1}^d R > \frac{z_k}{v_k}\right) =
-      \text{P}\left(R  > \vee_{k=1}^d\frac{z_k}{V_k}\right) =
-      \text{E}\left[1 \wedge \left(\vee_{k = 1}^d\frac{z_k}{V_k}\right)^{-1}\right].
+    \text{P}\left(\bigcap_{k = 1}^d R > \frac{z_k}{v_k}\right) =
+      \text{P}\left(R  > \bigvee_{k=1}^d\frac{z_k}{V_k}\right) =
+      \text{E}\left[1 \bigwedge \left(\bigvee_{k = 1}^d\frac{z_k}{V_k}\right)^{-1}\right].
   \end{equation}
   As $V_k \in [0,1]$, and given our interest in the tail of the distribution, we can assume $z_k > 1$,
   therefore $\frac{z_k}{V_k} > 1$.  We thus arrive at
   \begin{equation}
     \text{P}\left(\cap_{k = 1}^dZ_k > z_k\right) = \text{E}\left(\wedge_{k = 1}^d\frac{V_i}{z_i}\right).
   \end{equation}
-  We employ a similar calculation in the denominator, and arrive at
+  We employ a similar calculation in the denominator, yielding
   \begin{equation}
     \label{eqn:condsurv1df}
     \text{P}\left(Z_l > z_l\mid {\bf Z}_{\neg(l)} > {\bf z}_{\neg(l)}\right) =
-      \frac{\text{E}\left[\wedge_{k = 1}^d \frac{V_k}{z_k}\right]}{\text{E}\left[\wedge_{k \neq l}\frac{V_k}{z_k}\right]}.
+      \frac{\text{E}\left[\wedge_{k = 1}^d \frac{V_k}{z_k}\right]}{\text{E}\left[\bigwedge_{k \neq l}\frac{V_k}{z_k}\right]}.
   \end{equation}
   Following similar calculations, for a dimension set $\alpha \subset \{1,\ldots, d\}$, a multivariate
   conditional survival function can be similarly estimated as
   \begin{equation}
     \label{eqn:condsurv2df}
-    \text{P}\left(\cap_{l \in \alpha} Z_l > z_l \mid \cap_{l\not\in\alpha} Z_l > z_l\right) =
-      \frac{\text{E}\left[\wedge_{k = 1}^d \frac{V_k}{z_k}\right]}{\text{E}\left[\wedge_{k \not\in\alpha}\frac{V_k}{z_k}\right]}.
+    \text{P}\left(\bigcap_{l \in \alpha} Z_l > z_l \mid \cap_{l\not\in\alpha} Z_l > z_l\right) =
+      \frac{\text{E}\left[\bigwedge_{k = 1}^d \frac{V_k}{z_k}\right]}{\text{E}\left[\bigwedge_{k \not\in\alpha}\frac{V_k}{z_k}\right]}.
   \end{equation}
   We will be presenting single- and bi-variate forms of these curves.   Given appropriate values of
   ${\bf z}$, we can generate these curves from samples from the posterior predictive distribution of

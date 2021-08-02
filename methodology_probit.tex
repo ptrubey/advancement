@@ -2,9 +2,8 @@
 \subsection{Normal model built on Probit representation of Spherical Coordinate Space}
 \label{method:npprobitnorm}
 The transformation in Equation~\ref{eqn:spherical} provides us a mapping from $S_{2}^{d-1}$ to a
-  $d-1$ dimensional cube, $[0, \pi/2]^{d-1}$.  Building on this transformation allows us to represent
-  the data using a true $d-1$ dimensional distribution, rather than generating a latent parameter
-  to induce inference in a $d$ dimensional distribution, as we do with all the gamma based models.
+  $\bm{\theta} \in [0, \pi/2]^{d-1}$.  Building on this grants us some additional flexibility in our
+  choice of distributions.
 
 A canonical choice of distribution in this space might be to further transform to the $d-1$-hypercube
   to $(-\infty, \infty)^{d-1}$ via marginal probit or logit transformation, and represent the data as
@@ -44,6 +43,6 @@ Another practical disadvantage of this model is the need to compute $d-1$-dimens
   time climbing astronomically as the number of dimensions grows.  We are currently evaluating this
   model on 8 and 46 dimensions, we can see that those operations on 46 dimensions will take around
   190 times longer than on 8 dimensions.  This presents a problem if we want to fit this model in
-  any reasonable time scale.
+  in higher dimensions in any reasonable time scale.
 
 % EOF

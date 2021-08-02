@@ -12,7 +12,7 @@ A hypersphere is a geometric object such that the distance from any point to the
   \begin{equation*}
     \lVert \bm{s} \rVert_{\infty}
       = \lim\limits_{p\to\infty} \lVert \bm{s} \rVert_p
-      = \max_{l\in\lbrace1,\ldots,d\rbrace_l}s_l.
+      = \max_{l\in\lbrace1,\ldots,d\rbrace}s_l.
   \end{equation*}
   We are interested in the direction, or angular component, of vectors described in the positive
   orthant, $\mathcal{R}_{+}^d$.  One means of describing the direction of a vector in
@@ -55,40 +55,28 @@ Assuming $\bm{y} \in \mathcal{S}_{p}^{d-1}$, then for finite $p$, $y_d$ can alwa
   Notice a factor of $r^{d-1}$ independent of $p$. We refer to $\bm{y}$ and $r$ as, respectively,
   the angular and radial components of $\bm{x}$.  If we assume a distribution for $\bm{x}$, then
   by transforming to $r, \bm{y}$ and integrating out $r$, we are left with a distribution on solely
-  the angular component, or, equivalently, the projection of the vector $\bm{x}$ onto
-  $\mathcal{S}_{p}^{d-1}$.
+  $\bm{y}$, the projection of $\bm{x}$ onto $\mathcal{S}_{p}^{d-1}$.
   \bruno{\bf The idea is there, but you need to make the explanation that starts at the beginning
   of the section and ends here much sharper. }
 
-Many of the models we present here follow this form, where we, for reasons to be elaborated, assume
-  a $d$-dimensional Gamma distribution on this hypothetical $\bm{x}$. For finite $p$, this has a
-  direct benefit in that it is easy to integrate out $r$.  As we saw with the Jacobian computed
-  earlier, no matter what $p$, the Jacobian always has a factor of $r^{d-1}$.  With the independent
-  Gamma model, $r$ easily integrates out as a gamma distribution.  We can also perform data
-  augmentation generating latent $r$'s, and recovering the ability to do independent inference on
-  the parameters of those gamma distributions.  We investigated other unidimensional distributions
-  with support on $\mathcal{R}_+$ in the hopes we could perform the same dimension reduction with a
-  different parameterization, but none offered the flexibility of the Gamma while allowing $r$ to be
-  integrated out in closed form.
-  \bruno{\bf You can probably summarize this paragraph with two or three sentences saying that you
-   use a product of independent gamma distributions on the components of $x_j$ for convenience and tractability.}
+The models we present here follow this form, where we assume a $d$-dimensional Gamma distribution on
+  this hypothetical $\bm{x}$. As we saw with the Jacobian computed earlier, no matter what $p$, the
+  Jacobian always has a factor of $r^{d-1}$.  Starting from independent Gammas, $r$ easily integrates
+  out as a gamma distribution.  During inference, we recover a fully conjugate Gibbs sampling method
+  by performing data augmentation to recover the latent $\bm{R}$, and thus recovering the ability to
+  do independent inference on the parameters of those gamma distributions.
 
-One might question why we don't use this method to construct a distribution directly on
-  $\mathcal{S}_{\infty}^{d-1}$, the unit hypersphere under $\mathcal{L}_{\infty}$.  Put simply, we
-  encounter a problem in the transformation.  If we examine the the determinant of the Jacobian
-  under the $\mathcal{L}_{p}$ norm, we have a factor along the lines of
-  \begin{equation*}
-    \left(1 - \sum_{l = 1}^{d-1}y_i^p\right)^{\frac{1}{p} - 1}
-  \end{equation*}
-  which, if we take the limit as $p$ approaches infinity, if any other $y_l$ than $y_d$ is equal to
-  1, then that value approaches $0^{-1}$--an impossibility.  Another way we can recognize the problem
-  is directly in the transformation--$T^{-1}(r,y_1,\ldots,y_{d-1})$ will not recover $\bm{x}$ if
-  any $y_l$ other than $y_d$ is 1, or equivalently $\max_l x_l\neq x_d$.  Thus, we see a clear
-  breaking point between inference conducted on the finite $p$ hypersphere, $\mathcal{S}_{p}^{d-1}$,
-  and the $\mathcal{L}_{\infty}$ hypersphere, $\mathcal{S}_{\infty}^{d-1}$.
-  \bruno{\bf I am not sure I understand what you are trying to say in the paragraph.}
+% We encounter a problem in evaluating a density projected in this manner onto $\mathcal{S}_{\infty}^{d-1}$,
+%   the unit hypersphere under $\mathcal{L}_{\infty}$.  In the determinant of the Jacobian of the
+%   transformation onto the $\mathcal{L}_p$ norm, we observe a factor of
+%   \begin{equation*}
+%     \left(1 - \sum_{l = 1}^{d-1}y_i^p\right)^{\frac{1}{p} - 1}.
+%   \end{equation*}
+%   When we attempt to take the limit of this quantity as $p\to\infty$, if any $y_l$ other than $y_d$
+%   equals to 1 (that is, if any column other than the last is max), then this factor approaches $0^{-1}$.
+%   Thus, we can not evaluate a density for a distribution projected onto $\mathcal{S}_{\infty}^{d-1}$.
 
-As an alternative to this projected distribution model, one method we might consider would be to map
+For an alternative to this projected distribution model, one method we might consider would be to map
   to an alternative geometry, where we can express those $d-1$ degrees of freedom in a $d-1$
   dimensional vector.  In such a space, we can assign whatever model seems appropriate without the
   degrees of freedom restriction necessary in the projected gamma model.  Choosing what $\mathcal{L}_p$
@@ -110,12 +98,8 @@ As an alternative to this projected distribution model, one method we might cons
     \label{eqn:spherical}
     \begin{aligned}
       y_1 &= \cos\theta_1\\
-      y_l &= \prod_{k = 1}^{l-1}\sin\theta_k\cos\theta_l \hspace{1cm}\text{for } l = 2,\ldots,d-1\\
+      y_l &= \left[\prod_{k = 1}^{l-1}\sin\theta_k\right]\cos\theta_l \hspace{1cm}\text{for } l = 2,\ldots,d-1\\
       y_d &= \prod_{k = 1}^{d-1}\sin\theta_k
-      % y_2 &= \sin\theta_1\cos\theta_2\\
-      % &\hspace{0.2cm}\vdots\\
-      % y_{d-1} &= \sin\theta_1\ldots\sin\theta_{d-2}\cos\theta_{d-1}\\
-      % y_d &= \sin\theta_1\ldots\sin\theta_{d-1}
     \end{aligned}
   \end{equation}
   \cite{nunez2019} use this transformation to project a product of Gammas distribution in
