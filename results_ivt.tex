@@ -52,7 +52,7 @@ After the thresholding and maximum likelihood estimation of the parameters of th
 \end{algorithm}
 
 We have, at our disposal, two datasets from the IVT model.  One records data from 8 grid cells, covering
-  generally the coast of California.  The other, with a higher resolution, records data from 46 grid
+  generally the coast of California.  The other, with a higher resolution, records data from 47 grid
   cells covering the same area.  We fit our models to both datasets.
 
 \begin{table}[h]
@@ -78,36 +78,28 @@ We should also note that we did conduct inference on projected gamma models esta
   $\mathcal{S}_{1}^{d-1}$ and $\mathcal{S}_2^{d-1}$.  Posterior predictive loss and energy score criteria
   favored the model established on $\mathcal{S}_{\infty}^{d-1}$.  We also established finite mixture
   models for all presented distributions, but after tuning the number of mixture components, their
-  model performance was only \emph{as good} as the DP mixture.
+  model performance was, and could only be \emph{as good} as the DP mixture.
 
-% \begin{figure}[h]
-%   \centering
-%   \label{fig:knnkl}
-%   \includegraphics[width = 5in]{./images/kl_divergence_curves}
-%   \caption{KL Divergence Curves calculated through the KNN-KL Metric, evaluated between the empirical
-%   dataset and posterior predictive datasets of various models.  The top row corresponds to the
-%   8-dimensional data, while the bottom row the 46.  The left column corresponds to the vanilla models
-%   with no mixture method; the middle column a Dirichlet process prior, and the right column a finite
-%   mixture model.}
-% \end{figure}
+\begin{figure}[h]
+  \centering
+  \label{fig:knnkl}
+  \includegraphics[width = 6in, height = 3in]{./images/knn_kl_divergence_curves}
+  \caption{KL Divergence Curves calculated through the KNN-KL Metric, evaluated between the empirical
+  dataset and posterior predictive datasets of various models.  The top row corresponds to the
+  8-dimensional data, while the bottom row the 47.  All presented models use a Dirichlet process
+  prior, the nominal model being the kernel distribution.}
+\end{figure}
 
-Interpreting the KL divergence curves in Figure~\ref{fig:knnkl}, KL divergence at its core is a
-  log-ratio of densities.  We would prefer, all else being equal, a KL divergence near 0.
-  Interpreting this particular divergence metric, a KL divergence less than 0 means on average,
-  that the $k$th closest sample from the posterior predictive dataset is closer to the observation
-  than the $k$th closest sample from the empirical dataset.  There is a logged ratio of sample sizes
-  to account for differences in cardinality between the empirical dataset and posterior predictive.
-
-From this, we would interpret the \emph{best} model as that model which remains closest to the
-  horizontal line at $0$.  For the 8-dimension model, this means the generalized Dirichlet and
-  projected Gamma models, the unrestricted Gamma based models, seem to perform the best.   This is
-  in stark contrast to our inference from the earlier posterior predictive loss and energy score
-  criterions, which sharply favored the restricted Gamma models.  However, as dimensionality
-  increases, we see that the restricted Gamma models again become favored, indicating that the
-  greater flexibility of the unrestricted Gamma models becomes burdensome to fit in a
-  high-dimensional case.
-
-
-
+Interpreting the KL divergence curves in Figure~\ref{fig:knnkl} is more difficult.  As we saw in the
+  simulated case in Figure~\ref{fig:simkld}, the general logic of \emph{best} being that which is
+  closest to zero is not necessarily in use here.  We interpret a positive value in the KL divergence metric
+  as indicating that, for a given point in the given distribution, we must travel \emph{farther} on
+  the target distribution to reach the $k$th neighbor as compared to the given distribution.  In this
+  regard, we should regard \emph{large} positive values as indicating a particularly poor fit.  In this
+  regard, the projected gamma and probit-normal models do not appear to scale well as they performed
+  very poorly on the high dimensional data.  For the projected restricted gamma model, the log-normal
+  prior appears to scale better than the gamma prior.  This is in keeping with what we observed in
+  Table~\ref{table_dev}, but is a different result than what we observed in the simulation study, where
+  we observed that the log-normal prior only tended towards the gamma prior, never performing better.
 
 % EOF

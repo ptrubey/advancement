@@ -69,4 +69,32 @@ We frequently see all of the gamma-based mixture models accomplish a lower energ
   be made.  However, we are using projected Gamma as a parametric stand-in for an unknown distribution.
   In this sense, the argument for overfitting is less clear.
 
+\begin{figure}[h]
+  \label{fig:simkld}
+  \caption{Estimated $k$NN-KL Divergence metric, averaged between 1 and 10 nearest neihbors, against
+      column count, for selected models.  Graphs are facetted according to the number of mixture
+      components in the generating distribution.  The \emph{generative} model represents another
+      replicate of the underlying distribution, so that should be regarded as \emph{truth}.}
+  \includegraphics[width = 6in, heght = 4in]{./images/simulation_knn_kld}
+\end{figure}
+
+in Figure~\ref{fig:simkld} we see the application of the $k$NN-based K.L. divergence metric detailed
+  in Equation~\ref{eqn:knnkld} to the simulated datasets.  For display, this metric has been averaged
+  between $1$ and $10$ neighbors.  In general, the K.L. divergence metric is meant to be a log-ratio
+  of densities, integrated over the entire space.  In this fashion, we should interpret that model
+  is \emph{best} that stays closest to 0, as that indicates the two densities are equivalent.  The
+  equation also includes a scaling factor for the size of the datasets, as all else being equal, a
+  larger dataset will decrease the distance between any point and its neighbors.  We can regard the
+  \emph{generative} model as another replicate data set from the generating distribution--another
+  view of truth.  As its distribution should be almost identical, we would assume that the KL divergence
+  metric from this model will come closest to 0.  It does not.  Knowing this to be the case, we should
+  instead regard the generative model as truth, and treat as best the model which comes closest to the
+  \emph{generative} model.  In this regard, we observe that the projected gamma model comes closest,
+  with the projected restricted gamma model following behind.  The probit-normal model quiickly diverges
+  as the number of dimensions increases.  This is not unexpected, as we saw similar behavior in the
+  energy score and posterior predictive loss criteria.
+
+
+
+
 % EOF
