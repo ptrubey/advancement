@@ -1,0 +1,43 @@
+\section{Scaling to higher dimensions}
+Under the DP mixture of projected Gammas model detailed in Equation~\ref{eqn:infmixp}, computational
+  cost of inference using an MCMC sampler as described scales at $n\log n$ with regard to the number
+  of observations under consideration, and linearly with regard to the number of dimensions.  This cost
+  is exacerbated in the described model by the need to perform inference steps sequentially.  This is
+  alleviated somewhat in the finite mixture model in Equation~\ref{fmixp}, where cost of inference scales
+  linearly with regard to both number of observations, and number of dimensions.  Additionally, inference
+  steps can be accomplished in parallel.  For these reasons, for a DP model of a given level of performance,
+  an equivalently performant finite mixture model will be \emph{faster} to fit.  But even then, for
+  computational cost to increase linearly with the number of dimensions, this will to some extent limit
+  our ability to conduct inference at large scale.
+
+To motivate the topic of inference at scale, we consider the topic of storm surge.  Innundation, or
+  \emph{flooding} can occur as a result of storm activity--winds as a result of the storm pushing water
+  on-shore.  This is exacerbated by current tides, and potentially precipitation as a result of the storm.
+  With this in mind, designing levees to protect communities and infrastructure will require an
+  understanding of what height storm surge can potentially reach.  Simulated data from
+  \emph{SLOSH}~\citep{jelesnianski1992} provide information on inundation scenarios, given parameters
+  governing the storm as well as local topological features.  An \emph{observation} from a simulation
+  run provides the maximum observed level of storm surge at each site, for potentially millions of sites;
+  and there are thousands of available simulation runs.  Even subsetting the data to important
+  infrastructure will still yield potentially hundreds of thousands of sites \citep{hutchings2021}.
+
+Scaling our models to this level given our current methods of inference is not feasible, both in
+  computational complexity given linear scaling, and in model fidelity.   To control computational
+  complexity, one option available to us is an alternative inference algorithm such as variational
+  Bayes.~\cite{green2015}.  This works by, in relation to our target model, creating an analogous
+  variational model that is \emph{easy} to fit, and inference from this model will come as close as
+  possible to our chosen model.  This is generally done by minimizing the K.L. divergence between
+  the variational distribution and the target distribution.  This presents a difficulty, as it will
+  require evaluation of a density on $\mathcal{S}_{\infty}^{d-1}$.
+
+Model fidelity at high dimensions also presents a difficulty--as we observed in
+  Figures~\ref{fig:simes,fig:simppl}, the model performance as measured by energy score for the
+  Gamma-based models tends to converge as the number of dimensions grows.  We also observed less
+  extant clusters on average on the higher-dimensional data, indicating less ability to identify clusters.
+  Given this, one method we believe offers some promise for mantaining model fidelity in high dimensions
+  would be a more informative prior for the shape parameter.  In Table~\ref{tab:dev}, we saw the
+  log-normal prior for the shape parameters dramatically improve model performance on the real data
+  in the higher-dimension case.  If we are using an alternative inference method, then the additional
+  computational cost from a more complex prior may be alleviated.
+
+% EOF

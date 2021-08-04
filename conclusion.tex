@@ -1,29 +1,53 @@
 
 \section{Conclusion}
+In this paper, we have built upon the definition of the multivariate Pareto described in \cite{ferreira2014}
+  to establish a useful parametric representation of its dependence structure.  That dependence structure
+  is supported on the positive orthant of the unit hypersphere under the $\mathcal{L}_{\infty}$ norm,
+  for which we demonstrated the inherent difficulty in establishing a distribution supported thereon.
+  To build that representation, we presented a distribution based on a product of independent Gammas,
+  projected onto the same support as the dependence structure, and established a negative definite kernel
+  appropriate to the space to facilitate a means of model selection under the energy score criterion.
 
-\makenote{Snippets}
+The opportunities afforded us by a simple parametric representation of the dependence structure included
+  a tractable representation of pairwise dependence, as well as conditional survival curves--the
+  inversion of which produces the more well known \emph{return rates}.
+
+We leveraged the information afforded us by that distribution of the dependence structure to build
+  an efficient anomaly detection algorithm, that in preliminary analysis we found competitive with
+  existing methods.
+
+We finally postulated a path towards large scale inference using our projected Gamma distribution.
+  This path presents its own difficulties in the need for an evaluable density.  For future work, we
+  believe model fidelity for high-dimensional data can be improved with appropriate priors.
+
+\makenote{Make this longer.}
 
 
-A brief explanation of the additive logratio transformation
-as follows.  For $\bm{x}\in \mathcal{S}_{1}^{d-1}$ (on the unit simplex, so $\sum_{l = 1}^d x_l = 1$),
-let $y_l = \log\frac{x_l}{x_d}$ for $l = 1,\ldots,d-1$. This transformation, and those like it,
-exhibit extreme edge effects.  In this case, if any $x_l\to0$ for $l \neq d$, then $y_l\to-\infty$.
-If $x_d \to 0$, then $\bm{y}\to\infty$.
 
 
-\subsection{Spatial Threshold Modeling}
-Following the work of \cite{ferreira2014}, any of the above methods can be
-  extended to the spatial domain by modification of the marginalization process.
-  Assume a spatial process $X({\bf s})$, ${\bf s}\in {\bf S}$.  Then take the
-  transformation
-\begin{equation}
-  \label{eqn:spatial}
-  Z({\bf s}) = \left(1 + \gamma({\bf s})\frac{X({\bf s}) - b_t({\bf s})}{a_t({\bf s})}\right)_{+}^{1/{\gamma({\bf s})}}
-\end{equation}
-  where $b_t({\bf s})$ is a function corresponding to a high threshold at location
-  ${\bf s}$, analogous to the role $b_t$ played previously. $a_t({\bf s})$
-  corresponds to a scaling function, and $\gamma({\bf s})$ an extremal value index
-  function.
-
+% \makenote{Snippets}
+%
+%
+% A brief explanation of the additive logratio transformation
+% as follows.  For $\bm{x}\in \mathcal{S}_{1}^{d-1}$ (on the unit simplex, so $\sum_{l = 1}^d x_l = 1$),
+% let $y_l = \log\frac{x_l}{x_d}$ for $l = 1,\ldots,d-1$. This transformation, and those like it,
+% exhibit extreme edge effects.  In this case, if any $x_l\to0$ for $l \neq d$, then $y_l\to-\infty$.
+% If $x_d \to 0$, then $\bm{y}\to\infty$.
+%
+%
+% \subsection{Spatial Threshold Modeling}
+% Following the work of \cite{ferreira2014}, any of the above methods can be
+%   extended to the spatial domain by modification of the marginalization process.
+%   Assume a spatial process $X({\bf s})$, ${\bf s}\in {\bf S}$.  Then take the
+%   transformation
+% \begin{equation}
+%   \label{eqn:spatial}
+%   Z({\bf s}) = \left(1 + \gamma({\bf s})\frac{X({\bf s}) - b_t({\bf s})}{a_t({\bf s})}\right)_{+}^{1/{\gamma({\bf s})}}
+% \end{equation}
+%   where $b_t({\bf s})$ is a function corresponding to a high threshold at location
+%   ${\bf s}$, analogous to the role $b_t$ played previously. $a_t({\bf s})$
+%   corresponds to a scaling function, and $\gamma({\bf s})$ an extremal value index
+%   function.
+%
 
 % EOF

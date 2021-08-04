@@ -44,9 +44,9 @@ Assuming $\bm{y} \in \mathcal{S}_{p}^{d-1}$, then for finite $p$, $y_d$ can alwa
     T^{-1}\left(r,y_1,\ldots,y_{d-1}\right) =
       \left(ry_1,\ldots,ry_{d-1}, r\left(1 - {\scriptstyle\sum}_{l = 1}^{d-1}y_l^p\right)^{\frac{1}{p}}\right)
   \end{equation}
-  equivalently recovers the original data.  Transforming random variables such that we want to recover
-  the new density requires multiplying by the determinant of the Jacobian--the matrix of derivatives
-  of the inverse transformation.  For this transformation, that value takes the form:
+  equivalently recovers the original data.  To recover the density of the transformed random variables,
+  the original density is multiplied by the determinant of the Jacobian--the matrix of derivatives
+  of the inverse transformation.  This takes the form:
   \begin{equation}
     \label{eqn:pnormjac}
     r^{d-1}\left[\left(1 - \sum_{l = 1}^{d-1}y_l^p\right)^{\frac{1}{p}} +
@@ -59,24 +59,13 @@ Assuming $\bm{y} \in \mathcal{S}_{p}^{d-1}$, then for finite $p$, $y_d$ can alwa
   \bruno{\bf The idea is there, but you need to make the explanation that starts at the beginning
   of the section and ends here much sharper. }
 
-The models we present here follow this form, where we assume a $d$-dimensional Gamma distribution on
-  this hypothetical $\bm{x}$. As we saw with the Jacobian computed earlier, no matter what $p$, the
-  Jacobian always has a factor of $r^{d-1}$.  Starting from independent Gammas, $r$ easily integrates
-  out as a gamma distribution.  During inference, we recover a fully conjugate Gibbs sampling method
-  by performing data augmentation to recover the latent $\bm{R}$, and thus recovering the ability to
-  do independent inference on the parameters of those gamma distributions.
+The models we present here are obtained by assuming a $d$-dimensional Gamma distribution on $\bm{x}$.
+  So long as $p$ is finite, the Jacobian has a factor of $r^{d-1}$.  Starting from independent Gammas,
+  $r$ can be integrated out using the kernel of a gamma distribution.\makenote{The rest of this paragraph,
+  relevant to posterior analysis of the projected gamma distribution, was repeated in that section.
+  I've omitted it here.}
 
-% We encounter a problem in evaluating a density projected in this manner onto $\mathcal{S}_{\infty}^{d-1}$,
-%   the unit hypersphere under $\mathcal{L}_{\infty}$.  In the determinant of the Jacobian of the
-%   transformation onto the $\mathcal{L}_p$ norm, we observe a factor of
-%   \begin{equation*}
-%     \left(1 - \sum_{l = 1}^{d-1}y_i^p\right)^{\frac{1}{p} - 1}.
-%   \end{equation*}
-%   When we attempt to take the limit of this quantity as $p\to\infty$, if any $y_l$ other than $y_d$
-%   equals to 1 (that is, if any column other than the last is max), then this factor approaches $0^{-1}$.
-%   Thus, we can not evaluate a density for a distribution projected onto $\mathcal{S}_{\infty}^{d-1}$.
-
-For an alternative to this projected distribution model, one method we might consider would be to map
+An alternative to this projected distribution model, one method we might consider would be to map
   to an alternative geometry, where we can express those $d-1$ degrees of freedom in a $d-1$
   dimensional vector.  In such a space, we can assign whatever model seems appropriate without the
   degrees of freedom restriction necessary in the projected gamma model.  Choosing what $\mathcal{L}_p$
@@ -105,5 +94,6 @@ For an alternative to this projected distribution model, one method we might con
   \cite{nunez2019} use this transformation to project a product of Gammas distribution in
   $\mathcal{R}^d$ onto $[0,2\pi]^{d-1}$ Alternatively, we then map these spherical coordiates via
   probit transformation to $(-\infty,\infty)$ to consider a multivariate normal distribution.
+  \makenote{Rewrite Paragraph}
 
 % EOF

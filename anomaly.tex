@@ -67,6 +67,8 @@ There are additional non-statistical families of methods beyond clustering, adap
   boundary around \emph{normal} behavior.  A higher distance to that decision boundary on the
   anomalous side is regarded as \emph{more anomalous}.
 
+\makenote{Add more citations!}
+
 \subsection{Proposed Scoring Methods}
 We offer two adaptations of scoring methods for use on the hypersphere.  As we have previously
   mentioned, an evaluable density is difficult to create on $\mathcal{S}_{\infty}^{d-1}$.
@@ -87,7 +89,7 @@ We establish the local posterior predictive density under the KNN estimator by a
       S_{i,(k)}^{-1} =
         \frac{k}{N}\frac{\Gamma\left(\frac{d-1}{2} - 1\right)}{\pi^{\frac{d-1}{2}}D_{k}^{d-1}(V_i)}
   \end{equation}
-  This provides a
+  This provides an estimator of local density that we can use to establish a scoring metric.
 
 \subsubsection{Contribution to posterior predictive loss}
 Another way we can think of anomalies is as observations that are difficult to fit--that is, difficult
@@ -100,6 +102,7 @@ Another way we can think of anomalies is as observations that are difficult to f
   how \emph{difficult} a particular observation is to fit.
 
 \subsection{Anomaly Detection Performance on the hypersphere}
+\makenote{This needs to be presented as solely preliminary analysis}
 In a relative dearth of real-valued \emph{labelled} sample anomaly detection datasets, we have chosen
   to simulate AD datasets for comparison of our AD algorithms.  Generation of these datasets
   follows Algorithm~\ref{algo:simulated} for 95 percent of the data, then mutates the generating
@@ -111,7 +114,7 @@ In a relative dearth of real-valued \emph{labelled} sample anomaly detection dat
   \centering
   \label{tab:ad_sim_results}
   \include{table_ad_sim_results}
-  \caption{Area under the ROC Curve}
+  \caption{Area under the ROC Curve for various methods, established on simulated data.  }
 \end{table}
 
 The higher the number of mixture components, the more comparatively \emph{noisy} the data.  In such

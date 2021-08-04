@@ -18,8 +18,8 @@ To motivate the topic and our proposed solution, we acknowledge the relevance of
   and occur in probability at the tail end of \emph{normal} behavior.  In this fashion, a model built
   to capture \emph{normal} behavior may struggle to adequately represent extreme behavior.  More
   specialized tools become necessary; especially so in a time of intensifying extreme weather
-  events.~\cite{jentsch2007,vousdoukas2018,li2019}  To this end, we use the integrated water vapor
-  transport data for observing atmospheric rivers as a test case for our methodology.
+  events.\makenote{add glue}~\citep{jentsch2007,vousdoukas2018,li2019}  To this end, we use the
+  integrated water vapor transport data for observing atmospheric rivers as a test case for our methodology.
 
 \subsection{Background - Atmospheric Rivers}
 Atmospheric rivers are temporary events, where large elongated regions of high concentrations of
@@ -33,15 +33,17 @@ One metric by which we might identify and declare atmospheric rivers is the inte
   transport, or \emph{IVT}.  This value represents the total amount of water
   vapor being transported in an atmospheric column--that is, a column of the troposphere of particular
   size. These values can be measured by dropsondes, but the values we are using are estimated as part
-  of a data product\makenote{needs citation}.  An observation from these data includes a reading (estimated
+  of a data product\makenote{needs citation}.  An observation from these data
+  \makenote{IVT is a product, it is not observed.  Fix!} includes a reading (estimated
   or measured) at grid cell at a period in time; where a grid cell specifies the surface of the
   earth under the atmospheric column.  Our specific data comes from the coast of California,
-  with daily readings of IVT covering 30 years, omitting leap days.  We have two such datasets, in
+  with daily readings of IVT covering 30 years, omitting leap days.  \makenote{Give more info, look into other paper}.
+  We have two such datasets, in
   differing spatial resolutions.  The lower resolution splits the coast of california into 8 grid
   cells, while the higher resolution does so into 46 grid cells.
 
-As IVT tracks concentrations of water vapor in the atmosphere, extreme values in IVT can lead to
-  extreme precipitation events.  Atmosphereic rivers are necessary events, in that they carry the
+As IVT tracks water vapor in the atmosphere, extreme values in IVT can lead to
+  extreme precipitation events.  Atmospheric rivers are necessary events, in that they carry the
   bulk of precipitation that California recieves, but extreme precipitation events can be extremely
   destructive as well.  Thus, we are interested in the distribution of extreme precipitation events,
   including their depenedence structure.  This tells us about the probability of jointly extreme
@@ -83,8 +85,8 @@ Regarding the asymptotic behavior of extreme events, there are a couple major st
   as:
   \begin{equation*}
     \begin{aligned}
-      \text{Pr}(M_n\leq z) &= \text{Pr}(X_1 \leq z, \ldots, X_n \leq z)\\
-        &= \text{Pr}(X_1\leq z)\times\ldots\times\text{Pr}(X_n\leq z)\\
+      \text{Pr}\left[M_n\leq z\right] &= \text{Pr}\left[X_1 \leq z, \ldots, X_n \leq z\right]\\
+        &= \text{Pr}\left[X_1\leq z\right]\times\ldots\times\text{Pr}\left[X_n\leq z\right]\\
         &= F(z)^n.
     \end{aligned}
   \end{equation*}
@@ -97,7 +99,7 @@ Regarding the asymptotic behavior of extreme events, there are a couple major st
     \text{Pr}\left[\frac{M_n - b_n}{a_n} \leq z\right] \stackrel{d}{\rightarrow} G(z)
   \end{equation*}
   as $n\rightarrow\infty$, then $G$ is a max-stable distribution, and $F$ is in the domain of
-  attraction of that max stable distribution.  Maurice Fr{\'e}chet \cite{frechet1927} originates the
+  attraction of that max stable distribution.  Maurice Fr{\'e}chet \citep{frechet1927} originates the
   field, identifying two limiting forms of max-stable distributions, which would become known as the
   Fr{\'e}chet and Weibull distributions. \cite{weibull1951} expands the analysis of the Weibull
   distribution.  \cite{fisher1928}, in what is now called the \emph{Fisher-Tippett Theorem}, identifies
@@ -114,19 +116,19 @@ Regarding the asymptotic behavior of extreme events, there are a couple major st
   in the domain of attraction of the GEV.
 
 As this distribution specifies asymptotic behavior for the maximum of a set of observations,
-  inference assuming this distribution requires we specify some block of data that we would take the
-  maximum in, and for the block report only that maximum.  A series of these blocks yielding a series
-  of maxima allows us to conduct inference about the parameters of the distribution.  Taking only the
+  inference assuming this distribution requires we that specify some block of data, and for the block
+  report only the maximum.  A series of these blocks yielding a series of maxima allows us to conduct
+  inference about the parameters of the distribution.  Taking only the
   maximum in a block of observations necessarily leads to the reduction of our sample size by a factor
   of $1/\text{block size}$. In problems where the data occur in natural blocks, such as an hourly time
   series where a natural block might be a day, this might be appropriate.  There is an implicit
   violation of the assumption of independence within a block, in most cases, but that violation is
   generally ignored. In data without a natural block, it may be difficult to justify an induced
-  artitifial block. Moreover, in general, retaining only one datum for each block increases the
-  variability of the parameter estimates.
+  artitifial block. Moreover, by reducing available information, retaining only one datum for each
+  block increases the variability of the parameter estimates.
 
 \subsection{Univariate EVT - Peak Over Threshold}
-The \emph{Pickands-Balkema-de Haan Theorem}\citep{balkema1974,pickands1975} offers us another means
+The \emph{Pickands-Balkema-de Haan Theorem}~\citep{balkema1974,pickands1975} offers us another means
   of conducting inference that will be less wasteful of data.  If the original distribution $F$ is
   in the domain of attraction of the GEV, then excesses over a high threshold $u$ can be well modelled
   using the Generalized Pareto distribution.  Again, let $X$ follow some distribution function $F$.
@@ -165,6 +167,10 @@ One other point of note is that for time series, the implicit assumption of inde
   of the string.\makenote{Need citation of paper that uses this approach...as we do as well.}
 
 \subsection{Multivariate EVT}
+For the remainder of this paper, we adopt the operators $\wedge$ to denote minima, and the $\vee$
+  to denote maxima.  Thus $\wedge_i x_i = \min_i x_i$, $\vee_i x_i = \max_i x_i$.  These operators can
+  also be applied component-wise between vectors, such as $\bm{a}\wedge\bm{b} = (a_1\wedge b_1, a_2\wedge b_2,\ldots)$.
+
 The generalization of EVT to multiple dimensions presents a unique challenge in the case of maxima--how
   do we define the maximum of a sample?  How can we order observations in a multivariate scenario?
   \cite{rootzen2006} offers a brief review of the subject.  One possible treatment sidesteps this
@@ -188,10 +194,7 @@ In the same manner we extended the single variable peaks over threshold approach
   \begin{equation*}
     H(\bm{x}) = \frac{1}{-\log G(\bm{0})}\log\frac{G(\bm{x}}{G(\bm{x}\wedge \bm{0})},
   \end{equation*}
-  where $G$ is a multivariate GEV as previously defined.\footnote{Let $\bm{a}\wedge\bm{b}$ indicate
-  component-wise minima between $\bm{a}$ and $\bm{b}$.  Similarly, $\bm{a}\vee\bm{b}$ indicates
-  component-wise maxima, $\bigwedge_{i}a_i$ indicates series minima, and $\bigvee_ia_i$ indicates
-  series maxima.}
+  where $G$ is a multivariate GEV as previously defined.
 
 As in the multivariate extrema case, analysis in peaks over thresholds modelling generally first
   develops the marginal distributions, then establishes the dependence structure.  In extreme analysis,
@@ -218,11 +221,11 @@ As in the multivariate extrema case, analysis in peaks over thresholds modelling
   \begin{equation}
     \text{P}\left(\bm{V} \in A \mid R > r\right)
       = \frac{r\text{P}\left(\bm{V} \in A, R > r\right)}{r\text{P}(R > r)}
-      \longrightarrow_{r\to\infty} \frac{\Phi(A)}{\Phi(\mathcal{S}_{\infty}^{d-1})}
+      \stackrel{\longrightarrow}{r\to\infty} \frac{\Phi(A)}{\Phi(\mathcal{S}_{\infty}^{d-1})}
   \end{equation}
   Describing the dependence structure of $\bm{Z}$, equivalently describing the spectral measure
   $\Phi$.  Much literature exists describing this dependence structure using copulas--a family of
   multivariate cumulative distribution functions with uniform marginal distributions.~\cite{renard2007,falk2019}.
-  Instead we seek to establish a distribution directlyh on $\bm{V} \in \mathcal{S}_{\infty}^{d-1}$.
+  Instead we seek to establish a distribution directly on $\bm{V} \in \mathcal{S}_{\infty}^{d-1}$.
 
 % EOF
