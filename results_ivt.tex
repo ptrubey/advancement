@@ -35,7 +35,7 @@ After the thresholding and maximum likelihood estimation of the parameters of th
 \begin{algorithm}
   \label{algo:processing}
   \KwResult{$\bm{ r} : r_i \sim \text{Pareto}(1)$, $\bm{ v} \in \mathcal{S}_{\infty}^{d-1}$}
-  \For{$l = 1,ldots,d$}{
+  \For{$l = 1,\ldots,d$}{
     Set $b_{tl} = \hat{F}_l^{-1}\left(1 - \frac{1}{t}\right)$.\\
     With $\bm{ x}_l > b_{tl}$, fit $a_{tl}$, $\chi_l$ via MLE according to generalized Pareto likelihood.\\
     }
@@ -49,13 +49,15 @@ After the thresholding and maximum likelihood estimation of the parameters of th
       If $r_i \geq 1$ and $r_{i-1} \geq 1$, drop the lesser (and associated $v_i$) from dataset.\\
     }
   }
+ \caption{Data pre-processing to isolate and transform data exhibiting extreme behavior.  $r_i$ represents the radial component, 
+    and $\bm{v}_i$ the angular component.  The declustering portion is relevant if data is correlated in time.}
 \end{algorithm}
 
 We have, at our disposal, two datasets from the IVT model.  One records data from 8 grid cells, covering
   generally the coast of California.  The other, with a higher resolution, records data from 47 grid
   cells covering the same area.  We fit our models to both datasets.
 
-\begin{table}[h]
+\begin{table}[hb]
   \label{tab:dev}
   \centering
   \include{table_dev}
@@ -65,7 +67,7 @@ We have, at our disposal, two datasets from the IVT model.  One records data fro
 \end{table}
 
 In Table~\ref{tab:dev} we see the same model preference towards the projected restricted gamma models
-  that we saw in Figures~\ref{fig:simes,fig:simppl}.  The unrestricted gamma model is penalized much
+  that we saw in Figures~\ref{fig:simes},\ref{fig:simppl}.  The unrestricted gamma model is penalized much
   more strongly on real data than we saw with our simulation, performing comparably to the probit-normal
   model.  We also see the restricted gamma model with the log-normal prior performing significantly
   better than the restricted gamma model with the gamma prior on the higher dimensional data, a reversal
@@ -100,7 +102,7 @@ Interpreting the KL divergence curves in Figure~\ref{fig:knnkl} is more difficul
   regard, the projected gamma and probit-normal models do not appear to scale well as they performed
   very poorly on the high dimensional data.  For the projected restricted gamma model, the log-normal
   prior appears to scale better than the gamma prior.  This is in keeping with what we observed in
-  Table~\ref{table_dev}, but is a different result than what we observed in the simulation study, where
+  Table~\ref{tab:dev}, but is a different result than what we observed in the simulation study, where
   we observed that the log-normal prior only tended towards the gamma prior, never performing better.
 
 % EOF

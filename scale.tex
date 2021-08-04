@@ -3,7 +3,7 @@ Under the DP mixture of projected Gammas model detailed in Equation~\ref{eqn:inf
   cost of inference using an MCMC sampler as described scales at $n\log n$ with regard to the number
   of observations under consideration, and linearly with regard to the number of dimensions.  This cost
   is exacerbated in the described model by the need to perform inference steps sequentially.  This is
-  alleviated somewhat in the finite mixture model in Equation~\ref{fmixp}, where cost of inference scales
+  alleviated somewhat in the finite mixture model in Equation~\ref{eqn:fmixp}, where cost of inference scales
   linearly with regard to both number of observations, and number of dimensions.  Additionally, inference
   steps can be accomplished in parallel.  For these reasons, for a DP model of a given level of performance,
   an equivalently performant finite mixture model will be \emph{faster} to fit.  But even then, for
