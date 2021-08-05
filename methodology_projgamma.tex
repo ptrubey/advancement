@@ -13,6 +13,9 @@ As stated previously, one approach we might try in order to generate a distribut
       \left[\frac{\beta_l^{\alpha_l}}{\Gamma(\alpha_l)}(ry_l)^{\alpha_l - 1}\exp\lbrace \beta_lry_l\rbrace\right]
       \times r^{d-1}\left[y_d + {\textstyle \sum}_{l = 1}^{d-1}y_l^p\left(y_d^p\right)^{\frac{1}{p} - 1}\right].
   \end{equation}
+  \bruno{I think that there is "-" mising in the exponential. Also shouldn't the product run only to
+  $d-1$?}
+  
   Integrating out $r$ yields the the resulting \emph{Projected Gamma} density
   \begin{equation}
     \label{eqn:projgamma}
@@ -232,7 +235,8 @@ We also present a restricted Gamma form of this model, where we have set $\beta_
 \subsubsection{Choice of Norm}
 In the extreme value case, we have defined our task on $\mathcal{S}_{\infty}^{d-1}$, the positive orthant
   of the hypersphere defined under the $\mathcal{L}_{\infty}$ norm.  We described the difficulty in
-  establishing a density directly on this geometry.  While that remains true, the portion of
+  establishing a density directly on this geometry. \bruno{This paragraph keeps being rather unclear. 
+  I don't recall where you describe the difficulty with the $\infty$ norm. Can you write a formula? What I see is that the Jacobian depends on the argument of the max. That is, the transformation is not differentiable. That is why the original idea was to project on the ball of a differentiable norm, then transform to the $\infty$ norm, which is easy to do with samples. }  While that remains true, the portion of
   Eqn.~\ref{eqn:projgamma} that becomes problematic when taking the limit as $p\to\infty$ is constant
   with respect to the distributional parameters $\alpha,\beta$, along with the latent parameter $r$.
   That means we can still conduct inference on these parameters, establishing a distribution on
