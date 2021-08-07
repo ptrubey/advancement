@@ -1,12 +1,12 @@
 \subsection{Projection onto an arbitrary unit hypersphere}
 A hypersphere is a geometric object such that the distance from any point to the center takes a fixed,
   constant value.  The unit hypersphere is a hypersphere where that distance is 1. We can define the
-  hypersphere under an arbitrary distance measurement, but let's take the $\mathcal{L}_p$ norm. Let
-  the $\mathcal{L}_p$-norm be defined as
+  hypersphere under an arbitrary distance measurement, but for our purpose we will use the class of
+  hyperspheres defined under the $\mathcal{L}_p$ norm. Let the $\mathcal{L}_p$-norm be defined as
   \begin{equation*}
     \lVert \bm{s} \rVert_p = \left(\sum_{l = 1}^d \lvert s_l\rvert^p\right)^{\frac{1}{p}}.
   \end{equation*}
-  From this, we establish the $\mathcal{L}_1$ norm as $p = 1$, or the absolute sum, the
+  From this, we establish the $\mathcal{L}_1$ norm as $p = 1$, or the absolute sum; the
   $\mathcal{L}_2$ norm, as $p = 2$, the Euclidean distance.  From this we also establish the
   $\mathcal{L}_{\infty}$ norm, as
   \begin{equation*}
@@ -15,17 +15,17 @@ A hypersphere is a geometric object such that the distance from any point to the
       = \max_{l\in\lbrace1,\ldots,d\rbrace}s_l.
   \end{equation*}
   We are interested in the direction, or angular component, of vectors described in the positive
-  orthant, $\mathcal{R}_{+}^d$.  One means of describing the direction of a vector in
-  $\mathcal{R}_+^d$ is to project that vector onto $\mathcal{S}_{p}^{d-1}$, the positive orthant of
-  the unit hypersphere defined on an $\mathcal{L}_p$-norm, denoted as $\mathcal{S}_{p}^{d-1}$.  That is,
+  orthant, $\mathcal{R}_{+}^d$.  One means of describing the direction of a vector in $\mathcal{R}_+^d$
+  is to project that vector onto $\mathcal{S}_{p}^{d-1}$, the positive orthant of the unit hypersphere
+  defined on an $\mathcal{L}_p$-norm, denoted as $\mathcal{S}_{p}^{d-1}$.  That is,
   \begin{equation*}
-    \mathcal{S}_{p}^{d-1} = \left\lbrace \bm{y} : \bm{y} \in \mathcal{R}_{+}^{d}, \lVert \bm{y}\rVert_{p} = 1\right\rbrace.
+    \mathcal{S}_{p}^{d-1} = \left\lbrace \bm{s} : \bm{s} \in \mathcal{R}_{+}^{d}, \lVert \bm{s}\rVert_{p} = 1\right\rbrace.
   \end{equation*}
   We project an observation onto this space by dividing said observation by its $p$-norm. Let
   $\bm{x}\in \mathcal{R}_{+}^{d}$, then $\bm{y} = \bm{x} / \lVert \bm{x}\rVert_p \in \mathcal{S}_{p}^{d-1}$.
   We denote the $d-1$ to indicate the loss of one degree of freedom relative to the original vector.
   Observations on one hypersphere can be projected without loss of information onto another by
-  dividing by the target hypersphere's defining norm.
+  dividing by the defining norm of the target hypersphere.
 
 Assuming $\bm{y} \in \mathcal{S}_{p}^{d-1}$, then for finite $p$, $y_d$ can always be represented
   as a function of the other dimensions.  That is,
@@ -55,48 +55,19 @@ Assuming $\bm{y} \in \mathcal{S}_{p}^{d-1}$, then for finite $p$, $y_d$ can alwa
   Notice a factor of $r^{d-1}$ independent of $p$. We refer to $\bm{y}$ and $r$ as, respectively,
   the angular and radial components of $\bm{x}$.  If we assume a distribution for $\bm{x}$, then
   by transforming to $r, \bm{y}$ and integrating out $r$, we are left with a distribution on solely
-  $\bm{y}$, the projection of $\bm{x}$ onto $\mathcal{S}_{p}^{d-1}$.
-  \bruno{\bf The idea of this whole section keeps being unclear. For the Generalized Pareto approach
-  that we are pursuing we need to obtain a distribution on the unit ball for $\infty$ norm. I think
-  that the idea of this section is we can project the original $d$-dimensional vector onto the
-  unit ball for $p$ norm. That induces a distribution on the unit $\infty$ norm ball. You can use the
-  case of the 2-norm as an example.}
-
-The models we present here are obtained by assuming a $d$-dimensional Gamma distribution on $\bm{x}$.
-  So long as $p$ is finite, the Jacobian has a factor of $r^{d-1}$.  Starting from independent Gammas,
-  $r$ can be integrated out using the kernel of a gamma distribution.\makenote{The rest of this paragraph,
-  relevant to posterior analysis of the projected gamma distribution, was repeated in that section.
-  I've omitted it here.}
-
-An alternative to this projected distribution model, one method we might consider would be to map
-  to an alternative geometry, where we can express those $d-1$ degrees of freedom in a $d-1$
-  dimensional vector.  In such a space, we can assign whatever model seems appropriate without the
-  degrees of freedom restriction necessary in the projected gamma model.  Choosing what $\mathcal{L}_p$
-  norm hypersphere we start mapping from identifies what possible geometries we might use.  For instance,
-  on the $\mathcal{L}_1$ norm, a possible geometry might be isometric or additive
-  logratios~\citep{aitchison1982}.  On the $\mathcal{L}_2$ hypersphere, we consider spherical
-  coordinate transformation. Let $\bm{y} \in \mathcal{S}_{2}^{d-1}$. Then, we transform $\bm{y}$
-  to spherical coordinates as
-  \begin{equation*}
-    \theta_l = \arccos\frac{y_l}{\pnorm{\bm{y}_{l:d}}{2}},
-  \end{equation*}
-  for $l = 1,\ldots, d-1$. That is, the arccosine of the ratio of the mass of a given element,
-  versus the \emph{combined} mass of that and subsequent elements.  If $x_l = 0$, and
-  $\pnorm{\bm{x}_{l:d}}{2} > 0$, then $\theta_l = \frac{\pi}{2}$, indicating that all the mass was
-  in later dimensions.  Alternatively, if $\theta_l = 0$, then that indicates all the mass was in
-  the current element.  One can see here that ordering of the axes has a great effect on the
-  resulting coordinates.  The inverse of this transformation takes the form:
-  \begin{equation}
-    \label{eqn:spherical}
-    \begin{aligned}
-      y_1 &= \cos\theta_1\\
-      y_l &= \left[\prod_{k = 1}^{l-1}\sin\theta_k\right]\cos\theta_l \hspace{1cm}\text{for } l = 2,\ldots,d-1\\
-      y_d &= \prod_{k = 1}^{d-1}\sin\theta_k
-    \end{aligned}
-  \end{equation}
-  \cite{nunez2019} use this transformation to project a product of Gammas distribution in
-  $\mathcal{R}^d$ onto $[0,2\pi]^{d-1}$ Alternatively, we then map these spherical coordiates via
-  probit transformation to $(-\infty,\infty)$ to consider a multivariate normal distribution.
-  \makenote{Rewrite Paragraph}
+  $\bm{y}$, the projection of $\bm{x}$ onto $\mathcal{S}_{p}^{d-1}$.  If we take the projection to
+  its limit as $p\to\infty$, we arrive at a projection onto $\mathcal{S}_{\infty}^{d-1}$.  The models
+  we present here follow this form, projecting a distribution in $\mathcal{R}_+^{d}$ to
+  $\mathcal{S}_{\infty}^{d-1}$.
+%
+%   \bruno{\bf The idea of this whole section keeps being unclear. For the Generalized Pareto approach
+%   that we are pursuing we need to obtain a distribution on the unit ball for $\infty$ norm. I think
+%   that the idea of this section is we can project the original $d$-dimensional vector onto the
+%   unit ball for $p$ norm. That induces a distribution on the unit $\infty$ norm ball. You can use the
+%   case of the 2-norm as an example.}
+%
+% \makenote{The rest of this paragraph,
+%   relevant to posterior analysis of the projected gamma distribution, was repeated in that section.
+%   I've omitted it here.}
 
 % EOF
