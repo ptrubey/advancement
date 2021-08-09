@@ -53,7 +53,7 @@ After the thresholding and maximum likelihood estimation of the parameters of th
     and $\bm{v}_i$ the angular component.  The declustering portion is relevant if data is correlated in time.}
 \end{algorithm}
 
-We have, at our disposal, two datasets from the IVT model.  One records data from 8 grid cells, covering
+We have, at our disposal, two datasets from the IVT model. \bruno{Did you use daily data? For how many years? You should say how many data you started with, and how many you ended up with after you did the clustering. Also, were you not looking only at the rainy season for each year?}  One records data from 8 grid cells, covering
   generally the coast of California.  The other, with a higher resolution, records data from 47 grid
   cells covering the same area.  We fit our models to both datasets.
 
@@ -79,7 +79,7 @@ That said, there is much we can glean from this table.  The probit-normal model,
 
 We should also note that we did conduct inference on projected gamma models established on
   $\mathcal{S}_{1}^{d-1}$ and $\mathcal{S}_2^{d-1}$.  Posterior predictive loss and energy score criteria
-  favored the model established on $\mathcal{S}_{\infty}^{d-1}$.  We also established finite mixture
+  favored the model established on $\mathcal{S}_{\infty}^{d-1}$.  \bruno{I confess that I don't understand  what ``model established on $\mathcal{S}_{\infty}^{d-1}$'' means. All models ultimately estimate a distribution on $\mathcal{S}_{\infty}^{d-1}$, and there is not way to directly project onto $\mathcal{S}_{\infty}^{d-1}$ because the transformation is not differentiable.} We also established finite mixture
   models for all presented distributions, but after tuning the number of mixture components, their
   model performance was, and could only be \emph{as good} as the DP mixture.
 

@@ -19,7 +19,7 @@ As stated previously, one approach we might try in order to generate a distribut
     \label{eqn:projgamma}
     \text{PG}(\bm{ y}\mid\bm{ \alpha},\bm{ \beta}) = \prod_{l = 1}^d\left[\frac{\beta_l^{\alpha_l}}{\Gamma(\alpha_l)}y_l^{\alpha_l - 1}\right]
       \times \left[y_d - {\textstyle \sum}_{l = 1}^{d-1}y_l^p\left(y_d^p\right)^{\frac{1}{p} - 1}\right]
-      \times \frac{\Gamma({\textstyle\sum}_{l = 1}^d\alpha_l)}{\left({\scriptstyle\sum}_{l = 1}^d \beta_ly_l\right)^{{\textstyle\sum_{l = 1}^d \alpha_l}}}
+      \times \frac{\Gamma({\textstyle\sum}_{l = 1}^d\alpha_l)}{\left({\textstyle\sum}_{l = 1}^d \beta_ly_l\right)^{{\scriptstyle\sum_{l = 1}^d \alpha_l}}}
   \end{equation}
   established for an arbitrary $\mathcal{L}_p$ norm. This forms a valid density for all finite $p$.
   We can regard the Dirichlet distribution as a special case of this density, where
@@ -29,7 +29,7 @@ As stated previously, one approach we might try in order to generate a distribut
   The full conditional for $r$ takes the form
   \begin{equation}
     \label{eqn:rfullcond}
-    r\mid\bm{ \alpha},\bm{ \beta}, y \sim \text{Ga}\left(r\mid\sum_{l = 1}^d \alpha_l, \sum_{l = 1}^d \beta_ly_l\right).
+    r\mid\bm{ \alpha},\bm{ \beta}, y \sim \text{Ga}\left(r\mid{\textstyle\sum}_{l = 1}^d \alpha_l, {\textstyle\sum}_{l = 1}^d \beta_ly_l\right).
   \end{equation}
 
 In the estimation of the parameters of this model, we can quickly arrive at a problem, in that
