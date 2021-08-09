@@ -1,4 +1,5 @@
 \section{Scaling to higher dimensions}
+\label{sec:scale}
 Under the DP mixture of projected Gammas model detailed in Equation~\ref{eqn:infmixp}, computational
   cost of inference using an MCMC sampler as described scales at $n\log n$ with regard to the number
   of observations under consideration, and linearly with regard to the number of dimensions.  This cost
@@ -31,7 +32,7 @@ Scaling our models to this level given our current methods of inference is not f
   require evaluation of a density on $\mathcal{S}_{\infty}^{d-1}$.
 
 Model fidelity at high dimensions also presents a difficulty--as we observed in
-  Figures~\ref{fig:simes,fig:simppl}, the model performance as measured by energy score for the
+  Figures~\ref{fig:simes},~\ref{fig:simppl}, the model performance as measured by energy score for the
   Gamma-based models tends to converge as the number of dimensions grows.  We also observed less
   extant clusters on average on the higher-dimensional data, indicating less ability to identify clusters.
   Given this, one method we believe offers some promise for mantaining model fidelity in high dimensions
