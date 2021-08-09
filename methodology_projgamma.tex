@@ -10,13 +10,11 @@ As stated previously, one approach we might try in order to generate a distribut
   \begin{equation}
     \label{eqn:protopg}
     f(r,\bm{ y}) = \prod_{l = 1}^{d}
-      \left[\frac{\beta_l^{\alpha_l}}{\Gamma(\alpha_l)}(ry_l)^{\alpha_l - 1}\exp\lbrace \beta_lry_l\rbrace\right]
-      \times r^{d-1}\left[y_d + {\textstyle \sum}_{l = 1}^{d-1}y_l^p\left(y_d^p\right)^{\frac{1}{p} - 1}\right].
+      \left[\frac{\beta_l^{\alpha_l}}{\Gamma(\alpha_l)}(ry_l)^{\alpha_l - 1}\exp\lbrace-\beta_lry_l\rbrace\right]
+      \times r^{d-1}\left[y_d + {\textstyle \sum}_{l = 1}^{d-1}y_l^p\left(y_d^p\right)^{\frac{1}{p} - 1}\right],
   \end{equation}
-  \bruno{I think that there is "-" mising in the exponential. Also shouldn't the product run only to
-  $d-1$?}
-
-  Integrating out $r$ yields the the resulting \emph{Projected Gamma} density
+  where $y_d = \left(1 - \sum_{l=1}^{d-1}y_l^p\right)^{\frac{1}{p}}$. Integrating out $r$ yields the
+  the resulting \emph{Projected Gamma} density
   \begin{equation}
     \label{eqn:projgamma}
     \text{PG}(\bm{ y}\mid\bm{ \alpha},\bm{ \beta}) = \prod_{l = 1}^d\left[\frac{\beta_l^{\alpha_l}}{\Gamma(\alpha_l)}y_l^{\alpha_l - 1}\right]
@@ -194,14 +192,14 @@ A final extension we can make to this model is to allow for some structure, or d
   algorithm we are using for sampling the DP may not adequately represent the posterior density for
   a new cluster, as it is assuming sampling from an independent prior.  If we account for dependence
   between dimensions within the prior, then we may be able to more efficiently sample new clusters.
-  As shape parameters must be greater than 0, it seems logical to assume a log normal prior, as that
+  As shape parameters must be greater than 0, it is logical to assume a log normal prior, as that
   allows us the familar forms of a mean vector and covariance matrix for representing the source of
   cluster parameters. So,
   \begin{equation}
     \label{eqn:dpln}
     \begin{aligned}
-      \bm{ y}_i &\sim \sum_{j = 1}^J\pi_j\text{PG}\left(\bm{ y}\mid \bm{ \alpha}_i, \bm{ \beta}_i\right)\\
-      (\alpha_i,\beta_i) &\sim \text{DP}\left(\eta, G_0\right)\\
+      \bm{ y}_i &\sim \sum_{j = 1}^J\pi_j\text{PG}\left(\bm{ y}\mid \bm{ \alpha}_i, \bm{\beta}_i\right)\\
+      (\bm{\alpha}_i, \bm{\beta}_i) &\sim \text{DP}\left(\eta, G_0\right)\\
         &~\hspace{1cm}G_0 = \mathcal{N}\left(\log\bm{ \alpha}_{j}\mid\mu,\Sigma\right)\times
             {\textstyle\prod}_{l = 2}^d\text{Ga}\left(\beta_{jl}\mid\zeta_l,\sigma_l\right)\\
       \mu,\Sigma &\sim \mathcal{N}\left(\mu\mid\mu_0,\Sigma_0\right) \times \text{IG}\left(\nu,\Psi\right)\\
@@ -212,24 +210,46 @@ A final extension we can make to this model is to allow for some structure, or d
   We hope that this will allow us to better incorporate the relationship between dimensions in
   sampling new clusters, allowing for better mixing of the model.  The downside is one of computational
   complexity--this introduces a $d$-dimensional normal distribution into the model, requiring a
-  $d$-dimensional matrix inversion step.  This necessarily limits the potential number of dimensions
-  possible, merely as a practical matter.  The posterior inference strategies for $\beta,\zeta,\sigma$
+  $d$-dimensional matrix inversion step.  As matrix inversion is computationally costly, this limits
+  the potential number of dimensions possible.  The posterior inference strategies for $\beta,\zeta,\sigma$
   are the same as for prior models and have been described.  Inference for $\alpha_j$ given
   $r, \mu,\Sigma$ will rely on a $d$-dimensional Metropolis Hastings step, where the log-posterior
   density is proportional to
   \begin{equation}
     \label{eqn:dplnlp}
-    \text{\makenote{need to put this equation in}}
+    f(\bm{\alpha}_j\mid\bm{\delta},\bm{y},\mu,\Sigma,\zeta,\sigma) \propto
+    \frac{\left(\prod_{i:\delta_i = j}y_{il}\right)^{\alpha_{j1} - 1}}{\Gamma(\alpha_{j1})^{n_j}}
+        \prod_{l = 2}^d\left[\frac{\left(\prod_{i:\delta_i = j}y_{il}\right)^{\alpha_{jl} - 1}
+        \Gamma(n_j\alpha_{jl} + \zeta)}{\Gamma(\alpha_{jl})^{n_j}\left(\sum_{i:\delta_i = j}y_{il}
+        + \sigma\right)^{n_j\alpha_{jl} + \zeta}}\right] \times
+        \lvert \Sigma\rvert^{-\frac{1}{2}}\prod_{l=1}^d\alpha_{jl}^{-1}\exp\left\lbrace
+          -\frac{1}{2}(\log\alpha_j - \mu)^T\Sigma^{-1}(\log\alpha_j - \mu)\right\rbrace.
   \end{equation}
-  Sampling this beast is a tricky thing, but we are making use of a multidimensional adaptive Metropolis
-  algorithm \makenote{this will need an explanation, but a paper isn't prepared...} under parallel
-  tempering.\makenote{further explanation needed}.
-
-We also present a restricted Gamma form of this model, where we have set $\beta_l := 1$ for all
-  $l = 1,\ldots,d$.  This removes the inference steps for $\beta,\zeta,\sigma$.
-
-  \bruno{\bf I think that 3.2.2 -- 3.2.4 are pretty much the same model with some elaborations.
-                You should be able to present the whole story in a much more condensed fashion.}
+  Updating $\beta_j$ is accomplished with a conjugate Gibbs step, using the full conditional detailed
+  in Equation~\ref{eqn:betafc}, again subsetting $i$ such that $\delta_i = j$.  Note that we offer this
+  model for completeness--in practice, attempting to learn $\beta$ with $\alpha$ having a log-normal
+  prior resulted in extremely poor model performance.  We thus used the restricted gamma likelihood,
+  assuming $\beta_{jl} = 1$ for all $j,l$.  This simplifies Equation~\ref{eqn:dplnlp} into
+  \begin{equation}
+    \label{eqn:dplnlpr}
+    f(\bm{\alpha}_j\mid\bm{\delta},\bm{y},\mu,\Sigma) \propto
+    \prod_{l = 1}^d\left[\frac{\left(\prod_{i:\gamma_i = j}y_{il}\right)^{\alpha_{jl} - 1}}{\Gamma(\alpha_{jl})^{n_j}} \right]
+      \times \prod_{l=1}^{d}\alpha_{jl}^{-1}\lvert\Sigma\rvert^{-\frac{1}{2}}
+      \exp\left\lbrace-\frac{1}{2}(\log\alpha_j - \mu)^T\Sigma^{-1}(\log\alpha_j - \mu)\right\rbrace.
+  \end{equation}
+  This model is conjugate for $\mu,\Sigma$, allowing simple Gibbs step updating.  The full
+    conditional distributions for $\mu$, $\Sigma$ take the form
+  \begin{equation}
+    \mu\mid\Sigma,\log\alpha \sim \mathcal{N}\left((n^*\Sigma^{-1} + S^{-1})^{-1}(n*\bar{\log\alpha}^T\Sigma^{-1}
+      + \mu_0^TS^{-1}),(n^*\Sigma^{-1} + S^{-1})^{-1}\right) \hspace{1cm}
+    \Sigma\mid\mu,\log\alpha \sim \mathcal{IW}\left(
+        n^* + \nu, \sum_{j = 1}^{n^*}(\log\alpha_j - \mu)(\log\alpha_j - \mu)^T + \Psi\right),
+  \end{equation}
+  where $n^*$ specifies the number of extant clusters.  Removing $\beta$ additionally removes the
+  inference steps for $\zeta,\sigma$.
+  %
+  % \bruno{\bf I think that 3.2.2 -- 3.2.4 are pretty much the same model with some elaborations.
+  %               You should be able to present the whole story in a much more condensed fashion.}
 
 \subsubsection{Choice of Norm}
 In the extreme value case, we have defined our task on $\mathcal{S}_{\infty}^{d-1}$, the positive orthant

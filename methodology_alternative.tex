@@ -1,33 +1,28 @@
 \subsection{Alternative Geometries}
-An alternative to this projected distribution model, one method we might consider would be to map
-  to an alternative geometry, where we can express those $d-1$ degrees of freedom in a $d-1$
-  dimensional vector.  In such a space, we can assign whatever model seems appropriate without the
-  degrees of freedom restriction necessary in the projected gamma model.  Choosing what $\mathcal{L}_p$
-  norm hypersphere we start mapping from identifies what possible geometries we might use.  For instance,
-  on the $\mathcal{L}_1$ norm, a possible geometry might be isometric or additive
-  logratios~\citep{aitchison1982}.  On the $\mathcal{L}_2$ hypersphere, we consider spherical
-  coordinate transformation. Let $\bm{y} \in \mathcal{S}_{2}^{d-1}$. Then, we transform $\bm{y}$
-  to spherical coordinates as
+One alternative to projecting a distribution in $\mathcal{R}_+^d$ to $S_{p}^{d-1}$ would be to map
+  $\mathcal{S}_{p}^{d-1}$ to an alternative geometry, and fitting a distribution in that space.
+  Appropriate alternative geometries depend on $p$--for $p = 1$, one might consider isometric or
+  additive logratios~\citep{aitchison1982}.  For $p = 2$, we have spherical coordinates, where we
+  map $\bm{x}\in\mathcal{R}_+^d$ to $[0,\pi/2]^{d-1}$.
   \begin{equation*}
-    \theta_l = \arccos\frac{y_l}{\pnorm{\bm{y}_{l:d}}{2}},
+      \theta_l = \arccos\frac{x_l}{\pnorm{\bm{x}_{l:d}}{2}},\hspace{1cm}l = 1,\ldots,d-1.
   \end{equation*}
-  for $l = 1,\ldots, d-1$. That is, the arccosine of the ratio of the mass of a given element,
-  versus the \emph{combined} mass of that and subsequent elements.  If $x_l = 0$, and
-  $\pnorm{\bm{x}_{l:d}}{2} > 0$, then $\theta_l = \frac{\pi}{2}$, indicating that all the mass was
-  in later dimensions.  Alternatively, if $\theta_l = 0$, then that indicates all the mass was in
-  the current element.  One can see here that ordering of the axes has a great effect on the
-  resulting coordinates.  The inverse of this transformation takes the form:
+  That is, the arc-cosine of the ratio of mass on a given element, versus the combined mass of that
+  and subsequent elements as measured by Euclidean norm.  If $x_l = 0$, and $\pnorm{\bm{x}_{l:d}}{2} > 0$,
+  then $\theta_l = \frac{\pi}{2}$, indicating all the mass is on later dimensions.  Alternatively, if
+  $\theta_l = 0$, then that means all the mass was on the current element.  One can see here that the
+  ordering of axes has a great effect on the resulting coordinates.  The inverse of this transformation
+  takes the form:
   \begin{equation}
     \label{eqn:spherical}
     \begin{aligned}
       y_1 &= \cos\theta_1\\
       y_l &= \left[\prod_{k = 1}^{l-1}\sin\theta_k\right]\cos\theta_l \hspace{1cm}\text{for } l = 2,\ldots,d-1\\
-      y_d &= \prod_{k = 1}^{d-1}\sin\theta_k
+      y_d &= \prod_{k = 1}^{d-1}\sin\theta_k.
     \end{aligned}
   \end{equation}
-  \cite{nunez2019} use this transformation to project a product of Gammas distribution in
-  $\mathcal{R}^d$ onto $[0,2\pi]^{d-1}$ Alternatively, we then map these spherical coordiates via
-  probit transformation to $(-\infty,\infty)$ to consider a multivariate normal distribution.
-  \makenote{Rewrite Paragraph}
+  Note that while $\bm{x}\in \mathcal{R}_+^d$, the result of this inverse transformation,
+  $y$ exists on $\mathcal{S}_2^{d-1}$. \cite{nunez2019} use this transformation to map the product
+  of independent Gammas from $\mathcal{R}^d$ onto $[0,2\pi]^{d-1}$.
 
 % EOF
