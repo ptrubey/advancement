@@ -217,13 +217,16 @@ A final extension we can make to this model is to allow for some structure, or d
   density is proportional to
   \begin{equation}
     \label{eqn:dplnlp}
-    f(\bm{\alpha}_j\mid\bm{\delta},\bm{y},\mu,\Sigma,\zeta,\sigma) \propto
+    \begin{aligned}
+    f(\bm{\alpha}_j\mid\bm{\delta},\bm{y},\mu,\Sigma,\zeta,\sigma) &\propto
     \frac{\left(\prod_{i:\delta_i = j}y_{il}\right)^{\alpha_{j1} - 1}}{\Gamma(\alpha_{j1})^{n_j}}
         \prod_{l = 2}^d\left[\frac{\left(\prod_{i:\delta_i = j}y_{il}\right)^{\alpha_{jl} - 1}
         \Gamma(n_j\alpha_{jl} + \zeta)}{\Gamma(\alpha_{jl})^{n_j}\left(\sum_{i:\delta_i = j}y_{il}
-        + \sigma\right)^{n_j\alpha_{jl} + \zeta}}\right] \times
+        + \sigma\right)^{n_j\alpha_{jl} + \zeta}}\right]\\
+        &\hspace{1cm}\times
         \lvert \Sigma\rvert^{-\frac{1}{2}}\prod_{l=1}^d\alpha_{jl}^{-1}\exp\left\lbrace
           -\frac{1}{2}(\log\alpha_j - \mu)^T\Sigma^{-1}(\log\alpha_j - \mu)\right\rbrace.
+    \end{aligned}
   \end{equation}
   Updating $\beta_j$ is accomplished with a conjugate Gibbs step, using the full conditional detailed
   in Equation~\ref{eqn:betafc}, again subsetting $i$ such that $\delta_i = j$.  Note that we offer this
@@ -232,18 +235,22 @@ A final extension we can make to this model is to allow for some structure, or d
   assuming $\beta_{jl} = 1$ for all $j,l$.  This simplifies Equation~\ref{eqn:dplnlp} into
   \begin{equation}
     \label{eqn:dplnlpr}
-    f(\bm{\alpha}_j\mid\bm{\delta},\bm{y},\mu,\Sigma) \propto
-    \prod_{l = 1}^d\left[\frac{\left(\prod_{i:\gamma_i = j}y_{il}\right)^{\alpha_{jl} - 1}}{\Gamma(\alpha_{jl})^{n_j}} \right]
-      \times \prod_{l=1}^{d}\alpha_{jl}^{-1}\lvert\Sigma\rvert^{-\frac{1}{2}}
+    \begin{aligned}
+    f(\bm{\alpha}_j\mid\bm{\delta},\bm{y},\mu,\Sigma) &\propto
+    \prod_{l = 1}^d\left[\frac{\left(\prod_{i:\gamma_i = j}y_{il}\right)^{\alpha_{jl} - 1}}{\alpha_{jl}\Gamma(\alpha_{jl})^{n_j}} \right]\\
+      &\hspace{1cm}\times\lvert\Sigma\rvert^{-\frac{1}{2}}
       \exp\left\lbrace-\frac{1}{2}(\log\alpha_j - \mu)^T\Sigma^{-1}(\log\alpha_j - \mu)\right\rbrace.
+    \end{aligned}
   \end{equation}
   This model is conjugate for $\mu,\Sigma$, allowing simple Gibbs step updating.  The full
     conditional distributions for $\mu$, $\Sigma$ take the form
   \begin{equation}
-    \mu\mid\Sigma,\log\alpha \sim \mathcal{N}\left((n^*\Sigma^{-1} + S^{-1})^{-1}(n*\bar{\log\alpha}^T\Sigma^{-1}
-      + \mu_0^TS^{-1}),(n^*\Sigma^{-1} + S^{-1})^{-1}\right) \hspace{1cm}
-    \Sigma\mid\mu,\log\alpha \sim \mathcal{IW}\left(
+    \begin{aligned}
+    \mu\mid\Sigma,\log\alpha &\sim \mathcal{N}\left((n^*\Sigma^{-1} + S^{-1})^{-1}(n^*\bar{\log\alpha}^T\Sigma^{-1}
+      + \mu_0^TS^{-1}),(n^{*}\Sigma^{-1} + S^{-1})^{-1}\right)\\
+    \Sigma\mid\mu,\log\alpha &\sim \mathcal{IW}\left(
         n^* + \nu, \sum_{j = 1}^{n^*}(\log\alpha_j - \mu)(\log\alpha_j - \mu)^T + \Psi\right),
+    \end{aligned}
   \end{equation}
   where $n^*$ specifies the number of extant clusters.  Removing $\beta$ additionally removes the
   inference steps for $\zeta,\sigma$.

@@ -5,23 +5,21 @@
 \label{subsec:ar}
 Atmospheric rivers are temporary events, where large elongated regions of high concentrations of
   water vapor are developed in the atmosphere and carry huge amounts of water potentially thousands
-  of miles.  The amount of water in transit during these events dwarfs that of terrestrial rivers.
+  of miles.  The amount of water in transit during these events can dwarf that of terrestrial rivers.
   For the targeted region, the atmospheric river can represent a significant portion of the
-  precipitation the region will experience.  Such events are thus of great interest to meteorologists,
-  as well as farmers, \makenote{expand and cite}.
+  precipitation the region will experience.  Thus, such events are of great interest to meteorologists,
+  hydrologists, actuaries, land-use planners, and even farmers.  The ability to estimate the likely magnitude
+  and distribution of such events is thus of great importance~\citep{ralph2013,ralph2018}.
 
 One metric by which we might identify and declare atmospheric rivers is the integrated water vapor
   transport, or \emph{IVT}.  This value represents the total amount of water
-  vapor being transported in an atmospheric column--that is, a column of the troposphere of particular
-  size. These values can be measured by dropsondes, but the values we are using are estimated as part
-  of a data product\makenote{needs citation}.  An observation from these data
-  \makenote{IVT is a product, it is not observed.  Fix!} includes a reading (estimated
-  or measured) at grid cell at a period in time; where a grid cell specifies the surface of the
-  earth under the atmospheric column.  Our specific data comes from the coast of California,
-  with daily readings of IVT covering 30 years, omitting leap days.  \makenote{Give more info, look into other paper}.
-  We have two such datasets, in
-  differing spatial resolutions.  The lower resolution splits the coast of california into 8 grid
-  cells, while the higher resolution does so into 46 grid cells.
+  vapor being transported in an atmospheric column--that is, a column of the troposphere above a given
+  area of the surface of the Earth. Raw data are measured by dropsondes--measurement devices dropped
+  out of aircraft, taking measurements as they fall to the earth.~\citep{ralph2017}  A data vector
+  includes an estimate of IVT at grid cell at a period in time; where a grid cell specifies the surface
+  of the earth under the atmospheric column.  We have two such datasets, in differing spatial
+  resolutions--the lower resolution data splits the coast of california into 8 grid cells, while the
+  higher resolution does so into 47 grid cells~\citep{guan2015}.
 
 As IVT tracks water vapor in the atmosphere, extreme values in IVT can lead to
   extreme precipitation events.  Atmospheric rivers are necessary events, in that they carry the
@@ -81,15 +79,15 @@ Regarding the asymptotic behavior of extreme events, there are a couple major st
     \text{Pr}\left[\frac{M_n - b_n}{a_n} \leq z\right] \stackrel{d}{\rightarrow} G(z)
   \end{equation*}
   as $n\rightarrow\infty$, then $G$ is a max-stable distribution, and $F$ is in the domain of
-  attraction of that max stable distribution.  Maurice Fr{\'e}chet \citep{frechet1927} originates the
+  attraction of that max stable distribution.  \cite{frechet1927} originates the
   field, identifying two limiting forms of max-stable distributions, which would become known as the
   Fr{\'e}chet and Weibull distributions. \cite{weibull1951} expands the analysis of the Weibull
   distribution.  \cite{fisher1928}, in what is now called the \emph{Fisher-Tippett Theorem}, identifies
   the Fr{\'e}chet and Weibull distributions, along with an as then unnamed third form, as the three
-  limiting forms of the distribution of the maxima of a sample.  \cite{gumbel1935,gumbel1942} offers
-   an analysis of that third form, now known as the Gumbel distribution.  Later works, including
-   \cite{jenkinson1955} reparameterize all three forms as special cases of a single unifying form,
-   the generalized extreme value distribution, \emph{GEV}:
+  limiting forms of the distribution of the maxima of a sample.  \cite{gumbel1935,gumbel1942} offer
+  analysis of that third form, now known as the Gumbel distribution.  Later works, including
+  \cite{jenkinson1955} reparameterize all three forms as special cases of a single unifying form,
+  the generalized extreme value distribution, \emph{GEV}:
   \begin{equation*}
     \label{eqn:gev}
     F(m \mid \mu, \sigma, \xi) = \exp\left\lbrace-\left[1 + \xi\left(\frac{x - \mu}{\sigma}\right)\right]_{}^{-1/{\xi}}\right\rbrace.
@@ -112,10 +110,10 @@ As this distribution specifies asymptotic behavior for the maximum of a set of o
 \subsection{Univariate EVT - Peak Over Threshold}
 \label{subsec:univevtpot}
 The \emph{Pickands-Balkema-de Haan Theorem}~\citep{balkema1974,pickands1975} offers us another means
-  of conducting inference that will be less wasteful of data.  If the original distribution $F$ is
-  in the domain of attraction of the GEV, then excesses over a high threshold $u$ can be well modelled
-  using the Generalized Pareto distribution.  Again, let $X$ follow some distribution function $F$.
-  It follows that:
+  of conducting inference that will be less wasteful of data.  It states that if the original distribution
+  $F$ is in the domain of attraction of the GEV, then excesses over a high threshold $u$ can be well
+  modelled using the Generalized Pareto distribution.  Again, let $X$ follow some distribution function
+  $F$. It follows that:
   \begin{equation*}
     \text{Pr}\left[X > u + y\mid X > u\right] = \frac{1 - F(u + y)}{1 - F(u)}
   \end{equation*}
@@ -143,10 +141,11 @@ The \emph{Pickands-Balkema-de Haan Theorem}~\citep{balkema1974,pickands1975} off
   same parameter, and has the same value as the $\xi$ from the limiting distribution of the maximum
   observation of a sample \citep{dehaan2006}.
 
-One other point of note is that for time series, the implicit assumption of independence for those
-  observations in excess of a threshold is violated.  One means of dealing with this violation is
-  to consider a string of observations in excess of a threshold as correlated, and only keep one
-  of the string.\makenote{Need citation of paper that uses this approach...as we do as well.}
+One other point of note is that for time series, the data are temporally correlated.  Thus the implicit
+  assumption of independence for those observations in excess of a threshold is violated.  One means
+  of ameliorating the effect of this correlation is to decluster the data--and one method of declustering
+  is, for a series of observations in excess of the threshold, to keep only the maximum observed value
+  in the series.
 
 \subsection{Multivariate EVT}
 \label{subsec:mvevt}
