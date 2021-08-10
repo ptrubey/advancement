@@ -4,7 +4,7 @@ A hypersphere is a geometric object such that the distance from any point to the
   hypersphere under an arbitrary distance measurement, but for our purpose we will use the class of
   hyperspheres defined under the $\mathcal{L}_p$ norm. Let the $\mathcal{L}_p$-norm be defined as
   \begin{equation*}
-    \lVert \bm{s} \rVert_p = \left(\sum_{l = 1}^d \lvert s_l\rvert^p\right)^{\frac{1}{p}}.
+    \lVert \bm{s} \rVert_p = \left({\textstyle\sum}_{l = 1}^d \lvert s_l\rvert^p\right)^{\frac{1}{p}}.
   \end{equation*}
   From this, we establish the $\mathcal{L}_1$ norm as $p = 1$, or the absolute sum; the
   $\mathcal{L}_2$ norm, as $p = 2$, the Euclidean distance.  From this we also establish the
@@ -30,7 +30,7 @@ A hypersphere is a geometric object such that the distance from any point to the
 Assuming $\bm{y} \in \mathcal{S}_{p}^{d-1}$, then for finite $p$, $y_d$ can always be represented
   as a function of the other dimensions.  That is,
   \begin{equation*}
-    y_d = \left(1 - \sum_{l = 1}^{d-1}y_l^p\right)^{\frac{1}{p}}.
+    y_d = \left(1 - {\textstyle\sum}_{l = 1}^{d-1}y_l^p\right)^{\frac{1}{p}}.
   \end{equation*}
   So the transformation
   \begin{equation}
@@ -42,15 +42,15 @@ Assuming $\bm{y} \in \mathcal{S}_{p}^{d-1}$, then for finite $p$, $y_d$ can alwa
   \begin{equation}
     \label{eqn:pnormtinv}
     T^{-1}\left(r,y_1,\ldots,y_{d-1}\right) =
-      \left(ry_1,\ldots,ry_{d-1}, r\left(1 - {\scriptstyle\sum}_{l = 1}^{d-1}y_l^p\right)^{\frac{1}{p}}\right)
+      \left(ry_1,\ldots,ry_{d-1}, r\left(1 - {\textstyle\sum}_{l = 1}^{d-1}y_l^p\right)^{\frac{1}{p}}\right)
   \end{equation}
   equivalently recovers the original data.  To recover the density of the transformed random variables,
   the original density is multiplied by the determinant of the Jacobian--the matrix of derivatives
   of the inverse transformation.  This takes the form:
   \begin{equation}
     \label{eqn:pnormjac}
-    r^{d-1}\left[\left(1 - \sum_{l = 1}^{d-1}y_l^p\right)^{\frac{1}{p}} +
-        \sum_{l = 1}^{d-1}y_l^p\left(1 - \sum_{l=1}^{d-1} y_l^p\right)^{\frac{1}{p} - 1}\right].
+    r^{d-1}\left[\left(1 - {\textstyle\sum}_{l = 1}^{d-1}y_l^p\right)^{\frac{1}{p}} +
+        {\textstyle\sum}_{l = 1}^{d-1}y_l^p\left(1 - {\textstyle\sum}_{l=1}^{d-1} y_l^p\right)^{\frac{1}{p} - 1}\right].
   \end{equation}
   Notice a factor of $r^{d-1}$ independent of $p$. We refer to $\bm{y}$ and $r$ as, respectively,
   the angular and radial components of $\bm{x}$.  If we assume a distribution for $\bm{x}$, then
