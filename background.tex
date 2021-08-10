@@ -187,7 +187,7 @@ As in the multivariate extrema case, analysis in peaks over thresholds modelling
   \cite{ferreira2014}, where we assume that the $d$-dimensional vector $\bm{Z}$, after standardization
   is such that for some distribution $\mu$ defined on $\mathcal{R}_+^d$,
   \begin{equation}
-    \lim\limits_{n\to\infty}n\text{Pr}\left(\frac{1}{n}\bm{Z}\geq \bm{z}\right) = \mu\left([\bm{0},\bm{z}]^c\right).
+    \lim\limits_{n\to\infty}n\text{Pr}\left[\frac{1}{n}\bm{Z}\geq \bm{z}\right] = \mu\left([\bm{0},\bm{z}]^c\right).
   \end{equation}
   In this setting, $\mu$ is the asymptotic distribution of $\bm{Z}$ in extreme regions--the
   \emph{exponent measure}.  $\mu$ features the homogeneity property $\mu(tA) = \frac{1}{t}\mu(A)$.
@@ -196,14 +196,14 @@ As in the multivariate extrema case, analysis in peaks over thresholds modelling
   $\bm{V} = \bm{Z}/\pnorm{\bm{Z}}{\infty} \in \mathcal{S}_{\infty}^{d-1}$ the angular component of
   $\bm{Z}$ in $\mathcal{R}_+^d$.  $\mu(\cdot)$ is similarly factorized as
   \begin{equation}
-    \mu\left( [\bm{Z} : R(\bm{Z}) > r, V(\bm{Z}) \in A ] \right) = r^{-1}\Phi(A),
+    \mu\left( \left\lbrace\bm{Z} : R(\bm{Z}) > r, V(\bm{Z}) \in A \right\rbrace \right) = r^{-1}\Phi(A),
   \end{equation}
   where $\Phi(\cdot)$ is the \emph{spectral measure}.  The spectral measure is thus independent and
   separable from the radial component.  Furthermore,
   \begin{equation}
-    \text{P}\left(\bm{V} \in A \mid R > r\right)
-      = \frac{r\text{P}\left(\bm{V} \in A, R > r\right)}{r\text{P}(R > r)}
-      \stackrel{\longrightarrow}{r\to\infty} \frac{\Phi(A)}{\Phi(\mathcal{S}_{\infty}^{d-1})}
+    \text{P}\left[\bm{V} \in A \mid R > r\right]
+      = \frac{r\text{P}\left[\bm{V} \in A, R > r\right]}{r\text{P}[R > r]}\hspace{0.2cm}
+      \xrightarrow[r\to\infty]{~} \hspace{0.2cm} \frac{\Phi(A)}{\Phi(\mathcal{S}_{\infty}^{d-1})}
   \end{equation}
   Describing the dependence structure of $\bm{Z}$, equivalently describes the spectral measure
   $\Phi$. To accomplish this, we seek to establish a distribution on $\bm{V} \in \mathcal{S}_{\infty}^{d-1}$.
