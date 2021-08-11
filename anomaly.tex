@@ -107,25 +107,31 @@ Another way we can think of anomalies is as observations that are difficult to f
   how \emph{difficult} a particular observation is to fit.
 
 \subsection{Anomaly Detection Performance on the hypersphere}
-As a preliminary analysis, we have prepared simulated AD datasets using Algorithm~\ref{algo:simulated}.
+As a preliminary analysis, we have prepared simulated AD data sets using Algorithm~\ref{algo:simulated}.
   for 95 percent of the data, we apply the algorithm directly; then for the remaining 5 percent of the
   data we mutate the generating distribution by rotating axis labels by 1 for each mixture component.
   This results in \emph{anomalies} that are comparatively rare, and come from a different distribution
   than \emph{normal} data.
 
-\begin{table}[h]
+\begin{table}[ht]
   \centering
   \include{table_ad_sim_results}
   \caption{Area under the ROC Curve for various methods, established on simulated
     data.\label{tab:ad_sim_results}}
 \end{table}
 
+The receiver operating characteristics (\emph{ROC}) curve plots the true positive rate, or  
+  sensitivity,  on the vertical axis against the false positive rate, or $1 - \text{specificity}$
+  on the horizontal axis.  It provides a metric of \emph{how well} a given classifier is working 
+  on data.  A perfect classifier will have perfect sensitivity and specificity, so the area under
+  the ROC curve will be equal to 1. Table~\ref{tab:ad_sim_results} presents the area under the ROC
+  curve for the proposed models as well as selected classical models.  We evaluate the anomaly
+  detection algorithms described, along with one-class SVM, local outlier factor, and isolation
+  forest.  For each model, an anomaly score set is created, and by varying the score threshold, a
+  ROC curve is established.
+
 The higher the number of mixture components, the more comparatively \emph{noisy} the data.  In such
   an environment, anomalies are more difficult to spot.  We see a relative performance drop moving
-  from 5 to 10 mixture components, across all scoring algorithms.
-
-
-
-
-
+  from 5 to 10 mixture components, across all scoring algorithms.  Importantly, however, we see the proposed algorithms performing competitively as compared to the classic algorithms.  For three of four simulated datasets, the $k$NN algorithm using the 1-d rotation kernel performed best.
+  
 % EOF

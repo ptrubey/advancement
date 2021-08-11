@@ -24,7 +24,7 @@ We have introduced this projected gamma distribution existing on $\mathcal{S}_{\
   The choice of generation routine for $\beta$ is $\beta\sim\text{Unif}(\beta\mid 0.25, 2.5)$.
   This choice was made to ensure that $\beta$ does not approach 0 in the generation routine.
 
-\begin{figure}[h]
+\begin{figure}[ht]
   \caption{Simulation Energy Score versus Column Count, by Mixture Component Count\label{fig:simes}}
   \centering
   \includegraphics[width=0.8\textwidth]{./images/simulation_es}
@@ -40,7 +40,7 @@ In Figure~\ref{fig:simes}, we fit DP Mixtures of the various models presented an
   Gamma and the other gamma-based models tends to shrink as the number of columns increases.
   Alternatively, that difference appears to grow as the number of mixture components increases.
 
-\begin{figure}[h]
+\begin{figure}[ht]
   \label{fig:simppl}
   \caption{Simulation Posterior Predictive Loss versus Column Count, by Mixture Component Count}
   \centering
@@ -65,13 +65,13 @@ We frequently see all of the gamma-based mixture models accomplish a lower energ
   be made.  However, we are using projected Gamma as a parametric stand-in for an unknown distribution.
   In this sense, the argument for overfitting is less clear.
 
-\begin{figure}[h]
+\begin{figure}[ht]
   \caption{Estimated $k$NN-KL Divergence metric on simulated data, averaged between 1 and 10 nearest
     neighbors, against column count, for selected models.  Graphs are facetted according to the
     number of mixture components in the generating distribution.  The \emph{generative} model
     represents another replicate of the underlying distribution, so that should be regarded as
     \emph{truth}.\label{fig:simkld}}
-  \includegraphics[width = 6in, height = 4in]{./images/simulation_knn_kld}
+  \includegraphics[width = 5.5in, height = 3.75in]{./images/simulation_knn_kld}
 \end{figure}
 
 in Figure~\ref{fig:simkld} we see the application of the $k$NN-based K.L. divergence metric detailed
