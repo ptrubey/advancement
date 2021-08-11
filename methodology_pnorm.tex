@@ -21,11 +21,16 @@ A hypersphere is a geometric object such that the distance from any point to the
   \begin{equation*}
     \mathcal{S}_{p}^{d-1} = \left\lbrace \bm{s} : \bm{s} \in \mathcal{R}_{+}^{d}, \lVert \bm{s}\rVert_{p} = 1\right\rbrace.
   \end{equation*}
-  We project an observation onto this space by dividing said observation by its $p$-norm. Let
-  $\bm{x}\in \mathcal{R}_{+}^{d}$, then $\bm{y} = \bm{x} / \lVert \bm{x}\rVert_p \in \mathcal{S}_{p}^{d-1}$.
+  Figure~\ref{fig:psphere} shows $\mathcal{S}_{p}^{1}$ for $p$ at integers between 1 and 10.  At $p = 1$, we have the simplex.  As $p$ grows larger, the surface moves away from the origin and approaches closer to the unit hypercube--the limiting form of the surface. We project an observation onto $\mathcal{S}_p^{d-1}$ by dividing said observation by its $p$-norm--let  $\bm{x}\in \mathcal{R}_{+}^{d}$, then $\bm{y} = \bm{x} / \lVert \bm{x}\rVert_p \in \mathcal{S}_{p}^{d-1}$.
   We denote the $d-1$ to indicate the loss of one degree of freedom relative to the original vector.
   Observations on one hypersphere can be projected without loss of information onto another by
   dividing by the defining norm of the target hypersphere.
+  
+\begin{figure}[htb]
+    \centering
+    \includegraphics{images/p_sphere}
+    \caption{Unit hyperspheres established on $\mathcal{L}_p$, for $p = 1,\ldots,10$, for two dimensions.\label{fig:psphere}}
+\end{figure}
 
 Assuming $\bm{y} \in \mathcal{S}_{p}^{d-1}$, then for finite $p$, $y_d$ can always be represented
   as a function of the other dimensions.  That is,
@@ -56,14 +61,16 @@ Assuming $\bm{y} \in \mathcal{S}_{p}^{d-1}$, then for finite $p$, $y_d$ can alwa
   the angular and radial components of $\bm{x}$.  If we assume a distribution for $\bm{x}$, then
   by transforming to $r, \bm{y}$ and integrating out $r$, we are left with a distribution on solely
   $\bm{y}$, the projection of $\bm{x}$ onto $\mathcal{S}_{p}^{d-1}$.  If we take the projection to
-  its limit as $p\to\infty$, we arrive at a projection onto $\mathcal{S}_{\infty}^{d-1}$.  The models
-  we present here follow this form, projecting a distribution in $\mathcal{R}_+^{d}$ to
-  $\mathcal{S}_{\infty}^{d-1}$.
-%
-%   \bruno{\bf The idea of this whole section keeps being unclear. For the Generalized Pareto approach
-%   that we are pursuing we need to obtain a distribution on the unit ball for $\infty$ norm. I think
-%   that the idea of this section is we can project the original $d$-dimensional vector onto the
-%   unit ball for $p$ norm. That induces a distribution on the unit $\infty$ norm ball. You can use the
-%   case of the 2-norm as an example.}
+  its limit as $p\to\infty$, we arrive at a projection onto $\mathcal{S}_{\infty}^{d-1}$.
+  
+We can observe a problem at this point in at least two ways.  First, on $\mathcal{S}_{\infty}^{d-1}$, the
+  inverse transformation from $\mathcal{S}_{\infty}^{d-1}$ to $R_+^{d}$ in Equation~\ref{eqn:pnormtinv} 
+  may not recover the original data--that formulation of the projection would only work when $Y_d = 1$.
+  Alternatively, we may look at the formula for the determinant of the Jacobian in
+  Equation~\ref{eqn:pnormjac}.  In that formula we observe the value 
+  $(1 - \sum_{l = 1}^{d-1}y_l^p)^{\frac{1}{p} - 1}$.  As $p\to\infty$, 
+  this quantity will go to $0^{-1}$ if $y_d \neq 1$.
+  So, the mathematical basis of this transformation is thus dependent upon finite $p$.  However, we can
+  project onto $\mathcal{S}_p^{d-1}$ for large $p$, and that projection will be similar to an idealized distribution on $\mathcal{S}_{\infty}^{d-1}$.
 
 % EOF

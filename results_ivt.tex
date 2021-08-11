@@ -1,6 +1,6 @@
 % results.tex
 \subsection{Integrated Vapor Transport}
-We use data from the integrated water vapor transport (\emph{IVT}) model\makenote{needs citation}
+We use data from the integrated water vapor transport (\emph{IVT}) model \citep{guan2015}
   of atmospheric rivers as a means of testing these models.  An atmospheric river is a meteorological
   event of local concentration of water vapor in the atmosphere that moves with wind patterns.
   Understanding extremal dependence in atmospheric rivers, for instance, grants hydrological engineers
@@ -11,7 +11,8 @@ We use data from the integrated water vapor transport (\emph{IVT}) model\makenot
   Alternatively, if we install too much capacity everywhere, then we are wasting money that could be
   better spent elsewhere.
 
-Fitting our models to this data requires some pre-processing.  The marginal distributions of the
+Fitting our models to this data requires some pre-processing. First, we subset the data to the rainy
+  season, which appears from November to March.  The marginal distributions of the
   IVT data appear naturally log-normal, which falls into the domain of attraction of a Gumbel
   distribution.  Given that, we can apply a high threshold, and exceedances over that threshold can
   be modelled as Generalized Pareto.  Our modelling begins with that assessment.  As estimating
@@ -33,7 +34,6 @@ After the thresholding and maximum likelihood estimation of the parameters of th
   Algorithm~\ref{algo:processing}.
 
 \begin{algorithm}
-  \label{algo:processing}
   \KwResult{$\bm{ r} : r_i \sim \text{Pareto}(1)$, $\bm{ v} \in \mathcal{S}_{\infty}^{d-1}$}
   \For{$l = 1,\ldots,d$}{
     Set $b_{tl} = \hat{F}_l^{-1}\left(1 - \frac{1}{t}\right)$.\\
@@ -46,24 +46,28 @@ After the thresholding and maximum likelihood estimation of the parameters of th
   Subset $\bm{ r},\bm{ v}$ such that $r_i \geq 1$ for all $r_i\in \bm{r}$.\\
   \If{declustering}{
     \For{$i = 1,\ldots,n$}{
-      If $r_i \geq 1$ and $r_{i-1} \geq 1$, drop the lesser (and associated $v_i$) from dataset.\\
+      If $r_i \geq 1$ and $r_{i-1} \geq 1$, drop the lesser (and associated $v_i$) from data set.\\
     }
   }
- \caption{Data pre-processing to isolate and transform data exhibiting extreme behavior.  $r_i$ represents the radial component, 
-    and $\bm{v}_i$ the angular component.  The declustering portion is relevant if data is correlated in time.}
+ \caption{Data preprocessing to isolate and transform data exhibiting extreme behavior.  $r_i$
+   represents the radial component, and $\bm{v}_i$ the angular component.  The declustering 
+   portion is relevant if data is correlated in time.\label{algo:processing}}
 \end{algorithm}
 
-We have, at our disposal, two datasets from the IVT model. \bruno{Did you use daily data? For how many years? You should say how many data you started with, and how many you ended up with after you did the clustering. Also, were you not looking only at the rainy season for each year?}  One records data from 8 grid cells, covering
+We have, at our disposal, two data sets from the IVT model, totalling approximately 30 years of daily
+  values omitting leap days.  One records data from 8 grid cells, covering
   generally the coast of California.  The other, with a higher resolution, records data from 47 grid
-  cells covering the same area.  We fit our models to both datasets.
+  cells covering the same area.  For the 8-cell data, after subsetting to the rainy season, we have 
+  $5587$ observations.  After the data processing steps in Algorithm~\ref{algo:processing}, where we omit observations not extreme in any dimension, and decluster temporally correlated data, we are left with $511$ observations.  For the 47-cell data, after subsetting to the rainy season, we have $6342$ observations.  After the same data processing, we are left with 
+  $532$ observations.  We fit our models to both data sets.
 
-\begin{table}[hb]
-  \label{tab:dev}
+\begin{table}[b]
   \centering
-  \include{table_dev}
   \caption{Model comparison metrics: Posterior Predictive Loss and Energy Score criteria from fitted
     models against the IVT data.  All presented models are DP mixtures; the \emph{Model} field
-    identifies the kernel distribution.  For both criteria, lower is better.}
+    identifies the kernel distribution.  For both criteria, lower is better.
+  \label{tab:dev}}
+  \include{table_dev}
 \end{table}
 
 In Table~\ref{tab:dev} we see the same model preference towards the projected restricted gamma models
@@ -75,34 +79,30 @@ In Table~\ref{tab:dev} we see the same model preference towards the projected re
 
 That said, there is much we can glean from this table.  The probit-normal model, developed on a mapping
   from $\mathcal{S}_{2}^{d-1}$ to $(-\infty,\infty)^{d-1}$ via probit transformation of spherical coordinates
-  was not competitive with the gamma models on real data, similar to what we saw in the simulation study.
-
-We should also note that we did conduct inference on projected gamma models established on
-  $\mathcal{S}_{1}^{d-1}$ and $\mathcal{S}_2^{d-1}$.  Posterior predictive loss and energy score criteria
-  favored the model established on $\mathcal{S}_{\infty}^{d-1}$.  \bruno{I confess that I don't understand  what ``model established on $\mathcal{S}_{\infty}^{d-1}$'' means. All models ultimately estimate a distribution on $\mathcal{S}_{\infty}^{d-1}$, and there is not way to directly project onto $\mathcal{S}_{\infty}^{d-1}$ because the transformation is not differentiable.} We also established finite mixture
+  was not competitive with the gamma models on real data, similar to what we saw in the simulation study. We also established finite mixture
   models for all presented distributions, but after tuning the number of mixture components, their
-  model performance was, and could only be \emph{as good} as the DP mixture.
+  model performance was, and could only be \emph{as good} as the DP mixture.  In the interest of parsimony, we only present the DP models as representative of mixture distributions.
 
 \begin{figure}[h]
   \centering
-  \label{fig:knnkl}
-  \includegraphics[width = 6in, height = 3in]{./images/knn_kl_divergence_curves}
-  \caption{KL Divergence Curves calculated through the KNN-KL Metric, evaluated between the empirical
-  dataset and posterior predictive datasets of various models.  The top row corresponds to the
-  8-dimensional data, while the bottom row the 47.  All presented models use a Dirichlet process
-  prior, the nominal model being the kernel distribution.}
+  \caption{KL Divergence Curves calculated through the KNN-KL Metric, evaluated between the
+  empirical dataset and posterior predictive datasets of various models.  The top row corresponds
+  to the 8-dimensional data, while the bottom row the 47.  All presented models use a DP prior, 
+  the nominal model being the kernel distribution.\label{fig:knnkl}}
+  \includegraphics[width = 5.5in, height = 2.75in]{./images/knn_kl_divergence_curves}
 \end{figure}
 
-Interpreting the KL divergence curves in Figure~\ref{fig:knnkl} is more difficult.  As we saw in the
-  simulated case in Figure~\ref{fig:simkld}, the general logic of \emph{best} being that which is
-  closest to zero is not necessarily in use here.  We interpret a positive value in the KL divergence metric
-  as indicating that, for a given point in the given distribution, we must travel \emph{farther} on
-  the target distribution to reach the $k$th neighbor as compared to the given distribution.  In this
-  regard, we should regard \emph{large} positive values as indicating a particularly poor fit.  In this
-  regard, the projected gamma and probit-normal models do not appear to scale well as they performed
-  very poorly on the high dimensional data.  For the projected restricted gamma model, the log-normal
-  prior appears to scale better than the gamma prior.  This is in keeping with what we observed in
-  Table~\ref{tab:dev}, but is a different result than what we observed in the simulation study, where
-  we observed that the log-normal prior only tended towards the gamma prior, never performing better.
+Interpreting the KL divergence curves in Figure~\ref{fig:knnkl} is more difficult.  As we saw in
+  the simulated case in Figure~\ref{fig:simkld}, the general logic of \emph{best} being that which
+  is closest to zero is not necessarily in use here.  We interpret a positive value in the KL
+  divergence metric as indicating that, for a given point in the given distribution, we must 
+  travel \emph{farther} on the target distribution to reach the $k$th neighbor as compared to 
+  the given distribution.  In this regard, we should regard \emph{large} positive values as
+  indicating a particularly poor fit.  By this metric, the projected gamma and probit-normal 
+  models do not appear to scale well as they performed very poorly on the high dimensional data.
+  For the projected restricted gamma model, the log-normal prior appears to scale better than the
+  gamma prior.  This is in keeping with what we observed in Table~\ref{tab:dev}, but is a 
+  different result than what we observed in the simulation study, where we observed that the
+  log-normal prior only tended towards the gamma prior, never performing better.
 
 % EOF

@@ -6,8 +6,6 @@ We have introduced this projected gamma distribution existing on $\mathcal{S}_{\
   We generated each dataset from a mixture of projected Gammas, with the number of mixture components
   ranging between 3 and 12.  The generation procedure is detailed in Algorithm~\ref{algo:simulated}.
   \begin{algorithm}[htb]
-    \label{algo:simulated}
-    % \setAlgoLined
     \For{$n_{\text{mix}}$ in $[3, 6, 9, 12]$}{
       Generate $n_{\text{mix}} \times 20$ shape Parameters $\alpha$\\
       Generate $n_{\text{mix}} \times 20$ Rate Parameters $\beta$\\
@@ -19,7 +17,7 @@ We have introduced this projected gamma distribution existing on $\mathcal{S}_{\
         Project columns 1 to $n_{\text{col}}$ of ${\bf X}$ onto $\mathcal{S}_{\infty}^{n_{\text{col}} - 1}$ and save.
         }
     }
-    \caption{Simulated Angular Dataset Generation Routine}
+    \caption{Simulated Angular Dataset Generation Routine\label{algo:simulated}}
   \end{algorithm}
   The choice of generation routine for $\alpha = \alpha_0 + \alpha_1$ where
   $\alpha_0 \sim \text{Unif}(\alpha_0\mid 0,4)$, $\alpha_1\sim \text{Gamma}(\alpha_1\mid 1,1)$.
@@ -27,8 +25,7 @@ We have introduced this projected gamma distribution existing on $\mathcal{S}_{\
   This choice was made to ensure that $\beta$ does not approach 0 in the generation routine.
 
 \begin{figure}[h]
-  \label{fig:simes}
-  \caption{Simulation Energy Score versus Column Count, by Mixture Component Count}
+  \caption{Simulation Energy Score versus Column Count, by Mixture Component Count\label{fig:simes}}
   \centering
   \includegraphics[width=0.8\textwidth]{./images/simulation_es}
 \end{figure}
@@ -63,34 +60,33 @@ We frequently see all of the gamma-based mixture models accomplish a lower energ
   result in a better energy score, as posterior predictive replicates for a given observation in a local
   model will tend to be concentrate in that local mode rather than being spread between multiple
   modes.  As for the dominance of projected restricted Gamma, By specifying $\beta_l := 1$ for all
-  $l$, we are in effect forcing unimodal mixture components, which may not have been the case under
-  the generative model.  As for whether this represents \emph{overfitting}, If we had reason to
+  $l$, if there were multi-modal mixture components, we are in effect breaking the mixture components into separate modes. As for whether this represents \emph{overfitting}, If we had reason to
   believe that the generative distribution for real data followed this form, then such a case could
   be made.  However, we are using projected Gamma as a parametric stand-in for an unknown distribution.
   In this sense, the argument for overfitting is less clear.
 
 \begin{figure}[h]
-  \label{fig:simkld}
-  \caption{Estimated $k$NN-KL Divergence metric, averaged between 1 and 10 nearest neihbors, against
-      column count, for selected models.  Graphs are facetted according to the number of mixture
-      components in the generating distribution.  The \emph{generative} model represents another
-      replicate of the underlying distribution, so that should be regarded as \emph{truth}.}
+  \caption{Estimated $k$NN-KL Divergence metric on simulated data, averaged between 1 and 10 nearest
+    neighbors, against column count, for selected models.  Graphs are facetted according to the
+    number of mixture components in the generating distribution.  The \emph{generative} model
+    represents another replicate of the underlying distribution, so that should be regarded as
+    \emph{truth}.\label{fig:simkld}}
   \includegraphics[width = 6in, height = 4in]{./images/simulation_knn_kld}
 \end{figure}
 
 in Figure~\ref{fig:simkld} we see the application of the $k$NN-based K.L. divergence metric detailed
-  in Equation~\ref{eqn:knnkld} to the simulated datasets.  For display, this metric has been averaged
-  between $1$ and $10$ neighbors.  In general, the K.L. divergence metric is meant to be a log-ratio
+  in Equation~\ref{eqn:knnkld} to the simulated data sets.  For display, this metric has been averaged
+  between $1$ and $10$ neighbors.  In general, the K.L. divergence metric is a log-ratio
   of densities, integrated over the entire space.  In this fashion, we should interpret that model
   is \emph{best} that stays closest to 0, as that indicates the two densities are equivalent.  The
-  equation also includes a scaling factor for the size of the datasets, as all else being equal, a
-  larger dataset will decrease the distance between any point and its neighbors.  We can regard the
+  equation also includes a scaling factor for the size of the data sets, as all else being equal, a
+  larger data set will decrease the distance between any point and its neighbors.  We can regard the
   \emph{generative} model as another replicate data set from the generating distribution--another
   view of truth.  As its distribution should be almost identical, we would assume that the KL divergence
   metric from this model will come closest to 0.  It does not.  Knowing this to be the case, we should
   instead regard the generative model as truth, and treat as best the model which comes closest to the
   \emph{generative} model.  In this regard, we observe that the projected gamma model comes closest,
-  with the projected restricted gamma model following behind.  The probit-normal model quiickly diverges
+  with the projected restricted gamma model following behind.  The probit-normal model quickly diverges
   as the number of dimensions increases.  This is not unexpected, as we saw similar behavior in the
   energy score and posterior predictive loss criteria.
 

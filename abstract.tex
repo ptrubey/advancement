@@ -1,20 +1,29 @@
 
-In recent years much work has been done in exploring the definition and properties of an appropriate
-  generalization of the univaraite generalized Pareto distribution for threshold exceedences to a
-  multivariate setting.  This paper builds on the constructive definition of the multivariate Pareto
-  presented in \cite{ferreira2014} that decomposes the vector of interest into independent radial and
-  angular components; the latter supported on a particular manifold and containing only information
-  relevant to the dependence structure of the distribution.  We motivate our analysis with a discussion
-  of extreme analysis applications in atmospheric sciences, in particular using the integrated vapor
-  transport (IVT) data for assessing atmospheric rivers.
+The field of extreme analysis provides a means of extrapolating information from observed data into
+  predicting behavior of tails of a distribution.  One sub-field of extreme analysis focuses on modelling 
+  tail behavior by exceedences over a threshold, using the Pareto distribution.  In recent years much 
+  work has been done in exploring the definition and properties of an appropriate generalization of the
+  univariate generalized Pareto distribution for threshold exceedences to a multivariate setting.  This 
+  paper builds on the constructive definition of the multivariate Pareto presented in \cite{ferreira2014}
+  that decomposes the vector of interest into independent radial and angular components; the latter 
+  supported on a particular manifold and containing all and only information relevant to the dependence
+  structure of the distribution.  We motivate our analysis with a discussion of extreme analysis applications
+  in atmospheric sciences, in particular using the integrated vapor transport (IVT) data for assessing
+  atmospheric rivers.  This data covers approximately 30 years, and provides daily measurements of atmospheric water in grid cells covering California.
 
-In this paper, we propose a novel approach to parameterize this dependence structure and conduct
-  inference upon it.  We then explore some opportunities afforded to us by a parametrically modelled
-  dependence structure in classical multivariate extreme analysis.  Finally, we explore the efficacy
-  of some anomaly detection methods made possible by the existence of such a distribution, adapted
-  to the support of the angular component.
-  \bruno{You have to make the abstract sound more like the abstract for the advacement and less the abstract for a paper. Group the material that you are discussion into three broad projects.}
-
-\makenote{Extend the abstract.  Highlight the importance of EVT as a tool to predict behavior of
-    tails of a distribution.  Also talk about applications considered, and computational challenges. }
+In this advancement document, we propose a novel approach to parameterize this dependence structure of 
+  the multivariate Pareto, and conduct inference upon it.  We discuss criteria by which we can evaluate our
+  proposed models, as the manifold the dependence structure is supported on does not lend itself to using the
+  Euclidean distance metric.  Using our motivating example, we then explore some opportunities afforded to 
+  us by a parametrically  modelled dependence structure in classical multivariate extreme analysis.
+  
+We review available methods of anomaly detection, and then leverage our proposed model of the dependence
+  structure to develop methods of anomaly detection.  We propose two such methods, and in preliminary 
+  analysis on simulated data, we show them to be competitive with existing methods.
+  
+Finally we discuss computational developments that may allow us to apply our model at scale.  We discuss a
+  possible motivating example in the form of storm surge, where a given vector may have hundreds of 
+  thousands to millions of elements.  Application at this scale will require further development to
+  maintain model fidelity in high dimensions.
+ 
 % EOF
