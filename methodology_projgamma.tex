@@ -256,16 +256,13 @@ A final extension we can make to this model is to allow for some structure, or d
 \subsubsection{Choice of Norm}
 In the extreme value case, we have defined our task on $\mathcal{S}_{\infty}^{d-1}$, the positive orthant
   of the hypersphere defined under the $\mathcal{L}_{\infty}$ norm.  We previously described the 
-  difficulty in establishing a density directly on this geometry.  However, we can build the projected gamma
-  distribution on $\mathcal{S}_p^{d-1}$ for a large $p$.  We can then project samples from the posterior
-  predictive distribution for a model built on $\mathcal{S}_p^{d-1}$ onto $\mathcal{S}_{\infty}^{d-1}$.
-  As $p$ increases, the closer the manifold will be to $\mathcal{S}_{\infty}^{d-1}$, and thus the closer the
-  projected distribution will be to an idealized projected Gamma built on $\mathcal{S}_{\infty}^{d-1}$.  In
-  testing, we tried developing models on $S_p^{d-1}$ for varying levels of $p$, and found that higher $p$
-  produced higher performing models.  Additionally, the difference in model performance became more apparent
-  as dimensionality increased.  Results currently presented are assuming a projected Gamma distribution
-  projected onto $\mathcal{S}_{\infty}^{d-1}$--which as we have just outlined is problematic.  We are
-  currently running analysis for a finite $p = 10$, which we will replace analysis results in the rest of the
-  paper.  Results and model rankings are not expected to change significantly.
+  difficulty in establishing a density directly on this geometry.  However, we can build the projected
+  gamma distribution on $\mathcal{S}_p^{d-1}$ for a large $p$.  We can then project samples from the
+  posterior predictive distribution for a model built on $\mathcal{S}_p^{d-1}$ onto
+  $\mathcal{S}_{\infty}^{d-1}$. As $p$ increases, the closer the manifold will be to $\mathcal{S}_{\infty}^{d-1}$, and thus the closer the projected distribution will be to an idealized
+  projected Gamma built on $\mathcal{S}_{\infty}^{d-1}$.  In testing, we tried developing models on
+  $S_p^{d-1}$ for varying levels of $p$, and found that higher $p$ produced higher performing models. 
+  Additionally, the difference in model performance became more apparent as dimensionality increased.
+  We present results here for models developed on $\mathcal{S}_{10}^{d-1}$.
 
 % EOF
