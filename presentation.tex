@@ -31,7 +31,7 @@
 
 
 \title{Multivariate Extreme Value Theory and Applications to Anomaly Detection}
-\author{Peter Trubey \\ UCSC Department of Statistics}
+\author{Peter Trubey \\ Advisor: Bruno Sans{\'o} \\ UCSC Department of Statistics}
 \date[8/25/2021]{Advancement}
 
 \begin{document}
@@ -47,20 +47,16 @@
 
 \section{Introduction}
 
-\begin{frame}
-  \frametitle{Introduction}
-
-
-\end{frame}
-
-
-
 \subsection{Extreme Value Theory}
 
 \begin{frame}
   \frametitle{EVT - A Brief Background}
   \begin{itemize}
     \item Why EVT?
+        \begin{itemize}
+            \item Inference on the tails of the distribution
+            \item Inference beyond observed sample
+        \end{itemize}
     \item Block Maxima - GEV
     \item Thresholding - GP
   \end{itemize}
@@ -111,9 +107,7 @@
   \frametitle{Block Maxima - Inference}
   \begin{itemize}
     \item Inference requires blocking data and taking maximum within a block
-    \pause
     \item Reduces data for inference to $1 / \text{block size}$.
-    \pause
     \item Ignore those pesky \emph{iid} requirements
   \end{itemize}
 \end{frame}
@@ -130,23 +124,22 @@
       \begin{equation*}
         \lim\limits_{u\to u^{\prime}}\text{Pr}\left[X > u + y\mid X > u\right] = H(y)
       \end{equation*}
+    \pause
+    \item Where $H$ has the form
+      \begin{equation*}
+        H(y) = 1 - \left(1 + \xi\frac{y}{\sigma}\right)^{-\frac{1}{\xi}}.
+      \end{equation*}
   \end{itemize}
 \end{frame}
-
-\begin{frame}
-  \frametitle{Thresholding - Generalized Pareto}
-
-\end{frame}
-
 
 \begin{frame}
   \frametitle{Multivariate EVT}
   \begin{itemize}
     \item Useful to standardize each $X_i$ according to its marginal distribution
     \item Standardization occcurs as:
-      \begin{equation}
+      \begin{equation*}
         z_j = \left(1 + \xi\frac{x_j - b_{t,j}}{a_{t,j}}\right)_{+}^{1/\xi}
-      \end{equation}
+      \end{equation*}
 			where $b_{t,j} = \hat{F}^{-1}(1 - 1/t)$.
     \item Note that $Z_j > 1\implies X_j > b_{t,j}$
     \item $\max_j Z_j \sim \text{Pareto}$
@@ -171,16 +164,16 @@
   \frametitle{Spectral Measure}
   For $B \subset S_{\infty}^{d-1}$, define the \emph{Spectral Measure}:
   \begin{equation*}
-    \Omega(B) = \mu[{\bf z}: R({\bf z}) > 1, {\bf V} \in B].
+    \Omega(B) = \mu\left[{\bf z}: R({\bf z}) > 1, {\bf V} \in B\right].
   \end{equation*}
   Then,
   \begin{equation*}
-    \mu[{\bf z}:R(z)>t, {\bf V}\in B] = t^{-1}\Omega(B).
+    \mu\left[{\bf z}:R(z)>t, {\bf V}\in B\right] = t^{-1}\Omega(B).
   \end{equation*}
   Thus $t$ is independent of $\Omega$, the spectral measure.  This is completed as a
     probability measure as:
   \begin{equation*}
-    \text{Pr}\left({\bf V} \in B \mid r > 1\right) = \frac{\Omega(B)}{\Omega(S_{\infty}^{d-1})}.
+    \text{Pr}\left[{\bf V} \in B \mid r > 1\right] = \frac{\Omega(B)}{\Omega(S_{\infty}^{d-1})}.
   \end{equation*}
   So conditional on at least one dimension exceeding its threshold, we can hold the
   angular measure independent of the magnitude.
@@ -189,12 +182,26 @@
 \subsection{Integrated Vapor Transport}
 \begin{frame}
   \frametitle{Integrated Vapor Transport}
+  \begin{itemize}
+      \item Slide in progress
+      \item suffice to say: marginals of IVT are lognormal, in Gumbel D.o.A.
+      \item 2 datasets; 8 and 47 cells
+  \end{itemize}
 \end{frame}
 
 \section{Methodology}
 
 \begin{frame}
   \frametitle{Casting \emph{real} data to $\mathcal{S}_{\infty}^{d-1}$}
+  \begin{enumerate}
+      \item Calculate $b_{tj}$, fit $a_j$, $\xi_j$ by ML
+      \item Standardize according to
+        \begin{equation*}
+         z_j = \left(1 + \xi\frac{x_j - b_{t,j}}{a_{t,j}}\right)_{+}^{1/\xi}
+        \end{equation*}
+      \item Calculate $r_i = \max_lz_{il}$, $\bm{v}_i = \bm{z}_i / r_i$
+      \item Data is time series--decluster by keeping $\argmax r_i$ in series where $r_i > 1$
+  \end{enumerate}
 \end{frame}
 
 \subsection{Projection onto $\mathcal{S}_{\infty}^{d-1}$}
@@ -202,7 +209,7 @@
 \begin{frame}
   \frametitle{The Unit Sphere}
   \begin{columns}
-    \begin{column}{.48\textwidth}
+    \begin{column}{.38\textwidth}
       \begin{itemize}
         \item $\mathcal{L}_p$ Norm:
           \begin{equation*}
@@ -217,14 +224,13 @@
     \end{column}%
     \hfill%
     \pause
-    \begin{column}{.48\textwidth}
+    \begin{column}{.58\textwidth}
       \begin{center}
-        \includegraphics{./images/p_sphere}
+        \includegraphics[width = \linewidth, height = \linewidth]{./images/p_sphere}
       \end{center}
     \end{column}%
   \end{columns}%
 \end{frame}
-
 \begin{frame}
   \frametitle{Projection onto the Unit Norm Sphere}
   \begin{itemize}
@@ -438,9 +444,9 @@
   \frametitle{Alternative Geometries}
   \begin{itemize}
     \item Coordinate system to describe $\mathcal{S}_p^{d-1}$ in $\omega^{d-1}$
-    \item $\mathcal{L}_1$: Log-ratios
-    \item $\mathcal{L}_2$: Spherical Coordinates
-      \begin{equation}
+    \item $\mathcal{L}_1$: Log-ratios:  $\mathcal{S}_1^{d-1} \rightarrow (-\infty,\infty)^{d-1}$
+    \item $\mathcal{L}_2$: Spherical Coordinates: $\mathcal{S}_2^{d-1} \rightarrow [0,\pi/2]^{d-1}$
+      \begin{equation*}
         \label{eqn:spherical}
         \begin{aligned}
           y_1 &= \cos\theta_1\\
@@ -448,7 +454,7 @@
                                     \hspace{1cm}\text{for } l = 2,\ldots,d-1\\
           y_d &= {\textstyle\prod}_{k = 1}^{d-1}\sin\theta_k
         \end{aligned}
-      \end{equation}
+      \end{equation*}
   \end{itemize}
 \end{frame}
 
@@ -486,11 +492,11 @@
   \frametitle{Energy Score}
   \begin{itemize}
     \item Generalization of CRPS to multiple dimensions
-    \begin{equation}
+    \begin{equation*}
       \label{eq:es}
       \text{ES}\left(P,x_i\right) =  \text{E}_p g\left(\bm{X}_i, \bm{x}_i\right)
                 - \frac{1}{2}\text{E}_p g\left(\bm{X}_i,\bm{X}_i^{\prime}\right)
-    \end{equation}
+    \end{equation*}
     \pause
     \item Where $g$ is a negative definite kernel\\
       Euclidean distance is most common
@@ -505,7 +511,7 @@
 %     \item Positive orthant of hypercube
 %       \begin{equation*}
 %         \mathcal{S}_{\infty}^{d-1} = \left\lbrace \bm{s}\hspace{0.1cm}:\hspace{0.1cm}s_i \in [0,1],
-%                                                         \hspace{0.2cm} \max_i s_i = 1\right\rbrace
+%          \hspace{0.2cm} \max_i s_i = 1\right\rbrace
 %       \end{equation*}
 %     \pause
 %     \item Distance on the hypercube
@@ -555,13 +561,14 @@
       \begin{equation*}
         D_{\text{KL}}(A,B) = \int_{x\in \Omega(A)}A(x)\log\left(\frac{A(x)}{B(x)}\right)\text{d}x
       \end{equation*}
-      requires an estimate of density
-    \begin{item} D
-    \begin{equation*}
-        \label{eqn:knnkld}
-        D_{\text{KL}}^{(k)}(A,B) = \log\frac{n(B)}{n(A)} + c(A) \left[\rho_A^{(k)}(B)
-                                                          - \rho_A^{(k)}(A)\right]
-    \end{equation*}
+      requires an estimate of density.
+    \pause
+    \item We have demonstrated the difficulty of establishing density.  Approximate
+      \begin{equation*}
+      D_{\text{KL}}^{(k)}(A,B) = \log\frac{n(B)}{n(A)} + c(A) \left[\rho_A^{(k)}(B)
+                                                      - \rho_A^{(k)}(A)\right]
+      \end{equation*}
+
   \end{itemize}
 \end{frame}
 
@@ -594,7 +601,7 @@
   \begin{center}
     \includegraphics[width=0.9\linewidth]{./images/simulation_es}
   \end{center}
-\end{Frame}
+\end{frame}
 
 \begin{frame}
   \frametitle{Simulation - KL Divergence}
@@ -611,7 +618,7 @@
   \end{center}
 \end{frame}
 
-\begin{Frame}
+\begin{frame}
   \frametitle{IVT - Energy Score}
   \begin{center}
     \include{table_dev}
@@ -679,48 +686,50 @@
   \frametitle{Conditional Survival Function}
   \begin{prop}
       In one dimension, the conditional survival curve can be calculated as
-   \begin{equation}
+   \begin{equation*}
       \label{eqn:condsurv1df}
       \text{P}\left[Z_l > z_l\mid {\bf Z}_{\neg(l)} > {\bf z}_{\neg(l)}\right] =
         \frac{\text{E}\left[\wedge_{k = 1}^d \frac{V_k}{z_k}\right]}{
                       \text{E}\left[\bigwedge_{k \neq l}\frac{V_k}{z_k}\right]}
-    \end{equation}
+    \end{equation*}
       where $\bm{V} = \bm{Z} / \pnorm{\bm{Z}}{\infty}$.
   \end{prop}
 \end{frame}
 
 \begin{frame}
   \frametitle{Conditional Survival Function - Cont.}
-  \begin{equation}
+  \begin{footnotesize}
+  \begin{equation*}
     \label{eqn:condsurv1d}
     \text{P}\left[Z_l > z_l\mid {\bf Z}_{-(l)} > {\bf z}_{-(l)}\right] =
       \frac{\text{P}\left[\cap_{k = 1}^d Z_k > z_k\right]}{\text{P}\left[\cap_{k \neq l} Z_k > z_k\right]}.
-  \end{equation}
+  \end{equation*}
   \pause
   $R = \pnorm{{\bf Z}}{\infty}$, ${\bf V} = \frac{{\bf Z}}{R}$, such that
     ${\bf V}\in \mathcal{S}_{\infty}^{d-1}$.  Then ${\bf Z} = R{\bf V}$.
-  \begin{equation}
+  \begin{equation*}
     \text{P}\left(\cap_{k = 1}^d Z_k > z_k\right) = \text{P}\left(\cap_{k = 1}^d RV_k > z_k\right)
-  \end{equation}
+  \end{equation*}
   \pause
   Recall, for standard Pareto, $\text{P}(R > r) = 1\wedge\frac{1}{r}$.
-  \begin{equation}
+  \begin{equation*}
     \text{P}\left[\bigcap_{k = 1}^d R > \frac{z_k}{v_k}\right] =
       \text{P}\left[R  > \bigvee_{k=1}^d\frac{z_k}{V_k}\right] =
       \text{E}\left[1 \bigwedge \left(\bigvee_{k = 1}^d\frac{z_k}{V_k}\right)^{-1}\right]
   \end{equation*}
   $V_k \in [0,1]$; $z_k > 1$ (for the region of interest) $\implies$ $\frac{z_k}{V_k} > 1$
   \pause
-  \begin{equation}
+  \begin{equation*}
     \text{P}\left[\cap_{k = 1}^d Z_k > z_k\right] = \text{E}\left[\wedge_{k = 1}^d\frac{V_i}{z_i}\right].
-  \end{equation}
+  \end{equation*}
   \pause
   And similar for the denominator
-  \begin{equation}
+  \begin{equation*}
     \text{P}\left[Z_l > z_l\mid {\bf Z}_{\neg(l)} > {\bf z}_{\neg(l)}\right] =
       \frac{\text{E}\left[\wedge_{k = 1}^d \frac{V_k}{z_k}\right]}{\text{E}\left[
                 \bigwedge_{k \neq l}\frac{V_k}{z_k}\right]}
-  \end{equation}
+  \end{equation*}
+  \end{footnotesize}
 \end{frame}
 
 \begin{frame}
@@ -742,14 +751,14 @@
 \begin{frame}
   \frametitle{What is an anomaly?}
   \begin{itemize}
-    \items Anomalies are:
+    \item Anomalies are:
       \begin{itemize}
         \item Observations with large outliers?
         \item Observations with outsized effects?
         \item Data that is \emph{different}.
         \item Data from regions of data sparsity
       \end{itemize}
-    \item Desire anomaly \emph{scores}--larger$\righarrow$more anomalous
+    \item Desire anomaly \emph{scores}--larger$\rightarrow$more anomalous
   \end{itemize}
 \end{frame}
 
@@ -789,10 +798,10 @@
   \begin{itemize}
     \item Sample from posterior predictive distribution
     \item Density based on \emph{distance} to $k$th nearest neighbor
-    \begin{equation}
+    \begin{equation*}
         S_{i,(k)}^{-1} =
           \frac{k}{N}\frac{\Gamma\left(\frac{d-1}{2} - 1\right)}{\pi^{\frac{d-1}{2}}D_{k}^{d-1}(V_i)}
-    \end{equation}
+    \end{equation*}
   \end{itemize}
 \end{frame}
 
