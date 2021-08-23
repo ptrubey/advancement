@@ -34,6 +34,15 @@
 \setbeamertemplate{footline}{}
 \renewcommand*{\slideentry}[6]{}
 
+\makeatletter
+\newlength{\frameheadheight}
+\setlength{\frameheadheight}{2cm}
+\newlength{\frametextheight}
+\setlength{\frametextheight}{\paperheight}
+\addtolength{\frametextheight}{-\footheight}
+\addtolength{\frametextheight}{-\headheight}
+\addtolength{\frametextheight}{-\frameheadheight}
+\makeatother
 
 \setcounter{tocdepth}{1}
 
@@ -543,16 +552,18 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Rotation}
+    \frametitle{Rotation - 1d and 2d}
     \begin{center}
-        \includegraphics[width=0.7\linewidth]{./images/rot_3d_2d}
+        \includegraphics[height = \frametextheight]{./images/rot_3d_2d}
     \end{center}
 \end{frame}
 
-
-
-
-
+\begin{frame}
+    \frametitle{Rotation - 3d}
+    \begin{center}
+        \includegraphics[height=\frametextheight]{./images/rot_4d_3d}
+    \end{center}
+\end{frame}
 
 \begin{frame}
   \frametitle{A Valid Negative Definite Kernel}
@@ -587,45 +598,19 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{Simulation - Posterior predictive loss}
-  \begin{center}
-    \includegraphics[width=0.9\linewidth]{./images/simulation_ppl}
-  \end{center}
-\end{frame}
-
-\begin{frame}
   \frametitle{Simulation - Energy Score}
   \begin{center}
-    \includegraphics[width=0.9\linewidth]{./images/simulation_es}
+    \includegraphics[height=\frametextheight]{./images/simulation_es}
   \end{center}
 \end{frame}
 
-\begin{frame}
-  \frametitle{Simulation - KL Divergence}
-  \begin{center}
-    \includegraphics[width=0.9\linewidth]{./images/simulation_knn_kld}
-  \end{center}
-\end{frame}
 
 \subsection{Integrated Vapor Transport}
-\begin{frame}
-  \frametitle{IVT - Posterior Predictive Loss}
-  \begin{center}
-    \includegraphics[width=0.9\linewidth]{./images/simulation_knn_kld}
-  \end{center}
-\end{frame}
 
 \begin{frame}
   \frametitle{IVT - Energy Score}
   \begin{center}
     \include{table_dev}
-  \end{center}
-\end{frame}
-
-\begin{frame}
-  \frametitle{IVT - KL Divergence}
-  \begin{center}
-    \includegraphics[width=0.9\linewidth]{./images/knn_kld}
   \end{center}
 \end{frame}
 
@@ -682,11 +667,11 @@
 \begin{frame}
   \frametitle{Conditional Survival Function}
   \begin{prop}
-      In one dimension, the conditional survival curve can be calculated as
+      In one dimension, the conditional survival function can be calculated as
    \begin{equation*}
       \label{eqn:condsurv1df}
       \text{P}\left[Z_l > z_l\mid {\bf Z}_{\neg(l)} > {\bf z}_{\neg(l)}\right] =
-        \frac{\text{E}\left[\wedge_{k = 1}^d \frac{V_k}{z_k}\right]}{
+        \frac{\text{E}\left[\bigwedge_{k = 1}^d \frac{V_k}{z_k}\right]}{
                       \text{E}\left[\bigwedge_{k \neq l}\frac{V_k}{z_k}\right]}
     \end{equation*}
       where $\bm{V} = \bm{Z} / \pnorm{\bm{Z}}{\infty}$.
@@ -732,14 +717,14 @@
 \begin{frame}
   \frametitle{IVT - Conditional Survival 1d}
   \begin{center}
-    \includegraphics[width = 5in]{./images/condsurv_1d}
+    \includegraphics[height=\frametextheight,width=\textwidth]{./images/condsurv_1d}
   \end{center}
 \end{frame}
 
 \begin{frame}
   \frametitle{IVT - Conditional Survival 2d (selected)}
   \begin{center}
-    \includegraphics[width = 5in]{./images/condsurv_2d}
+    \includegraphics[height=\frametextheight,width=\frametextheight]{./images/condsurv_2d}
   \end{center}
 \end{frame}
 
@@ -856,6 +841,8 @@
 
 \section{Conclusion}
 
+\subsection{Summary}
+
 \begin{frame}
   \frametitle{Conclusion}
   \begin{itemize}
@@ -872,6 +859,20 @@
     \item Anomaly Detection (Preliminary)
     \item Modelling at Scale (on the horizon)
   \end{itemize}
+\end{frame}
+
+\subsection{Timeline}
+
+\begin{frame}
+    \frametitle{Timeline}
+    \begin{center}
+        \includegraphics[width=\textwidth]{./images/timeline}
+    \end{center}
+\end{frame}
+
+
+\begin{frame}
+    
 \end{frame}
 
 
@@ -912,8 +913,33 @@
   \end{equation*}
 \end{frame} % Projected Gamma - Finite Mixture Model
 
+\begin{frame}
+  \frametitle{Simulation - Posterior predictive loss}
+  \begin{center}
+    \includegraphics[height=\frametextheight]{./images/simulation_ppl}
+  \end{center}
+\end{frame}
+\begin{frame}
+  \frametitle{Simulation - KL Divergence}
+  \begin{center}
+    \includegraphics[height=\frametextheight]{./images/simulation_knn_kld}
+  \end{center}
+\end{frame}
 
 
+\begin{frame}
+  \frametitle{IVT - Posterior Predictive Loss}
+  \begin{center}
+    \includegraphics[height=\frametextheight]{./images/simulation_knn_kld}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{IVT - KL Divergence}
+  \begin{center}
+    \includegraphics[height=\frametextheight]{./images/knn_kld}
+  \end{center}
+\end{frame}
 
 
 \end{document}
