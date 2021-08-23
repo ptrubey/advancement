@@ -28,24 +28,42 @@
 \DeclareMathOperator*{\argmin}{arg\,min}
 \DeclareMathOperator*{\argmax}{arg\,max}
 
+\usetheme{Berlin}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{mini frames}{}
+\setbeamertemplate{footline}{}
+\renewcommand*{\slideentry}[6]{}
 
 
-\title{Multivariate Extreme Value Theory and Applications to Anomaly Detection}
-\author{Peter Trubey \\ Advisor: Bruno Sans{\'o} \\ UCSC Department of Statistics}
-\date[8/25/2021]{Advancement}
+\setcounter{tocdepth}{1}
+
+\title{Multivariate Extreme Value Theory \\ and Applications to Anomaly Detection}
+\author{Peter Trubey \\ Advisor: Bruno Sans{\'o}}
+\institute{UCSC - Statistics Department}
+\date[8/25/2021]{August 25, 2021}
 
 \begin{document}
 
-\begin{frame}
+\begin{frame}[plain]
   \titlepage
 \end{frame}
 
-\begin{frame}
+\begin{frame}[plain]
   \frametitle{Overview}
   \tableofcontents
 \end{frame}
 
 \section{Introduction}
+
+\subsection{Integrated Vapor Transport}
+\begin{frame}
+  \frametitle{Integrated Vapor Transport}
+  \begin{itemize}
+      \item Slide in progress
+      \item suffice to say: marginals of IVT are lognormal, in Gumbel D.o.A.
+      \item 2 datasets; 8 and 47 cells
+  \end{itemize}
+\end{frame}
 
 \subsection{Extreme Value Theory}
 
@@ -60,11 +78,28 @@
     \item Block Maxima - GEV
     \item Thresholding - GP
   \end{itemize}
-\end{frame}
+\end{frame} % EVT Background
+\begin{frame}
+    \frametitle{Notation}
+    \begin{itemize}
+      \item Wedge Operators
+        \begin{equation*}
+            a \vee b = \max(a,b) \hspace{1cm} a\wedge b = \min(a,b)
+        \end{equation*} 
+      \item Positive orthant of unit $d$-sphere under $\mathcal{L}_{\infty}$ norm
+        \begin{equation*}
+          \mathcal{S}_{\infty}^{d-1} = \left\lbrace \bm{s} : \bm{s} \in [0,1]^d,\hspace{0.2cm}
+                            \vee_{l=1}^d s_l = 1\right\rbrace
+        \end{equation*}
+    \end{itemize}
+    
+\end{frame} % Notation
+
+\subsection{EVT - Block Maxima}
 
 \begin{frame}
   \frametitle{Block Maxima}
-  For $x_i \stackrel{\text{iid}}{\sim} F$, Let $M_n = \max_{i} x_i$.
+  For $x_i \stackrel{\text{iid}}{\sim} F$, Let $M_n = \vee_{i=1}^n x_i$.
   \begin{equation*}
     \begin{aligned}
       \text{Pr}\left[M_n\leq z\right] &= \text{Pr}\left[X_1 \leq z, \ldots, X_n \leq z\right]\\
@@ -75,19 +110,16 @@
   But if $F$ is unknown?
 
   How to keep from degenerating to a point mass?
-\end{frame}
-
+\end{frame} % Block Maxima
 \begin{frame}
   \frametitle{Block Maxima - Fisher-Tippett-Gnedenko Theorem}
   If there exists a sequence of constants $a_n > 0$, $b_n$ such that:
   \begin{equation*}
-    \text{Pr}\left[\frac{M_n - b_n}{a_n} \leq z\right] \stackrel{d}{\rightarrow} G(z)
+    \text{Pr}\left[\frac{M_n - b_n}{a_n} \leq z\right] \xrightarrow[\enskip n\to\infty\enskip]{} G(z)
   \end{equation*}
-  as $n\to\infty$,
 
   Then $G$ is a \emph{max-stable distribution}, and $F$ is in its \emph{domain of attraction}.
-\end{frame}
-
+\end{frame} % Fisher-Tippett Theorem 
 \begin{frame}
   \frametitle{Block Maxima - GEV}
   \begin{itemize}
@@ -101,16 +133,17 @@
       \end{equation*}
       the \emph{generalized extreme value distribution}
   \end{itemize}
-\end{frame}
-
+\end{frame} % Block Maxima - GEV
 \begin{frame}
   \frametitle{Block Maxima - Inference}
   \begin{itemize}
     \item Inference requires blocking data and taking maximum within a block
     \item Reduces data for inference to $1 / \text{block size}$.
-    \item Ignore those pesky \emph{iid} requirements
+    \item Enter - Thresholding
   \end{itemize}
-\end{frame}
+\end{frame} % Block Maxima - Inference
+
+\subsection{EVT - Thresholding}
 
 \begin{frame}
   \frametitle{Thresholding - Pickands-Balkema-de Haan Theorem}
@@ -127,25 +160,26 @@
     \pause
     \item Where $H$ has the form
       \begin{equation*}
-        H(y) = 1 - \left(1 + \xi\frac{y}{\sigma}\right)^{-\frac{1}{\xi}}.
+        H(y) = 1 - \left(1 + \xi\frac{y}{\sigma}\right)^{-\frac{1}{\xi}}
       \end{equation*}
   \end{itemize}
-\end{frame}
+\end{frame} % Thresholding - Pickands Balkema
+
+\subsection{EVT - Multivariate Thresholding}
 
 \begin{frame}
   \frametitle{Multivariate EVT}
   \begin{itemize}
-    \item Useful to standardize each $X_i$ according to its marginal distribution
-    \item Standardization occcurs as:
-      \begin{equation*}
-        z_j = \left(1 + \xi\frac{x_j - b_{t,j}}{a_{t,j}}\right)_{+}^{1/\xi}
-      \end{equation*}
-			where $b_{t,j} = \hat{F}^{-1}(1 - 1/t)$.
-    \item Note that $Z_j > 1\implies X_j > b_{t,j}$
-    \item $\max_j Z_j \sim \text{Pareto}$
-		\item $a$, $\xi$ are currently found by MLE.  Not ideal, I know.
+    \item Standardize each $X_i$ according to its marginal distribution
+        \begin{equation*}
+          z_l = \left(1 + \xi_l\frac{x_l - b_{t,l}}{a_{t,l}}\right)_{+}^{1/\xi_l}
+        \end{equation*}
+		where $b_{t,l} = \hat{F}^{-1}(1 - 1/t)$.
+    \item Note that $Z_l > 1\implies X_l > b_{t,l}$
+    \item $\vee_l Z_l \sim \text{Pareto}$
+	\item $\bm{a}$, $\bm{\xi}$ are found by MLE.
   \end{itemize}
-\end{frame}
+\end{frame} % Multivariate EVT
 
 \begin{frame}
   \frametitle{Multivariate EVT}
@@ -173,41 +207,37 @@
   Thus $t$ is independent of $\Omega$, the spectral measure.  This is completed as a
     probability measure as:
   \begin{equation*}
-    \text{Pr}\left[{\bf V} \in B \mid r > 1\right] = \frac{\Omega(B)}{\Omega(S_{\infty}^{d-1})}.
+    \text{Pr}\left[{\bf V} \in B \mid r > 1\right] = \frac{\Omega(B)}{\Omega(S_{\infty}^{d-1})}
   \end{equation*}
   So conditional on at least one dimension exceeding its threshold, we can hold the
   angular measure independent of the magnitude.
 \end{frame}
 
-\subsection{Integrated Vapor Transport}
-\begin{frame}
-  \frametitle{Integrated Vapor Transport}
-  \begin{itemize}
-      \item Slide in progress
-      \item suffice to say: marginals of IVT are lognormal, in Gumbel D.o.A.
-      \item 2 datasets; 8 and 47 cells
-  \end{itemize}
-\end{frame}
-
 \section{Methodology}
 
 \begin{frame}
-  \frametitle{Casting \emph{real} data to $\mathcal{S}_{\infty}^{d-1}$}
+  \frametitle{Casting \emph{Real} Data to $\mathcal{S}_{\infty}^{d-1}$}
   \begin{enumerate}
-      \item Calculate $b_{tj}$, fit $a_j$, $\xi_j$ by ML
+      \item Find $a_j, b_j, \xi_j$
       \item Standardize according to
         \begin{equation*}
-         z_j = \left(1 + \xi\frac{x_j - b_{t,j}}{a_{t,j}}\right)_{+}^{1/\xi}
+         z_j = \left(1 + \xi\frac{x_j - b_{j}}{a_{j}}\right)_{+}^{1/\xi}
         \end{equation*}
-      \item Calculate $r_i = \max_lz_{il}$, $\bm{v}_i = \bm{z}_i / r_i$
-      \item Data is time series--decluster by keeping $\argmax r_i$ in series where $r_i > 1$
+      \item Calculate
+        \begin{equation*}
+            r_i = \vee_{l=1}^d z_{il},\hspace{1cm}\bm{v}_i = \frac{\bm{z}_i}{r_i}
+        \end{equation*}
+        
+      \item $r_i\mid r_i \geq 1 \sim \text{Pareto}(1)$ $\rightarrow$ Keep where $r_i \geq 1$.
+      \item Data is time series--decluster by keeping $\argmax_i r_i$ in series where $r_i > 1$
+      \item $\bm{Z} \sim \text{MV Pareto}(1)$.  Dependence structure of $\bm{Z}$ expressed in $\bm{V}\in\mathcal{S}_{\infty}^{d-1}$.
   \end{enumerate}
 \end{frame}
 
-\subsection{Projection onto $\mathcal{S}_{\infty}^{d-1}$}
+\subsection{Projection a Distribution to $\mathcal{S}_{\infty}^{d-1}$}
 
 \begin{frame}
-  \frametitle{The Unit Sphere}
+  \frametitle{The Unit $d$-Sphere in $\mathcal{L}_p$}
   \begin{columns}
     \begin{column}{.38\textwidth}
       \begin{itemize}
@@ -218,21 +248,23 @@
         \pause
         \item Unit Sphere on $\mathcal{L}_p$ Norm
           \begin{equation*}
-            \mathcal{S}_{p}^{d-1} = \left\lbrace \bm{s} : \lVert\bm{s}\rVert_p = 1 \right\rbrace
+            \mathcal{S}_{p}^{d-1} = \left\lbrace \bm{s} : 
+                \bm{s}\in\mathcal{R}_+^d,\hspace{.2cm} \lVert\bm{s}\rVert_p = 1 \right\rbrace
           \end{equation*}
-      \end{itemize}
+      \end{itemize}%
+      \vfill
+      ~
     \end{column}%
     \hfill%
-    \pause
     \begin{column}{.58\textwidth}
       \begin{center}
-        \includegraphics[width = \linewidth, height = \linewidth]{./images/p_sphere}
+        \includegraphics[width = .8\linewidth, height = .8\linewidth]{./images/p_sphere}
       \end{center}
     \end{column}%
   \end{columns}%
-\end{frame}
+\end{frame} % Unit Sphere - Description
 \begin{frame}
-  \frametitle{Projection onto the Unit Norm Sphere}
+  \frametitle{Projection onto the Unit Sphere}
   \begin{itemize}
     \item Take a distribution from $\mathcal{R}_+^{d}$ to $\mathcal{S}_{p}^{d-1}$
     \pause
@@ -252,8 +284,7 @@
       \left(ry_1,\ldots,ry_{d-1}, r\left(1 - {\textstyle\sum}_{l = 1}^{d-1}y_l^p\right)^{\frac{1}{p}}\right)
     \end{equation*}
   \end{itemize}
-\end{frame}
-
+\end{frame} % Unit Sphere - Projection
 \begin{frame}
   \frametitle{Projection - Jacobian}
   \begin{equation*}
@@ -263,7 +294,7 @@
       \vdots & \vdots & \vdots & \ddots & \vdots\\
       y_{d-1} & 0 & \ldots & 0 & r \\
       \left(1 - {\scriptsize\sum_{l=1}^{d-1}}y_l^p\right)^{1/p} &
-        - y_1^{p-1}\phi & -y_2^{p-1}\phi & \cdots & -y_{d-1}\phi
+        - ry_1^{p-1}\phi & -ry_2^{p-1}\phi & \cdots & -ry_{d-1}\phi
     \end{bmatrix}
   \end{equation*}
   where $\phi = \left(1 - {\scriptsize\sum_{l=1}^{d-1}}y_l^p\right)^{1/p - 1}$
@@ -271,12 +302,11 @@
   \begin{equation*}
   \lvert J \rvert = r^{d-1}\left[\left(1 - {\textstyle\sum}_{l = 1}^{d-1}y_l^p\right)^{\frac{1}{p}} +
       {\textstyle\sum}_{l = 1}^{d-1}y_l^p\left(1 - {\textstyle\sum}_{l=1}^{d-1}
-          y_l^p\right)^{\frac{1}{p} - 1}\right].
+          y_l^p\right)^{\frac{1}{p} - 1}\right]
   \end{equation*}
-\end{frame}
+\end{frame} % Unit Sphere - Jacobian
 
 \subsection{Projected Gamma Family}
-
 \begin{frame}
   \frametitle{Projected Gamma Distribution}
   \begin{itemize}
@@ -302,8 +332,7 @@
           \times \frac{\Gamma({\textstyle\sum}_{l = 1}^d\alpha_l)}{\left({\textstyle\sum}_{l = 1}^d \beta_ly_l\right)^{{\scriptstyle\sum_{l = 1}^d \alpha_l}}}
       \end{equation*}
   \end{itemize}
-\end{frame}
-
+\end{frame} % Projected Gamma Distribution
 \begin{frame}
   \frametitle{Data augmentation}
   \begin{itemize}
@@ -325,19 +354,17 @@
                   \text{Ga}\left(r_iy_{il}\mid\alpha_l,\beta_l\right)
       \end{equation*}
   \end{itemize}
-\end{frame}
-
+\end{frame} % Data Augmentation
 \begin{frame}
   \frametitle{Projected Gamma Model}
   \begin{equation*}
     \begin{aligned}
-      \bm{ y}\mid\alpha,\beta &\sim \text{PG}(\bm{ y}\mid\alpha,\beta)\\
+      \bm{ y}\mid\bm{\alpha},\bm{\beta} &\sim \text{PG}(\bm{ y}\mid\bm{\alpha},\bm{\beta})\\
       \bm{ \alpha},\bm{\beta} &\sim {\textstyle \prod}_{l = 1}^d \text{Ga}(\alpha_l \mid \xi_l,\tau_l)
               \times {\textstyle \prod}_{l = 2}^d \text{Ga}(\beta_l\mid \zeta_l,\sigma_l).
     \end{aligned}
   \end{equation*}
-\end{frame}
-
+\end{frame} % Vanilla Model
 \begin{frame}
   \frametitle{Projected Gamma Model - Inference}
   \begin{itemize}
@@ -367,29 +394,10 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{Finite Mixture Model}
-  \begin{equation*}
-    \begin{aligned}
-      \bm{ y}_i &\sim \sum_{j = 1}^J\pi_j\text{PG}\left(\bm{ y}\mid \bm{ \alpha}_j, \bm{ \beta}_j\right)\\
-      \bm{ \alpha}_j &\sim {\textstyle \prod}_{l = 1}^d \text{Ga}\left(\alpha_l\mid\xi_l,\tau_l\right)\\
-      \bm{ \beta}_j &\sim {\textstyle \prod}_{l = 2}^d \text{Ga}\left(\beta_l\mid\zeta_l,\sigma_l\right)
-    \end{aligned}
-    \hspace{2cm}
-    \begin{aligned}
-      \bm{ \xi},\bm{\tau} &\sim {\textstyle \prod}_{l = 1}^d \text{Ga}(\xi_l\mid a,b)
-                \times \text{Ga}(\tau_l\mid c,d)\\
-      \bm{ \zeta},\bm{\sigma} &\sim {\textstyle\prod}_{l = 2}^d\text{Ga}(\zeta_l \mid a,b)
-              \times \text{Ga}(\sigma_l\mid c,d)\\
-      \bm{ \pi} &\sim \text{Dir}(\pi_0)
-    \end{aligned}
-  \end{equation*}
-\end{frame}
-
-\begin{frame}
   \frametitle{Dirichlet Process Mixture Model}
   \begin{equation*}
     \begin{aligned}
-      \bm{ y}_i &\sim \sum_{j = 1}^J\pi_j\text{PG}\left(\bm{ y}\mid \bm{ \alpha}_i, \bm{ \beta}_i\right)\\
+      \bm{ y}_i &\sim \text{PG}\left(\bm{ y}\mid \bm{ \alpha}_i, \bm{ \beta}_i\right)\\
       (\alpha_i,\beta_i) &\sim \text{DP}\left(\eta, G_0\right)\\
       &~\hspace{-2cm}G_0 = {\textstyle\prod}_{l = 1}^d\text{Ga}\left(\alpha_{jl}\mid\xi_{l},\tau_{l}\right)
                     \times{\textstyle\prod}_{l=2}^d\text{Ga}\left(\beta_{jl}\mid\zeta_{l}\tau_{l}\right)
@@ -409,7 +417,7 @@
   \frametitle{Log-normal Prior for Shape Parameters}
   \begin{equation*}
     \begin{aligned}
-      \bm{ y}_i &\sim \sum_{j = 1}^J\pi_j\text{PG}\left(\bm{ y}\mid \bm{ \alpha}_i, \bm{\beta}_i\right)\\
+      \bm{ y}_i &\sim \text{PG}\left(\bm{ y}\mid \bm{ \alpha}_i, \bm{\beta}_i\right)\\
       (\bm{\alpha}_i, \bm{\beta}_i) &\sim \text{DP}\left(\eta, G_0\right)\\
         &~\hspace{-1cm}G_0 = \mathcal{N}\left(\log\bm{ \alpha}_{j}\mid\mu,\Sigma\right)\times
             {\textstyle\prod}_{l = 2}^d\text{Ga}\left(\beta_{jl}\mid\zeta_l,\sigma_l\right)
@@ -430,9 +438,9 @@
   \begin{itemize}
     \item $\bm{V} \in \mathcal{S}_{\infty}^{d-1}$
     \pause
-    \item Difficult to project distribution in $\mathcal{R}_+^{d}$ to $\mathcal{S}_{\infty}^{d-1}$
-    \pause
     \item Easy to project distribution in $\mathcal{R}_+^{d}$ to $\mathcal{S}_{p}^{d-1}$ for any finite $p$
+    \pause
+    \item Difficult to project distribution in $\mathcal{R}_+^{d}$ to $\mathcal{S}_{\infty}^{d-1}$
     \pause
     \item Project to $\mathcal{S}_{p}^{d-1}$ for large $p$, then project posterior predictive samples
   \end{itemize}
@@ -446,12 +454,17 @@
     \item Coordinate system to describe $\mathcal{S}_p^{d-1}$ in $\omega^{d-1}$
     \item $\mathcal{L}_1$: Log-ratios:  $\mathcal{S}_1^{d-1} \rightarrow (-\infty,\infty)^{d-1}$
     \item $\mathcal{L}_2$: Spherical Coordinates: $\mathcal{S}_2^{d-1} \rightarrow [0,\pi/2]^{d-1}$
+    
       \begin{equation*}
-        \label{eqn:spherical}
+        \begin{aligned}
+        \theta_l &= \cos^{-1}\left(\frac{y_l}{\lVert \bm{y}_{l:d}\rVert_2}\right)\\
+        &\hspace{1cm}\text{for }l = 1,\ldots,d-1
+        \end{aligned}
+        \hspace{1cm}
         \begin{aligned}
           y_1 &= \cos\theta_1\\
-          y_l &= \left[{\textstyle\prod}_{k = 1}^{l-1}\sin\theta_k\right]\cos\theta_l
-                                    \hspace{1cm}\text{for } l = 2,\ldots,d-1\\
+          y_l &= \left[{\textstyle\prod}_{k = 1}^{l-1}\sin\theta_k\right]\cos\theta_l\\
+          &\hspace{1cm}\text{for }l = 2,\ldots,d-1\\
           y_d &= {\textstyle\prod}_{k = 1}^{d-1}\sin\theta_k
         \end{aligned}
       \end{equation*}
@@ -477,14 +490,17 @@
   \end{equation*}
 \end{frame}
 
-\section{Model Comparison on the hypercube}
+\section[Model Comparison]{Model Comparison on $\mathcal{S}_{\infty}^{d-1}$}
 
 \begin{frame}
-  \frametitle{Model Comparison on the Hypercube}
+  \frametitle{Model Comparison on $\mathcal{S}_{\infty}^{d-1}$}
   \begin{itemize}
-    \item Posterior Predictive Loss
-    \item Energy Score
-    \item Kullbeck Liebler Divergence
+      \item Density is \emph{difficult}
+      \item Multivariate distribution
+      \item Have samples from posterior predictive
+      \begin{itemize}
+          \item Energy Score
+      \end{itemize}
   \end{itemize}
 \end{frame}
 
@@ -505,23 +521,10 @@
   \end{itemize}
 \end{frame}
 
-% \begin{frame}
-%   \frametitle{Distance on $\mathcal{S}_{\infty}^{d-1}$}
-%   \begin{itemize}
-%     \item Positive orthant of hypercube
-%       \begin{equation*}
-%         \mathcal{S}_{\infty}^{d-1} = \left\lbrace \bm{s}\hspace{0.1cm}:\hspace{0.1cm}s_i \in [0,1],
-%          \hspace{0.2cm} \max_i s_i = 1\right\rbrace
-%       \end{equation*}
-%     \pause
-%     \item Distance on the hypercube
-%   \end{itemize}
-% \end{frame}
-
 \begin{frame}
   \frametitle{Positive Orthant of $\mathcal{S}_{\infty}^{d-1}$}
   \begin{center}
-    \includegraphics[width=0.9\linewidth]{./images/rotation}
+    \includegraphics[width=0.8\linewidth]{./images/rotation}
   \end{center}
 \end{frame}
 
@@ -540,6 +543,18 @@
 \end{frame}
 
 \begin{frame}
+    \frametitle{Rotation}
+    \begin{center}
+        \includegraphics[width=0.7\linewidth]{./images/rot_3d_2d}
+    \end{center}
+\end{frame}
+
+
+
+
+
+
+\begin{frame}
   \frametitle{A Valid Negative Definite Kernel}
   \begin{prop}
     For points $a,b \in \mathcal{S}_{\infty}^{d-1}$ a valid negative definite kernel can be formed as
@@ -552,24 +567,6 @@
     where $\bm{c}$ resides on the intersection between the faces of $\bm{a}$ and $\bm{b}$, and
                 minimizes $g(\bm{a},\bm{b})$.
   \end{prop}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Kullbeck Liebler Divergence}
-  \begin{itemize}
-    \item KL Divergence
-      \begin{equation*}
-        D_{\text{KL}}(A,B) = \int_{x\in \Omega(A)}A(x)\log\left(\frac{A(x)}{B(x)}\right)\text{d}x
-      \end{equation*}
-      requires an estimate of density.
-    \pause
-    \item We have demonstrated the difficulty of establishing density.  Approximate
-      \begin{equation*}
-      D_{\text{KL}}^{(k)}(A,B) = \log\frac{n(B)}{n(A)} + c(A) \left[\rho_A^{(k)}(B)
-                                                      - \rho_A^{(k)}(A)\right]
-      \end{equation*}
-
-  \end{itemize}
 \end{frame}
 
 
@@ -632,7 +629,7 @@
   \end{center}
 \end{frame}
 
-\section{Applications of EVT Analysis}
+\section[EVT Applications]{Applications of EVT Analysis}
 
 \begin{frame}
   \frametitle{Applications of EVT Analysis}
@@ -746,7 +743,7 @@
   \end{center}
 \end{frame}
 
-\section{Applications to anomaly detection}
+\section[Anomaly]{Applications to anomaly detection}
 
 \begin{frame}
   \frametitle{What is an anomaly?}
@@ -812,7 +809,7 @@
   \end{center}
 \end{frame}
 
-\section{Scaling to higher dimensions}
+\section[Scaling]{Scaling to higher dimensions}
 
 \begin{frame}
   \frametitle{Scaling to Higher Dimensions}
@@ -876,5 +873,47 @@
     \item Modelling at Scale (on the horizon)
   \end{itemize}
 \end{frame}
+
+
+\appendix
+
+\begin{frame}
+  \frametitle{Kullbeck Liebler Divergence}
+  \begin{itemize}
+    \item KL Divergence
+      \begin{equation*}
+        D_{\text{KL}}(A,B) = \int_{x\in \Omega(A)}A(x)\log\left(\frac{A(x)}{B(x)}\right)\text{d}x
+      \end{equation*}
+      requires an estimate of density.
+    \pause
+    \item We have demonstrated the difficulty of establishing density.  Approximate
+      \begin{equation*}
+      D_{\text{KL}}^{(k)}(A,B) = \log\frac{n(B)}{n(A)} + c(A) \left[\rho_A^{(k)}(B)
+                                                      - \rho_A^{(k)}(A)\right]
+      \end{equation*}
+  \end{itemize}
+\end{frame} % KL Divergence (Introduction)
+\begin{frame}
+  \frametitle{Finite Mixture Model}
+  \begin{equation*}
+    \begin{aligned}
+      \bm{ y}_i &\sim \sum_{j = 1}^J\pi_j\text{PG}\left(\bm{ y}\mid \bm{ \alpha}_j, \bm{ \beta}_j\right)\\
+      \bm{ \alpha}_j &\sim {\textstyle \prod}_{l = 1}^d \text{Ga}\left(\alpha_l\mid\xi_l,\tau_l\right)\\
+      \bm{ \beta}_j &\sim {\textstyle \prod}_{l = 2}^d \text{Ga}\left(\beta_l\mid\zeta_l,\sigma_l\right)
+    \end{aligned}
+    \hspace{2cm}
+    \begin{aligned}
+      \bm{ \xi},\bm{\tau} &\sim {\textstyle \prod}_{l = 1}^d \text{Ga}(\xi_l\mid a,b)
+                \times \text{Ga}(\tau_l\mid c,d)\\
+      \bm{ \zeta},\bm{\sigma} &\sim {\textstyle\prod}_{l = 2}^d\text{Ga}(\zeta_l \mid a,b)
+              \times \text{Ga}(\sigma_l\mid c,d)\\
+      \bm{ \pi} &\sim \text{Dir}(\pi_0)
+    \end{aligned}
+  \end{equation*}
+\end{frame} % Projected Gamma - Finite Mixture Model
+
+
+
+
 
 \end{document}
