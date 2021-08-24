@@ -70,7 +70,7 @@
 \subsection{Motivating Example}
 \begin{frame}
   \frametitle{Integrated Vapor Transport}
-  \begin{minipage}{.6\textwidth}
+  \begin{minipage}{.7\textwidth}
     \begin{itemize}
         \item Atmospheric rivers~\citep{ralph2013,ralph2018}
             \begin{itemize}
@@ -87,8 +87,9 @@
                 \item subset to rainy season (November to March, 5587 observations)
             \end{itemize}
     \end{itemize}
-  \end{minipage}%
-  \begin{minipage}{.39\textwidth}
+  \end{minipage}
+  ~\hfill
+  \begin{minipage}{.25\textwidth}
     \centering
     \includegraphics[width=\textwidth]{./images/ar}\\
     {\scriptsize Credit: NASA}
@@ -123,7 +124,7 @@
       \item Wedge Operators
         \begin{equation*}
             a \vee b = \max(a,b) \hspace{1cm} a\wedge b = \min(a,b)
-        \end{equation*} 
+        \end{equation*}
       \item Positive orthant of unit $d$-sphere under $\mathcal{L}_{\infty}$ norm
         \begin{equation*}
           \mathcal{S}_{\infty}^{d-1} = \left\lbrace \bm{s} : \bm{s} \in [0,1]^d,\hspace{0.2cm}
@@ -181,22 +182,15 @@
 
 \begin{frame}
   \frametitle{Multivariate EVT}
-  {\scriptsize\cite{ferreira2014}}\\~\vspace{0.3cm}\\
+  {\scriptsize\cite{ferreira2014}}\\~\vspace{-0.1cm}\\
   \begin{itemize}
     \item Standardize each $X_i$ according to its marginal distribution
         \begin{equation*}
           z_l = \left(1 + \xi_l\frac{x_l - b_{l}}{a_{l}}\right)_{+}^{1/\xi_l}
         \end{equation*}
-    \item Note that $Z_l > 1\implies X_l > b_{l}$
-    \item $\bigvee_{l=1}^d Z_l \sim \text{Pareto}$
-  \end{itemize}
-\end{frame} % Multivariate EVT
-
-\begin{frame}
-  \frametitle{Multivariate EVT}
-  {\scriptsize\cite{ferreira2014}}\\~\vspace{0.3cm}\\
-  \begin{itemize}
-    \item Assume the existence of a limit measure $\mu$ on $\bm{Z}$ such that:
+    Note that $Z_l > 1\implies X_l > b_{l}$,\hspace{1cm}$\bigvee_{l=1}^d Z_l \sim \text{Pareto}$
+    \pause
+    \item Assume the existence of limit measure $\mu$ on $\bm{Z}$ such that:
     \begin{equation*}
       n\text{Pr}\left(\frac{Z_1}{n} \geq z_1 \text{ or }\ldots\text{ or }\frac{Z_d}{n}\geq z_d\right)
       \xrightarrow[n\to\infty]{} \mu\left([\bm{0}, \bm{z}]^C\right)
@@ -204,7 +198,7 @@
     \item $\mu$ is the asymptotic distribution of $\bm{Z}$ in extreme regions.
     \item $\mu$ features the homogeneity property, $\mu(t\cdot) = t^{-1}\mu(\cdot)$.
   \end{itemize}
-\end{frame}
+\end{frame} % Multivariate EVT
 
 \begin{frame}
   \frametitle{Spectral Measure}
@@ -241,7 +235,6 @@
       \item $r_i\mid r_i \geq 1 \sim \text{Pareto}(1)$ $\rightarrow$ Keep where $r_i \geq 1$.
       \item Data is time series--decluster by keeping $\argmax_i r_i$ in series where $r_i > 1$
       \item $\bm{Z} \sim \text{MV Pareto}(1)$.  Dependence structure of $\bm{Z}$ expressed in $\bm{V}\in\mathcal{S}_{\infty}^{d-1}$.
-      \item How do we infer the angular distribution?
   \end{enumerate}
 \end{frame}
 
@@ -254,13 +247,17 @@
       \begin{itemize}
         \item $\mathcal{L}_p$ Norm:
           \begin{equation*}
-            \lVert \bm{s}\rVert_p = \left[\sum_{l = 1}^ds_l^p\right]^{\frac{1}{p}}
+            \lVert \bm{s}\rVert_p = \left[{\scriptstyle\sum}_{l = 1}^ds_l^p\right]^{\frac{1}{p}}
           \end{equation*}
         \pause
         \item Positive orthant of unit sphere on $\mathcal{L}_p$
           \begin{equation*}
             \mathcal{S}_{p}^{d-1} = \left\lbrace \bm{s} : 
                 \bm{s}\in\mathcal{R}_+^d,\hspace{.2cm} \lVert\bm{s}\rVert_p = 1 \right\rbrace
+          \end{equation*}
+        \item Take limit as $p\to\infty$
+          \begin{equation*}
+              \lim\limits_{p\to\infty}\mathcal{S}_p^{d-1} \rightarrow \mathcal{S}_{\infty}^{d-1}
           \end{equation*}
       \end{itemize}%
       \vfill
@@ -286,13 +283,13 @@
     \pause
     \item Transformation to Radial, Angular
     \begin{equation*}
-      T(x_1,\ldots,x_d) = \left(\pnorm{\bm{x}}{p}, \frac{x_1}{\pnorm{\bm{x}}{p}},
-                    \ldots , \frac{x_{d-1}}{\pnorm{\bm{x}}{p}}\right) = (r,y_1,\ldots,y_{d-1})
-    \end{equation*}
-    \pause
-    \begin{equation*}
-    T^{-1}\left(r,y_1,\ldots,y_{d-1}\right) =
-      \left(ry_1,\ldots,ry_{d-1}, r\left(1 - {\textstyle\sum}_{l = 1}^{d-1}y_l^p\right)^{\frac{1}{p}}\right)
+        \begin{aligned}
+      T(x_1,\ldots,x_d) &= \left(\pnorm{\bm{x}}{p}, \frac{x_1}{\pnorm{\bm{x}}{p}},
+                    \ldots , \frac{x_{d-1}}{\pnorm{\bm{x}}{p}}\right) = (r,y_1,\ldots,y_{d-1})\\
+                    \pause
+    T^{-1}\left(r,y_1,\ldots,y_{d-1}\right) &=
+      \left(ry_1,\ldots,ry_{d-1}, r\left(1 - {\textstyle\sum}_{l = 1}^{d-1}y_l^p\right)^{\frac{1}{p}}\right) = (x_1,\ldots,x_d)
+      \end{aligned}
     \end{equation*}
     \pause
     Determinant of the Jacobian:
@@ -388,7 +385,7 @@
     \item If $\beta_l = 1$, then
     \begin{equation*}
       f(\alpha_l \mid \bm{ y}, r) \propto
-        \frac{{\textstyle\prod}_{i = 1}^n ry_{i1}^{\alpha_l - 1}}{\Gamma^n(\alpha_l)} \times
+        \frac{\left({\textstyle\prod}_{i = 1}^n r_iy_{il}\right)^{\alpha_l - 1}}{\Gamma^n(\alpha_l)} \times
         \alpha_l^{\xi_1 - 1}\exp\{-\tau_1\alpha_l\}
     \end{equation*}
   \end{itemize}
@@ -691,13 +688,13 @@
       \begin{itemize}
         \item Linkage-based (single, \dots, complete)~\citep{ackerman2010}
         \item Centroid-based ($k$-Means)~\citep{hartigan1979} 
-        \item Density-based (DBSCAN)~\cite{ester1996}
+        \item Density-based (DBSCAN)~\citep{ester1996}
       \end{itemize}
     \item Non-statistical Models
       \begin{itemize}
         \item Isolation Forest~\citep{liu2000}
-        \item One-class SVM~\cite{chang2011}
-        \item Local Outlier Factor~\cite{breunig2000}
+        \item One-class SVM~\citep{chang2011}
+        \item Local Outlier Factor~\citep{breunig2000}
       \end{itemize}
     \item Statistical Models
       \begin{itemize}
@@ -734,9 +731,9 @@
                         \left(\text{E}[X_{il}] - x_{il}\right)^2\right]
     \end{equation*}
     \begin{itemize}
-        \item Bias term and Variance term
+        \item \emph{Variance} and \emph{Bias} terms
         \item Larger values for both indicate \emph{hard to predict} observation.
-        \item Anomalies are \emph{different} from prevailing distribution--PPL would seem to indicate this
+        \item Anomalies are \emph{different} from prevailing distribution--PPL would indicate this
     \end{itemize}
 \end{frame}
 
@@ -754,12 +751,12 @@
   \begin{itemize}
     \item Compuitational advances in modelling
       \begin{itemize}
-        \item Variational Bayes
+        \item Variational Bayes~\citep{green2015}
       \end{itemize}
     \item Maintaining Model Fidelity at Scale
       \begin{itemize}
-        \item Gaussian Mixture on $\log\alpha$
-        \item $\eta$-Cones
+        \item Gaussian Mixture prior on $\log\alpha$
+        \item $\eta$-Cones~\citep{goix2017}
       \end{itemize}
   \end{itemize}
 \end{frame}
@@ -832,6 +829,7 @@
 
 \begin{frame}[allowframebreaks]
     \frametitle{References}
+    \footnotesize
     \bibliography{./refs}
 \end{frame}
 
