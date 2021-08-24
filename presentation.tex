@@ -3,6 +3,7 @@
 \usepackage{amsmath}
 \usepackage{amsthm}
 \usepackage{amssymb}
+\usepackage{natbib}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
@@ -34,6 +35,8 @@
 \setbeamertemplate{footline}{}
 \renewcommand*{\slideentry}[6]{}
 
+\bibliographystyle{plainnat}
+
 \makeatletter
 \newlength{\frameheadheight}
 \setlength{\frameheadheight}{2cm}
@@ -63,14 +66,13 @@
 \end{frame}
 
 \section{Introduction}
-
 \subsection{Integrated Vapor Transport}
 \begin{frame}
   \frametitle{Integrated Vapor Transport}
   \begin{itemize}
-      \item Slide in progress
-      \item suffice to say: marginals of IVT are lognormal, in Gumbel D.o.A.
-      \item 2 datasets; 8 and 47 cells
+    \item Daily average of total water content in atmospheric column above grid cell
+    \item Grid cells cover coast of California in two spatial resolutions (8, and 47 cells)
+    \item IVT are marginally log-normal
   \end{itemize}
 \end{frame}
 
@@ -83,9 +85,16 @@
         \begin{itemize}
             \item Inference on the tails of the distribution
             \item Inference beyond observed sample
+            \item Return levels (100 year flood, etc.)
         \end{itemize}
-    \item Block Maxima - GEV
-    \item Thresholding - GP
+    \item Block Maxima
+        \begin{itemize}
+            \item \citet{frechet1927,fisher1928,gumbel1942,jenkinson1955}
+        \end{itemize}
+    \item Threshold Exceedances
+        \begin{itemize}
+            \item \citet{pickands1975,balkema1974}
+        \end{itemize}
   \end{itemize}
 \end{frame} % EVT Background
 \begin{frame}
@@ -120,22 +129,27 @@
 
   How to keep from degenerating to a point mass?
 \end{frame} % Block Maxima
+
 \begin{frame}
   \frametitle{Block Maxima - Fisher-Tippett-Gnedenko Theorem}
+  {\scriptsize\cite{dehaan2006}}\\~\vspace{0.5cm}\\
   If there exists a sequence of constants $a_n > 0$, $b_n$ such that:
   \begin{equation*}
     \text{Pr}\left[\frac{M_n - b_n}{a_n} \leq z\right] \xrightarrow[\enskip n\to\infty\enskip]{} G(z)
   \end{equation*}
-
-  Then $G$ is a \emph{max-stable distribution}, and $F$ is in its \emph{domain of attraction}.
+    \begin{itemize}
+        \item $G$ is a \emph{max-stable distribution}
+        \item $F$ is in its \emph{domain of attraction}
+    \end{itemize}
 \end{frame} % Fisher-Tippett Theorem 
+
 \begin{frame}
-  \frametitle{Block Maxima - GEV}
+  \frametitle{Block Maxima - Generalized Extreme Value Distribution}
   \begin{itemize}
     \item 3 possible forms for these max stable distributions\\
-      \hspace{1cm}Fr{\'e}chet, Gumbel, and Weibull
+      \hspace{1cm}Fr{\'e}chet~\citep{frechet1927}, Gumbel, and Weibull~\citep{fisher1928}
     \pause
-    \item One unifying form
+    \item One unifying form~\citep{jenkinson1955}
       \begin{equation*}
         F(m \mid \mu, \sigma, \xi) = \exp\left\lbrace-\left[1 +
               \xi\left(\frac{x - \mu}{\sigma}\right)\right]_{}^{-1/{\xi}}\right\rbrace.
@@ -156,6 +170,7 @@
 
 \begin{frame}
   \frametitle{Thresholding - Pickands-Balkema-de Haan Theorem}
+  {\scriptsize\cite{dehaan2006}}\\
   \begin{itemize}
     \item For $X \sim F$:
       \begin{equation*}
@@ -178,48 +193,46 @@
 
 \begin{frame}
   \frametitle{Multivariate EVT}
+  {\scriptsize\cite{ferreira2014}}\\~\vspace{0.3cm}\\
   \begin{itemize}
     \item Standardize each $X_i$ according to its marginal distribution
         \begin{equation*}
-          z_l = \left(1 + \xi_l\frac{x_l - b_{t,l}}{a_{t,l}}\right)_{+}^{1/\xi_l}
+          z_l = \left(1 + \xi_l\frac{x_l - b_{l}}{a_{l}}\right)_{+}^{1/\xi_l}
         \end{equation*}
-		where $b_{t,l} = \hat{F}^{-1}(1 - 1/t)$.
-    \item Note that $Z_l > 1\implies X_l > b_{t,l}$
-    \item $\vee_l Z_l \sim \text{Pareto}$
-	\item $\bm{a}$, $\bm{\xi}$ are found by MLE.
+    \item Note that $Z_l > 1\implies X_l > b_{l}$
+    \item $\bigvee_{l=1}^d Z_l \sim \text{Pareto}$
   \end{itemize}
 \end{frame} % Multivariate EVT
 
 \begin{frame}
   \frametitle{Multivariate EVT}
+  {\scriptsize\cite{ferreira2014}}\\~\vspace{0.3cm}\\
   \begin{itemize}
-    \item Assume the existence of a limit measure $\mu$ on ${\bf Z}$ such that:
+    \item Assume the existence of a limit measure $\mu$ on $\bm{Z}$ such that:
     \begin{equation*}
-      n\text{Pr}\left(\frac{V_1}{n} \geq v_1 \text{ or }\ldots\text{ or }\frac{V_d}{n}\geq v_d\right)
-      \rightarrow \mu\left([{\bf 0}, {\bf v}]^C\right)
+      n\text{Pr}\left(\frac{Z_1}{n} \geq z_1 \text{ or }\ldots\text{ or }\frac{Z_d}{n}\geq z_d\right)
+      \xrightarrow[n\to\infty]{} \mu\left([\bm{0}, \bm{z}]^C\right)
     \end{equation*}
-    \item $\mu$ is the asymptotic distribution of ${\bf Z}$ in extreme regions.
+    \item $\mu$ is the asymptotic distribution of $\bm{Z}$ in extreme regions.
     \item $\mu$ features the homogeneity property, $\mu(t\cdot) = t^{-1}\mu(\cdot)$.
   \end{itemize}
 \end{frame}
 
 \begin{frame}
   \frametitle{Spectral Measure}
+  {\scriptsize\cite{ferreira2014}}\\~\vspace{0.1cm}\\
   For $B \subset S_{\infty}^{d-1}$, define the \emph{Spectral Measure}:
   \begin{equation*}
-    \Omega(B) = \mu\left[{\bf z}: R({\bf z}) > 1, {\bf V} \in B\right].
+    \Omega(B) = \mu\left\lbrace\bm{z}: R(\bm {z}) > 1, V(\bm{Z}) \in B\right\rbrace
   \end{equation*}
-  Then,
+  where $R(\bm{Z}) = \bigvee_{l = 1}^d Z_l$, $V(\bm{Z}) = \bm{Z} / R(\bm{Z})$.  Then,
   \begin{equation*}
-    \mu\left[{\bf z}:R(z)>t, {\bf V}\in B\right] = t^{-1}\Omega(B).
+    \mu\left[\bm{z}:R(\bm{z})>r, V(\bm{Z})\in B\right] = r^{-1}\Omega(B).
   \end{equation*}
-  Thus $t$ is independent of $\Omega$, the spectral measure.  This is completed as a
-    probability measure as:
+  Thus $r$ is independent of $\Omega$.  Complete the probability measure as
   \begin{equation*}
-    \text{Pr}\left[{\bf V} \in B \mid r > 1\right] = \frac{\Omega(B)}{\Omega(S_{\infty}^{d-1})}
+    \text{Pr}\left[\bm{V} \in B \mid R > 1\right] = \frac{\Omega(B)}{\Omega(S_{\infty}^{d-1})}
   \end{equation*}
-  So conditional on at least one dimension exceeding its threshold, we can hold the
-  angular measure independent of the magnitude.
 \end{frame}
 
 \section{Methodology}
@@ -373,17 +386,19 @@
               \times {\textstyle \prod}_{l = 2}^d \text{Ga}(\beta_l\mid \zeta_l,\sigma_l).
     \end{aligned}
   \end{equation*}
+  \vfill
+  {\small Note: Projection of Restricted Gammas \emph{(PRG)} sets $\beta_l := 1$ for all $l$.}
 \end{frame} % Vanilla Model
 \begin{frame}
   \frametitle{Projected Gamma Model - Inference}
   \begin{itemize}
     \item Full conditional for $\beta_l$
       \begin{equation*}
-        \beta_l\mid \bm{ y}, r, \alpha_l \sim \text{Ga}\left(n + \alpha_l + \zeta_l,
+        \beta_l\mid \bm{ y}, r, \alpha_l \sim \text{Ga}\left(n\alpha_l + \zeta_l,
                 {\textstyle \sum}_{i = 1}^nr_iy_{il} + \sigma_l\right)
       \end{equation*}
     \pause
-    \item Log-posterior for $\alpha_l$
+    \item Posterior for $\alpha_l$
       \begin{equation*}
         f(\alpha_l \mid \bm{ y}, r) \propto
           \frac{\left({\textstyle \prod}_{i = 1}^nr_iy_{il}\right)^{\alpha_l - 1}}{
@@ -395,9 +410,9 @@
     \pause
     \item If $\beta_l = 1$, then
     \begin{equation*}
-      f(\alpha_1 \mid \bm{ y}, r) \propto
-        \frac{{\textstyle\prod}_{i = 1}^n ry_{i1}^{\alpha_1 - 1}}{\Gamma^n(\alpha_1)} \times
-        \alpha_1^{\xi_1 - 1}\exp\{-\tau_1\alpha_1\}
+      f(\alpha_l \mid \bm{ y}, r) \propto
+        \frac{{\textstyle\prod}_{i = 1}^n ry_{i1}^{\alpha_l - 1}}{\Gamma^n(\alpha_l)} \times
+        \alpha_l^{\xi_1 - 1}\exp\{-\tau_1\alpha_l\}
     \end{equation*}
   \end{itemize}
 \end{frame}
@@ -408,8 +423,8 @@
     \begin{aligned}
       \bm{ y}_i &\sim \text{PG}\left(\bm{ y}\mid \bm{ \alpha}_i, \bm{ \beta}_i\right)\\
       (\alpha_i,\beta_i) &\sim \text{DP}\left(\eta, G_0\right)\\
-      &~\hspace{-2cm}G_0 = {\textstyle\prod}_{l = 1}^d\text{Ga}\left(\alpha_{jl}\mid\xi_{l},\tau_{l}\right)
-                    \times{\textstyle\prod}_{l=2}^d\text{Ga}\left(\beta_{jl}\mid\zeta_{l}\tau_{l}\right)
+      &~\hspace{-1cm}G_0 = {\textstyle\prod}_{l = 1}^d\text{Ga}\left(\alpha_{jl}\mid\xi_{l},\tau_{l}\right)\\
+      &~\hspace{0.5cm}\times{\textstyle\prod}_{l=2}^d\text{Ga}\left(\beta_{jl}\mid\zeta_{l}\tau_{l}\right)
     \end{aligned}
     \hspace{1cm}
     \begin{aligned}
@@ -428,7 +443,8 @@
     \begin{aligned}
       \bm{ y}_i &\sim \text{PG}\left(\bm{ y}\mid \bm{ \alpha}_i, \bm{\beta}_i\right)\\
       (\bm{\alpha}_i, \bm{\beta}_i) &\sim \text{DP}\left(\eta, G_0\right)\\
-        &~\hspace{-1cm}G_0 = \mathcal{N}\left(\log\bm{ \alpha}_{j}\mid\mu,\Sigma\right)\times
+        &~\hspace{-1cm}G_0 = \mathcal{N}\left(\log\bm{ \alpha}_{j}\mid\mu,\Sigma\right)\\
+        &~\hspace{0.5cm}\times
             {\textstyle\prod}_{l = 2}^d\text{Ga}\left(\beta_{jl}\mid\zeta_l,\sigma_l\right)
     \end{aligned}
     \hspace{1cm}
@@ -447,9 +463,18 @@
   \begin{itemize}
     \item $\bm{V} \in \mathcal{S}_{\infty}^{d-1}$
     \pause
-    \item Easy to project distribution in $\mathcal{R}_+^{d}$ to $\mathcal{S}_{p}^{d-1}$ for any finite $p$
+    \item Recall Jacobian of projection from $\mathcal{R}_+^d$ to $\mathcal{S}_{p}^{d-1}$
+    \begin{equation*}
+        \lvert J \rvert = r^{d-1}\left[\left(1 - {\textstyle\sum}_{l = 1}^{d-1}y_l^p\right)^{\frac{1}{p}} +
+        {\textstyle\sum}_{l = 1}^{d-1}y_l^p\left(1 - {\textstyle\sum}_{l=1}^{d-1}
+              y_l^p\right)^{\frac{1}{p} - 1}\right]
+    \end{equation*}
     \pause
-    \item Difficult to project distribution in $\mathcal{R}_+^{d}$ to $\mathcal{S}_{\infty}^{d-1}$
+    If $p\to\infty$, then validity dependent upon $y_d = 1$.  If $y_d\neq 1$, then $\lvert J \rvert \to 0^{-1}$.
+    \pause
+    \item \emph{Difficult} to project density in $\mathcal{R}_+^{d}$ to $\mathcal{S}_{\infty}^{d-1}$
+    \pause
+    \item Easy to project density in $\mathcal{R}_+^{d}$ to $\mathcal{S}_{p}^{d-1}$ for any finite $p$
     \pause
     \item Project to $\mathcal{S}_{p}^{d-1}$ for large $p$, then project posterior predictive samples
   \end{itemize}
@@ -459,21 +484,28 @@
 
 \begin{frame}
   \frametitle{Alternative Geometries}
+  \small
   \begin{itemize}
     \item Coordinate system to describe $\mathcal{S}_p^{d-1}$ in $\omega^{d-1}$
-    \item $\mathcal{L}_1$: Log-ratios:  $\mathcal{S}_1^{d-1} \rightarrow (-\infty,\infty)^{d-1}$
-    \item $\mathcal{L}_2$: Spherical Coordinates: $\mathcal{S}_2^{d-1} \rightarrow [0,\pi/2]^{d-1}$
-    
+    \item $\mathcal{L}_1$: Log-ratios \citep{aitchison1982}:
+        \begin{equation*}
+            \mathcal{S}_1^{d-1} \rightarrow (-\infty,\infty)^{d-1}\hspace{8cm}~
+        \end{equation*}
+    \item $\mathcal{L}_2$: Spherical Coordinates \citep{nunez2019}: 
+        \begin{equation*}
+            \mathcal{S}_2^{d-1} \rightarrow [0,\pi/2]^{d-1}\hspace{8cm}~
+        \end{equation*}
+        \vspace{-0.5cm}
       \begin{equation*}
         \begin{aligned}
         \theta_l &= \cos^{-1}\left(\frac{y_l}{\lVert \bm{y}_{l:d}\rVert_2}\right)\\
-        &\hspace{1cm}\text{for }l = 1,\ldots,d-1
+        &\hspace{0.75cm}\text{for }l = 1,\ldots,d-1
         \end{aligned}
         \hspace{1cm}
         \begin{aligned}
           y_1 &= \cos\theta_1\\
           y_l &= \left[{\textstyle\prod}_{k = 1}^{l-1}\sin\theta_k\right]\cos\theta_l\\
-          &\hspace{1cm}\text{for }l = 2,\ldots,d-1\\
+          &\hspace{0.75cm}\text{for }l = 2,\ldots,d-1\\
           y_d &= {\textstyle\prod}_{k = 1}^{d-1}\sin\theta_k
         \end{aligned}
       \end{equation*}
@@ -485,14 +517,14 @@
   Let $Q_i = \text{Probit}(2\theta_i / \pi)$, for $i = 1,\ldots,d-1$
   \begin{equation*}
     \begin{aligned}
-                Q_i &\sim \mathcal{N}_{d-1}\left(\mu_i, \Sigma_i\right)\\
-    \mu_i, \sigma_i &\sim \text{DP}(\eta, G_0)\\
+                Q_i &\sim \mathcal{N}_{d-1}\left(\bm{\mu}_i, \Sigma_i\right)\\
+    \bm{\mu}_i, \Sigma_i &\sim \text{DP}(\eta, G_0)\\
                     &\hspace{-1cm}G_0 =
-                      \mathcal{N}_{d-1}(\mu_i\mid\mu_0,\Sigma_0)\times \text{IW}(\Sigma_i\mid\nu,\Psi)
+                      \mathcal{N}_{d-1}(\bm{\mu}_i\mid\bm{\mu}_0,\Sigma_0)\times \text{IW}(\Sigma_i\mid\nu,\Psi)
     \end{aligned}
     \hspace{1cm}
     \begin{aligned}
-              \mu_0 &\sim \mathcal{N}_{d-1}\left({\bf u},{\bf S}\right)\\
+              \mu_0 &\sim \mathcal{N}_{d-1}\left(\bm{u},\bm{S}\right)\\
            \Sigma_0 &\sim \text{IW}(\nu_0,\Psi_0)\\
                \eta &\sim \text{Ga}(\alpha, \beta)
     \end{aligned}
@@ -500,7 +532,7 @@
 \end{frame}
 
 \section[Model Comparison]{Model Comparison on $\mathcal{S}_{\infty}^{d-1}$}
-
+\subsection{Model Comparison}
 \begin{frame}
   \frametitle{Model Comparison on $\mathcal{S}_{\infty}^{d-1}$}
   \begin{itemize}
@@ -508,30 +540,37 @@
       \item Multivariate distribution
       \item Have samples from posterior predictive
       \begin{itemize}
-          \item Energy Score
+            \item Posterior Predictive Loss~\citep{gelfand1998}
+                \begin{equation*}
+                    D_k^{(i)} = \frac{1}{d}\sum_{l = 1}^{d}\left[\text{Var}(X_{il}) +
+                        \frac{k}{k+1}\left(\text{E}[X_{il}] - x_{il}\right)^2\right]
+                \end{equation*}
+            \item Energy Score~\cite{gneiting2007}
       \end{itemize}
   \end{itemize}
 \end{frame}
 
 \begin{frame}
   \frametitle{Energy Score}
+  {\scriptsize \citep{gneiting2007}}\\~\vspace{0.2cm}\\
   \begin{itemize}
     \item Generalization of CRPS to multiple dimensions
     \begin{equation*}
       \label{eq:es}
-      \text{ES}\left(P,x_i\right) =  \text{E}_p g\left(\bm{X}_i, \bm{x}_i\right)
+      \text{ES}\left(P,\bm{x}_i\right) =  \text{E}_p g\left(\bm{X}_i, \bm{x}_i\right)
                 - \frac{1}{2}\text{E}_p g\left(\bm{X}_i,\bm{X}_i^{\prime}\right)
     \end{equation*}
     \pause
     \item Where $g$ is a negative definite kernel\\
       Euclidean distance is most common
     \pause
-    \item What is most appropriate on the hypercube?
+    \item What is most appropriate on $\mathcal{S}_{\infty}^{d-1}$?
   \end{itemize}
 \end{frame}
 
+\subsection{Distance on $\mathcal{S}_{\infty}^{d-1}$}
 \begin{frame}
-  \frametitle{Positive Orthant of $\mathcal{S}_{\infty}^{d-1}$}
+  \frametitle{$\mathcal{S}_{\infty}^{2}$ - 2 Possible Paths}
   \begin{center}
     \includegraphics[width=0.8\linewidth]{./images/rotation}
   \end{center}
@@ -542,12 +581,14 @@
   \begin{itemize}
     \item Length of the shortest path between two points
     \pause
-    \item A distance:
-      \begin{itemize}
-        \item is symmetric
-        \item is positive
-        \item respects triangle inequality
-      \end{itemize}
+    \item An Unfolded polyhedron is called a \emph{net}
+    \pause
+    \item If we \emph{Unfold} or \emph{Rotate} $\mathcal{S}_{\infty}^{d-1}$ to the appropriate \emph{net}:
+        \begin{itemize}
+            \item Shortest distance is length, or \emph{Euclidean distance} of straight line \citep{pappas1989}
+            \item \emph{Spider and fly problem}
+            \item The \emph{distance} is the length of the shortest line that does not exit the net
+        \end{itemize}
   \end{itemize}
 \end{frame}
 
@@ -565,21 +606,41 @@
     \end{center}
 \end{frame}
 
+\subsection{Negative Definite Kernel on $\mathcal{S}_{\infty}^{d-1}$}
 \begin{frame}
   \frametitle{A Valid Negative Definite Kernel}
   \begin{prop}
-    For points $a,b \in \mathcal{S}_{\infty}^{d-1}$ a valid negative definite kernel can be formed as
+    For points $a,b \in \mathcal{S}_{\infty}^{d-1}$ a valid negative definite kernel\footnote{A negative definite kernel satisfies symmetry in its arguments, and $\sum_{i = 1}^n\sum_{j = 1}^n \alpha_i\alpha_j g(\bm{x}_1,\bm{x}_2) \leq 0$ for all $x_1,x_2$, for all $\alpha_i$ such that $\sum_{i = 1}^n\alpha_i = 0$.} can be formed as
     \begin{equation*}
       g(\bm{a},\bm{b}) = \begin{cases}
         \pnorm{\bm{b}-\bm{a}}{2} &\text{ if }\argmax_l\bm{a} = \argmax_l\bm{b}\\
         \pnorm{\bm{c}-\bm{a}}{2} + \pnorm{\bm{b}-\bm{c}}{2} &\text{ otherwise}
       \end{cases}
     \end{equation*}
-    where $\bm{c}$ resides on the intersection between the faces of $\bm{a}$ and $\bm{b}$, and
+    where $\bm{c}$ resides on intersection between faces of $\bm{a}$ and $\bm{b}$, and
                 minimizes $g(\bm{a},\bm{b})$.
   \end{prop}
 \end{frame}
 
+\begin{frame}
+    \frametitle{Negative Definite Kernel - Proof}
+    \begin{itemize}
+        \item In the first case, where $\bm{a}$ and $\bm{b}$ $\rightarrow$ Euclidean distance. 
+        \item In the second case, $\bm{a}$ and $\bm{b}$ reside on separate
+  faces.  
+  \begin{itemize}
+      \item $c$ is unique, $\pnorm{\bm{c} - \bm{a}}{2} = \pnorm{\bm{a} - \bm{c}}{2}$ $\rightarrow$ symmetry in the arguments.
+      \item Then for the other property of negative definiteness
+  \begin{equation*}
+    \begin{aligned}
+      \sum_{i = 1}^n\sum_{j = 1}^n \alpha_i\alpha_j g(\bm{x}_1,\bm{x}_2) &= \sum_{i = 1}^n\sum_{j = 1}^n \alpha_i\alpha_j \bigg[\pnorm{\bm{c} - \bm{x}_1}{2} + \pnorm{\bm{x}_2 - \bm{c}}{2}\bigg]\\
+      &= \sum_{i = 1}^n\sum_{j = 1}^n \alpha_i\alpha_j\pnorm{\bm{c} - \bm{x}_1}{2} + \sum_{i = 1}^n\sum_{j = 1}^n \alpha_i\alpha_j\pnorm{\bm{x}_2 - \bm{c}}{2}
+    \end{aligned}
+  \end{equation*}
+  which is less than or equal to $0$ in both terms
+  \end{itemize} 
+  \end{itemize}
+\end{frame}
 
 \section{Results}
 
@@ -598,12 +659,18 @@
 \end{frame}
 
 \begin{frame}
+  \frametitle{Simulation - Posterior predictive loss}
+  \begin{center}
+    \includegraphics[height=\frametextheight]{./images/simulation_ppl}
+  \end{center}
+\end{frame}
+
+\begin{frame}
   \frametitle{Simulation - Energy Score}
   \begin{center}
     \includegraphics[height=\frametextheight]{./images/simulation_es}
   \end{center}
 \end{frame}
-
 
 \subsection{Integrated Vapor Transport}
 
@@ -615,15 +682,13 @@
 \end{frame}
 
 \section[EVT Applications]{Applications of EVT Analysis}
+\subsection{EVT Applications}
 
 \begin{frame}
   \frametitle{Applications of EVT Analysis}
   \begin{itemize}
-    \item Pairwise Extremal Dependence Coefficients
+    \item Pairwise Extremal Dependence Coefficients~\citep{warner2018}\\~\vspace{0.3cm}\\
     \item Conditional Survival Functions
-      \begin{itemize}
-        \item Reciprocal of Conditional Return Levels
-      \end{itemize}
   \end{itemize}
 \end{frame}
 
@@ -631,6 +696,7 @@
 
 \begin{frame}
   \frametitle{Pairwise Extremal Dependence Coefficients}
+  {\scriptsize\citep{warner2018}}
     \begin{itemize}
       \item A summary measure of extremal dependence
       \begin{equation*}
@@ -647,6 +713,7 @@
         \begin{equation*}
           \chi_{kl} = \text{E}\left[\frac{V_k}{\text{E}(V_k)}{\bigwedge}\frac{V_l}{\text{E}(V_l)}\right]
         \end{equation*}
+        Where $\bm{V} = \bm{Z} / \lVert\bm{Z}\rVert_{\infty}$
     \end{itemize}
 \end{frame}
 
@@ -670,7 +737,7 @@
       In one dimension, the conditional survival function can be calculated as
    \begin{equation*}
       \label{eqn:condsurv1df}
-      \text{P}\left[Z_l > z_l\mid {\bf Z}_{\neg(l)} > {\bf z}_{\neg(l)}\right] =
+      \text{P}\left[Z_l > z_l\mid \bm{Z}_{\neg(l)} > \bm{z}_{\neg(l)}\right] =
         \frac{\text{E}\left[\bigwedge_{k = 1}^d \frac{V_k}{z_k}\right]}{
                       \text{E}\left[\bigwedge_{k \neq l}\frac{V_k}{z_k}\right]}
     \end{equation*}
@@ -679,16 +746,16 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{Conditional Survival Function - Cont.}
-  \begin{footnotesize}
+  \frametitle{Conditional Survival Function - Proof}
+  {\small
   \begin{equation*}
     \label{eqn:condsurv1d}
-    \text{P}\left[Z_l > z_l\mid {\bf Z}_{-(l)} > {\bf z}_{-(l)}\right] =
+    \text{P}\left[Z_l > z_l\mid \bm{Z}_{-(l)} > \bm{z}_{-(l)}\right] =
       \frac{\text{P}\left[\cap_{k = 1}^d Z_k > z_k\right]}{\text{P}\left[\cap_{k \neq l} Z_k > z_k\right]}.
   \end{equation*}
   \pause
-  $R = \pnorm{{\bf Z}}{\infty}$, ${\bf V} = \frac{{\bf Z}}{R}$, such that
-    ${\bf V}\in \mathcal{S}_{\infty}^{d-1}$.  Then ${\bf Z} = R{\bf V}$.
+  $R = \pnorm{\bm{Z}}{\infty}$, $\bm{V} = \frac{\bm{Z}}{R}$, such that
+    $\bm{V}\in \mathcal{S}_{\infty}^{d-1}$.  Then $\bm{Z} = R\bm{V}$.
   \begin{equation*}
     \text{P}\left(\cap_{k = 1}^d Z_k > z_k\right) = \text{P}\left(\cap_{k = 1}^d RV_k > z_k\right)
   \end{equation*}
@@ -700,24 +767,29 @@
       \text{E}\left[1 \bigwedge \left(\bigvee_{k = 1}^d\frac{z_k}{V_k}\right)^{-1}\right]
   \end{equation*}
   $V_k \in [0,1]$; $z_k > 1$ (for the region of interest) $\implies$ $\frac{z_k}{V_k} > 1$
-  \pause
+  }
+\end{frame}
+
+\begin{frame}
+    \frametitle{Conditional Survival Function - Proof Cont.}
+    {\small 
   \begin{equation*}
     \text{P}\left[\cap_{k = 1}^d Z_k > z_k\right] = \text{E}\left[\wedge_{k = 1}^d\frac{V_i}{z_i}\right].
   \end{equation*}
   \pause
   And similar for the denominator
   \begin{equation*}
-    \text{P}\left[Z_l > z_l\mid {\bf Z}_{\neg(l)} > {\bf z}_{\neg(l)}\right] =
+    \text{P}\left[Z_l > z_l\mid \bm{Z}_{\neg(l)} > \bm{z}_{\neg(l)}\right] =
       \frac{\text{E}\left[\wedge_{k = 1}^d \frac{V_k}{z_k}\right]}{\text{E}\left[
                 \bigwedge_{k \neq l}\frac{V_k}{z_k}\right]}
   \end{equation*}
-  \end{footnotesize}
+  }
 \end{frame}
 
 \begin{frame}
   \frametitle{IVT - Conditional Survival 1d}
   \begin{center}
-    \includegraphics[height=\frametextheight,width=\textwidth]{./images/condsurv_1d}
+    \includegraphics[height=0.8\frametextheight,width=0.9\textwidth]{./images/condsurv_1d}
   \end{center}
 \end{frame}
 
@@ -749,20 +821,19 @@
   \begin{itemize}
     \item Clustering methods
       \begin{itemize}
-        \item Linkage-based (single, \dots, complete)
-        \item Centroid-based ($k$-Means)
-        \item Density-based (DBSCAN)
+        \item Linkage-based (single, \dots, complete)~\citep{ackerman2010}
+        \item Centroid-based ($k$-Means)~\citep{hartigan1979} 
+        \item Density-based (DBSCAN)~\cite{ester1996}
       \end{itemize}
     \item Non-statistical Models
       \begin{itemize}
-        \item Isolation Forest
-        \item One-class SVM
-        \item Local Outlier Factor
+        \item Isolation Forest~\citep{liu2000}
+        \item One-class SVM~\cite{chang2011}
+        \item Local Outlier Factor~\cite{breunig2000}
       \end{itemize}
     \item Statistical Models
       \begin{itemize}
-        \item Gaussian mixture models
-        \item If you can generate a density directly\dots
+        \item Density Estimation routines (GMM's, KDE, KNN)
       \end{itemize}
   \end{itemize}
 \end{frame}
@@ -776,15 +847,29 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{Density Estimation on the Hypersphere}
+  \frametitle{Posterior Predictive \emph{Density}}
   \begin{itemize}
     \item Sample from posterior predictive distribution
-    \item Density based on \emph{distance} to $k$th nearest neighbor
+    \item Density estimate based on \emph{distance} to $k$th nearest neighbor
     \begin{equation*}
         S_{i,(k)}^{-1} =
           \frac{k}{N}\frac{\Gamma\left(\frac{d-1}{2} - 1\right)}{\pi^{\frac{d-1}{2}}D_{k}^{d-1}(V_i)}
     \end{equation*}
+    Using the 1d rotation distance estimate established earlier.
   \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Contribution to Posterior Predictive Loss}
+    \begin{equation*}
+         D_k^{(i)} = \frac{1}{d}\sum_{l = 1}^{d}\left[\text{Var}(X_{il}) +
+                        \frac{k}{k+1}\left(\text{E}[X_{il}] - x_{il}\right)^2\right]
+    \end{equation*}
+    \begin{itemize}
+        \item Bias term and Variance term
+        \item Larger values for both indicate \emph{hard to predict} observation.
+        \item Anomalies are \emph{different} from prevailing distribution--PPL would seem to indicate this
+    \end{itemize}
 \end{frame}
 
 \begin{frame}
@@ -871,13 +956,23 @@
 \end{frame}
 
 
+\begin{frame}[plain]
+    \begin{center}
+        \includegraphics[height=0.7\frametextheight]{./images/fin}
+    \end{center}
+\end{frame}
+
 \begin{frame}
-    
+    \frametitle{References}
+    \bibliography{./refs}
 \end{frame}
 
 
 \appendix
 
+\section*{Appendix}
+
+\subsection*{Alternative forms of model comparison}
 \begin{frame}
   \frametitle{Kullbeck Liebler Divergence}
   \begin{itemize}
@@ -894,6 +989,9 @@
       \end{equation*}
   \end{itemize}
 \end{frame} % KL Divergence (Introduction)
+
+\subsection*{Finite Mixture of Projected Gammas}
+
 \begin{frame}
   \frametitle{Finite Mixture Model}
   \begin{equation*}
@@ -913,12 +1011,9 @@
   \end{equation*}
 \end{frame} % Projected Gamma - Finite Mixture Model
 
-\begin{frame}
-  \frametitle{Simulation - Posterior predictive loss}
-  \begin{center}
-    \includegraphics[height=\frametextheight]{./images/simulation_ppl}
-  \end{center}
-\end{frame}
+\subsection*{Simulation - Alternative Model Selection Criteria}
+
+
 \begin{frame}
   \frametitle{Simulation - KL Divergence}
   \begin{center}
@@ -933,6 +1028,8 @@
     \includegraphics[height=\frametextheight]{./images/simulation_knn_kld}
   \end{center}
 \end{frame}
+
+\subsection*{IVT - Alternative Selection Criteria}
 
 \begin{frame}
   \frametitle{IVT - KL Divergence}
