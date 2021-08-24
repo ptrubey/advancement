@@ -65,26 +65,34 @@
   \tableofcontents
 \end{frame}
 
+
 \section{Introduction}
 \subsection{Motivating Example}
 \begin{frame}
   \frametitle{Integrated Vapor Transport}
-  \begin{itemize}
-    \item Atmospheric rivers~\citep{ralph2013,ralph2018}
-        \begin{itemize}
-            \item Concentrated water vapor in atmosphere
-            \item Huge amounts of water
-            \item Predominant source of precipitation for inland California
-            \item Large implications for land use, agriculture, flood prevention/mitigation
-        \end{itemize}
-    \item The data~\citep{guan2015}
-        \begin{itemize}
-            \item 42 years of daily average of total water content in atmospheric column above grid cell
-            \item Grid cells cover coast of California in two spatial resolutions (8, and 47 cells) 
-            \item IVT are marginally log-normal
-            \item subset to rainy season (November to March, 5587 observations)
-        \end{itemize}
-  \end{itemize}
+  \begin{minipage}{.6\textwidth}
+    \begin{itemize}
+        \item Atmospheric rivers~\citep{ralph2013,ralph2018}
+            \begin{itemize}
+                \item Concentrated water vapor in atmosphere
+                \item Huge amounts of water
+                \item Predominant source of precipitation for inland California
+                \item Large implications for land use, agriculture, flood prevention/mitigation
+            \end{itemize}
+        \item The data~\citep{guan2015}
+            \begin{itemize}
+                \item 42 years of daily average of total water content in atmospheric column above grid cell
+                \item Grid cells cover coast of California in two spatial resolutions (8, and 47 cells) 
+                \item IVT are marginally log-normal
+                \item subset to rainy season (November to March, 5587 observations)
+            \end{itemize}
+    \end{itemize}
+  \end{minipage}%
+  \begin{minipage}{.39\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{./images/ar}\\
+    {\scriptsize Credit: NASA}
+   \end{minipage}
 \end{frame}
 
 \subsection{Extreme Value Theory}
