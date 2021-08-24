@@ -66,20 +66,31 @@
 \end{frame}
 
 \section{Introduction}
-\subsection{Integrated Vapor Transport}
+\subsection{Motivating Example}
 \begin{frame}
   \frametitle{Integrated Vapor Transport}
   \begin{itemize}
-    \item Daily average of total water content in atmospheric column above grid cell
-    \item Grid cells cover coast of California in two spatial resolutions (8, and 47 cells)
-    \item IVT are marginally log-normal
+    \item Atmospheric rivers~\citep{ralph2013,ralph2018}
+        \begin{itemize}
+            \item Concentrated water vapor in atmosphere
+            \item Huge amounts of water
+            \item Predominant source of precipitation for inland California
+            \item Large implications for land use, agriculture, flood prevention/mitigation
+        \end{itemize}
+    \item The data~\citep{guan2015}
+        \begin{itemize}
+            \item 42 years of daily average of total water content in atmospheric column above grid cell
+            \item Grid cells cover coast of California in two spatial resolutions (8, and 47 cells) 
+            \item IVT are marginally log-normal
+            \item subset to rainy season (November to March, 5587 observations)
+        \end{itemize}
   \end{itemize}
 \end{frame}
 
 \subsection{Extreme Value Theory}
 
 \begin{frame}
-  \frametitle{EVT - A Brief Background}
+  \frametitle{Extreme Value Theory - A Brief Background}
   \begin{itemize}
     \item Why EVT?
         \begin{itemize}
@@ -95,6 +106,7 @@
         \begin{itemize}
             \item \citet{pickands1975,balkema1974}
         \end{itemize}
+    \item Multivariate EVT - more difficult
   \end{itemize}
 \end{frame} % EVT Background
 \begin{frame}
@@ -116,58 +128,26 @@
 \subsection{EVT - Block Maxima}
 
 \begin{frame}
-  \frametitle{Block Maxima}
-  For $x_i \stackrel{\text{iid}}{\sim} F$, Let $M_n = \vee_{i=1}^n x_i$.
-  \begin{equation*}
-    \begin{aligned}
-      \text{Pr}\left[M_n\leq z\right] &= \text{Pr}\left[X_1 \leq z, \ldots, X_n \leq z\right]\\
-        &= \text{Pr}\left[X_1\leq z\right]\times\ldots\times\text{Pr}\left[X_n\leq z\right]\\
-        &= F(z)^n.
-    \end{aligned}
-  \end{equation*}
-  But if $F$ is unknown?
-
-  How to keep from degenerating to a point mass?
-\end{frame} % Block Maxima
-
-\begin{frame}
   \frametitle{Block Maxima - Fisher-Tippett-Gnedenko Theorem}
-  {\scriptsize\cite{dehaan2006}}\\~\vspace{0.5cm}\\
-  If there exists a sequence of constants $a_n > 0$, $b_n$ such that:
-  \begin{equation*}
-    \text{Pr}\left[\frac{M_n - b_n}{a_n} \leq z\right] \xrightarrow[\enskip n\to\infty\enskip]{} G(z)
-  \end{equation*}
-    \begin{itemize}
-        \item $G$ is a \emph{max-stable distribution}
-        \item $F$ is in its \emph{domain of attraction}
-    \end{itemize}
-\end{frame} % Fisher-Tippett Theorem 
-
-\begin{frame}
-  \frametitle{Block Maxima - Generalized Extreme Value Distribution}
+  {\scriptsize\cite{dehaan2006}}\\~\vspace{0.01cm}\\
+  For $x_i \stackrel{\text{iid}}{\sim} F$, Let $M_n = \vee_{i=1}^n x_i$.
   \begin{itemize}
-    \item 3 possible forms for these max stable distributions\\
-      \hspace{1cm}Fr{\'e}chet~\citep{frechet1927}, Gumbel, and Weibull~\citep{fisher1928}
+    \item If there exists a sequence of constants $a_n > 0$, $b_n$ such that:
+        \begin{equation*}
+            \text{Pr}\left[\frac{M_n - b_n}{a_n} \leq z\right] \xrightarrow[\enskip n\to\infty\enskip]{} G(z),
+        \end{equation*}
+        Then $G$ is a \emph{max-stable distribution}, and $F$ is in its \emph{domain of attraction}
+    \item 3 possible forms~\citep{frechet1927,fisher1928}
     \pause
-    \item One unifying form~\citep{jenkinson1955}
+    \item One unifying form, \emph{GEV}~\citep{jenkinson1955}
       \begin{equation*}
         F(m \mid \mu, \sigma, \xi) = \exp\left\lbrace-\left[1 +
               \xi\left(\frac{x - \mu}{\sigma}\right)\right]_{}^{-1/{\xi}}\right\rbrace.
       \end{equation*}
-      the \emph{generalized extreme value distribution}
-  \end{itemize}
-\end{frame} % Block Maxima - GEV
-\begin{frame}
-  \frametitle{Block Maxima - Inference}
-  \begin{itemize}
-    \item Inference requires blocking data and taking maximum within a block
-    \item Reduces data for inference to $1 / \text{block size}$.
-    \item Enter - Thresholding
-  \end{itemize}
-\end{frame} % Block Maxima - Inference
+    \end{itemize}
+\end{frame} % Fisher-Tippett Theorem 
 
 \subsection{EVT - Thresholding}
-
 \begin{frame}
   \frametitle{Thresholding - Pickands-Balkema-de Haan Theorem}
   {\scriptsize\cite{dehaan2006}}\\
@@ -240,10 +220,10 @@
 \begin{frame}
   \frametitle{Casting \emph{Real} Data to $\mathcal{S}_{\infty}^{d-1}$}
   \begin{enumerate}
-      \item Find $a_j, b_j, \xi_j$
+      \item Find $a_l, b_l, \xi_l$
       \item Standardize according to
         \begin{equation*}
-         z_j = \left(1 + \xi\frac{x_j - b_{j}}{a_{j}}\right)_{+}^{1/\xi}
+         z_l = \left(1 + \xi_l\frac{x_l - b_{l}}{a_{l}}\right)_{+}^{1/\xi_l}
         \end{equation*}
       \item Calculate
         \begin{equation*}
@@ -253,6 +233,7 @@
       \item $r_i\mid r_i \geq 1 \sim \text{Pareto}(1)$ $\rightarrow$ Keep where $r_i \geq 1$.
       \item Data is time series--decluster by keeping $\argmax_i r_i$ in series where $r_i > 1$
       \item $\bm{Z} \sim \text{MV Pareto}(1)$.  Dependence structure of $\bm{Z}$ expressed in $\bm{V}\in\mathcal{S}_{\infty}^{d-1}$.
+      \item How do we infer the angular distribution?
   \end{enumerate}
 \end{frame}
 
@@ -261,14 +242,14 @@
 \begin{frame}
   \frametitle{The Unit $d$-Sphere in $\mathcal{L}_p$}
   \begin{columns}
-    \begin{column}{.38\textwidth}
+    \begin{column}{.49\textwidth}
       \begin{itemize}
         \item $\mathcal{L}_p$ Norm:
           \begin{equation*}
             \lVert \bm{s}\rVert_p = \left[\sum_{l = 1}^ds_l^p\right]^{\frac{1}{p}}
           \end{equation*}
         \pause
-        \item Unit Sphere on $\mathcal{L}_p$ Norm
+        \item Positive orthant of unit sphere on $\mathcal{L}_p$
           \begin{equation*}
             \mathcal{S}_{p}^{d-1} = \left\lbrace \bm{s} : 
                 \bm{s}\in\mathcal{R}_+^d,\hspace{.2cm} \lVert\bm{s}\rVert_p = 1 \right\rbrace
@@ -278,9 +259,9 @@
       ~
     \end{column}%
     \hfill%
-    \begin{column}{.58\textwidth}
+    \begin{column}{.5\textwidth}
       \begin{center}
-        \includegraphics[width = .8\linewidth, height = .8\linewidth]{./images/p_sphere}
+        \includegraphics[height=\frametextheight, width = \frametextheight]{./images/p_sphere}
       \end{center}
     \end{column}%
   \end{columns}%
@@ -305,28 +286,16 @@
     T^{-1}\left(r,y_1,\ldots,y_{d-1}\right) =
       \left(ry_1,\ldots,ry_{d-1}, r\left(1 - {\textstyle\sum}_{l = 1}^{d-1}y_l^p\right)^{\frac{1}{p}}\right)
     \end{equation*}
-  \end{itemize}
-\end{frame} % Unit Sphere - Projection
-\begin{frame}
-  \frametitle{Projection - Jacobian}
-  \begin{equation*}
-    \begin{bmatrix}
-      y_1 & r & 0 & \ldots & 0\\
-      y_2 & 0 & r & \ldots & 0\\
-      \vdots & \vdots & \vdots & \ddots & \vdots\\
-      y_{d-1} & 0 & \ldots & 0 & r \\
-      \left(1 - {\scriptsize\sum_{l=1}^{d-1}}y_l^p\right)^{1/p} &
-        - ry_1^{p-1}\phi & -ry_2^{p-1}\phi & \cdots & -ry_{d-1}\phi
-    \end{bmatrix}
-  \end{equation*}
-  where $\phi = \left(1 - {\scriptsize\sum_{l=1}^{d-1}}y_l^p\right)^{1/p - 1}$
-  \pause
-  \begin{equation*}
-  \lvert J \rvert = r^{d-1}\left[\left(1 - {\textstyle\sum}_{l = 1}^{d-1}y_l^p\right)^{\frac{1}{p}} +
+    \pause
+    Determinant of the Jacobian:
+    \begin{equation*}
+        \lvert J \rvert = r^{d-1}\left[\left(1 - {\textstyle\sum}_{l = 1}^{d-1}y_l^p\right)^{\frac{1}{p}} +
       {\textstyle\sum}_{l = 1}^{d-1}y_l^p\left(1 - {\textstyle\sum}_{l=1}^{d-1}
           y_l^p\right)^{\frac{1}{p} - 1}\right]
-  \end{equation*}
-\end{frame} % Unit Sphere - Jacobian
+    \end{equation*}
+  \end{itemize}
+\end{frame} % Unit Sphere - Projection
+
 
 \subsection{Projected Gamma Family}
 \begin{frame}
@@ -370,7 +339,7 @@
             \prod_{i = 1}^n\prod_{l = 1}^{d}\text{Ga}\left(r_iy_{il}\mid\alpha_l,\beta_l\right)
       \end{equation*}
     \pause
-    \item Enabling independent inference between columns
+    \item Enabling independent inference between dimensions
       \begin{equation*}
         L(\alpha_l,\beta_l) \propto \prod_{i = 1}^n
                   \text{Ga}\left(r_iy_{il}\mid\alpha_l,\beta_l\right)
@@ -480,57 +449,6 @@
   \end{itemize}
 \end{frame}
 
-\subsection{Alternative Geometries}
-
-\begin{frame}
-  \frametitle{Alternative Geometries}
-  \small
-  \begin{itemize}
-    \item Coordinate system to describe $\mathcal{S}_p^{d-1}$ in $\omega^{d-1}$
-    \item $\mathcal{L}_1$: Log-ratios \citep{aitchison1982}:
-        \begin{equation*}
-            \mathcal{S}_1^{d-1} \rightarrow (-\infty,\infty)^{d-1}\hspace{8cm}~
-        \end{equation*}
-    \item $\mathcal{L}_2$: Spherical Coordinates \citep{nunez2019}: 
-        \begin{equation*}
-            \mathcal{S}_2^{d-1} \rightarrow [0,\pi/2]^{d-1}\hspace{8cm}~
-        \end{equation*}
-        \vspace{-0.5cm}
-      \begin{equation*}
-        \begin{aligned}
-        \theta_l &= \cos^{-1}\left(\frac{y_l}{\lVert \bm{y}_{l:d}\rVert_2}\right)\\
-        &\hspace{0.75cm}\text{for }l = 1,\ldots,d-1
-        \end{aligned}
-        \hspace{1cm}
-        \begin{aligned}
-          y_1 &= \cos\theta_1\\
-          y_l &= \left[{\textstyle\prod}_{k = 1}^{l-1}\sin\theta_k\right]\cos\theta_l\\
-          &\hspace{0.75cm}\text{for }l = 2,\ldots,d-1\\
-          y_d &= {\textstyle\prod}_{k = 1}^{d-1}\sin\theta_k
-        \end{aligned}
-      \end{equation*}
-  \end{itemize}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Probit-Normal}
-  Let $Q_i = \text{Probit}(2\theta_i / \pi)$, for $i = 1,\ldots,d-1$
-  \begin{equation*}
-    \begin{aligned}
-                Q_i &\sim \mathcal{N}_{d-1}\left(\bm{\mu}_i, \Sigma_i\right)\\
-    \bm{\mu}_i, \Sigma_i &\sim \text{DP}(\eta, G_0)\\
-                    &\hspace{-1cm}G_0 =
-                      \mathcal{N}_{d-1}(\bm{\mu}_i\mid\bm{\mu}_0,\Sigma_0)\times \text{IW}(\Sigma_i\mid\nu,\Psi)
-    \end{aligned}
-    \hspace{1cm}
-    \begin{aligned}
-              \mu_0 &\sim \mathcal{N}_{d-1}\left(\bm{u},\bm{S}\right)\\
-           \Sigma_0 &\sim \text{IW}(\nu_0,\Psi_0)\\
-               \eta &\sim \text{Ga}(\alpha, \beta)
-    \end{aligned}
-  \end{equation*}
-\end{frame}
-
 \section[Model Comparison]{Model Comparison on $\mathcal{S}_{\infty}^{d-1}$}
 \subsection{Model Comparison}
 \begin{frame}
@@ -622,25 +540,7 @@
   \end{prop}
 \end{frame}
 
-\begin{frame}
-    \frametitle{Negative Definite Kernel - Proof}
-    \begin{itemize}
-        \item In the first case, where $\bm{a}$ and $\bm{b}$ $\rightarrow$ Euclidean distance. 
-        \item In the second case, $\bm{a}$ and $\bm{b}$ reside on separate
-  faces.  
-  \begin{itemize}
-      \item $c$ is unique, $\pnorm{\bm{c} - \bm{a}}{2} = \pnorm{\bm{a} - \bm{c}}{2}$ $\rightarrow$ symmetry in the arguments.
-      \item Then for the other property of negative definiteness
-  \begin{equation*}
-    \begin{aligned}
-      \sum_{i = 1}^n\sum_{j = 1}^n \alpha_i\alpha_j g(\bm{x}_1,\bm{x}_2) &= \sum_{i = 1}^n\sum_{j = 1}^n \alpha_i\alpha_j \bigg[\pnorm{\bm{c} - \bm{x}_1}{2} + \pnorm{\bm{x}_2 - \bm{c}}{2}\bigg]\\
-      &= \sum_{i = 1}^n\sum_{j = 1}^n \alpha_i\alpha_j\pnorm{\bm{c} - \bm{x}_1}{2} + \sum_{i = 1}^n\sum_{j = 1}^n \alpha_i\alpha_j\pnorm{\bm{x}_2 - \bm{c}}{2}
-    \end{aligned}
-  \end{equation*}
-  which is less than or equal to $0$ in both terms
-  \end{itemize} 
-  \end{itemize}
-\end{frame}
+
 
 \section{Results}
 
@@ -745,46 +645,6 @@
   \end{prop}
 \end{frame}
 
-\begin{frame}
-  \frametitle{Conditional Survival Function - Proof}
-  {\small
-  \begin{equation*}
-    \label{eqn:condsurv1d}
-    \text{P}\left[Z_l > z_l\mid \bm{Z}_{-(l)} > \bm{z}_{-(l)}\right] =
-      \frac{\text{P}\left[\cap_{k = 1}^d Z_k > z_k\right]}{\text{P}\left[\cap_{k \neq l} Z_k > z_k\right]}.
-  \end{equation*}
-  \pause
-  $R = \pnorm{\bm{Z}}{\infty}$, $\bm{V} = \frac{\bm{Z}}{R}$, such that
-    $\bm{V}\in \mathcal{S}_{\infty}^{d-1}$.  Then $\bm{Z} = R\bm{V}$.
-  \begin{equation*}
-    \text{P}\left(\cap_{k = 1}^d Z_k > z_k\right) = \text{P}\left(\cap_{k = 1}^d RV_k > z_k\right)
-  \end{equation*}
-  \pause
-  Recall, for standard Pareto, $\text{P}(R > r) = 1\wedge\frac{1}{r}$.
-  \begin{equation*}
-    \text{P}\left[\bigcap_{k = 1}^d R > \frac{z_k}{v_k}\right] =
-      \text{P}\left[R  > \bigvee_{k=1}^d\frac{z_k}{V_k}\right] =
-      \text{E}\left[1 \bigwedge \left(\bigvee_{k = 1}^d\frac{z_k}{V_k}\right)^{-1}\right]
-  \end{equation*}
-  $V_k \in [0,1]$; $z_k > 1$ (for the region of interest) $\implies$ $\frac{z_k}{V_k} > 1$
-  }
-\end{frame}
-
-\begin{frame}
-    \frametitle{Conditional Survival Function - Proof Cont.}
-    {\small 
-  \begin{equation*}
-    \text{P}\left[\cap_{k = 1}^d Z_k > z_k\right] = \text{E}\left[\wedge_{k = 1}^d\frac{V_i}{z_i}\right].
-  \end{equation*}
-  \pause
-  And similar for the denominator
-  \begin{equation*}
-    \text{P}\left[Z_l > z_l\mid \bm{Z}_{\neg(l)} > \bm{z}_{\neg(l)}\right] =
-      \frac{\text{E}\left[\wedge_{k = 1}^d \frac{V_k}{z_k}\right]}{\text{E}\left[
-                \bigwedge_{k \neq l}\frac{V_k}{z_k}\right]}
-  \end{equation*}
-  }
-\end{frame}
 
 \begin{frame}
   \frametitle{IVT - Conditional Survival 1d}
@@ -862,8 +722,8 @@
 \begin{frame}
     \frametitle{Contribution to Posterior Predictive Loss}
     \begin{equation*}
-         D_k^{(i)} = \frac{1}{d}\sum_{l = 1}^{d}\left[\text{Var}(X_{il}) +
-                        \frac{k}{k+1}\left(\text{E}[X_{il}] - x_{il}\right)^2\right]
+         S_{i} = \frac{1}{d}\sum_{l = 1}^{d}\left[\text{Var}(X_{il}) +
+                        \left(\text{E}[X_{il}] - x_{il}\right)^2\right]
     \end{equation*}
     \begin{itemize}
         \item Bias term and Variance term
@@ -962,8 +822,7 @@
     \end{center}
 \end{frame}
 
-\begin{frame}
-    \tiny
+\begin{frame}[allowframebreaks]
     \frametitle{References}
     \bibliography{./refs}
 \end{frame}
@@ -978,13 +837,35 @@
     \frametitle{IVT Grid}
     \begin{minipage}{.49\textwidth}
     \centering
-    \includegraphics[width=0.99\linewidth]{./images/grid_8}
+    \includegraphics[height=\frametextheight]{./images/grid_8}
   \end{minipage}
   \begin{minipage}{.49\textwidth}
     \centering
-    \includegraphics[width=0.99\linewidth]{./images/grid_47}
+    \includegraphics[height=\frametextheight]{./images/grid_47}
   \end{minipage}
 \end{frame}
+
+\subsection*{Projection onto $\mathcal{S}_p^{d-1}$}
+\begin{frame}
+  \frametitle{Jacobian}
+  \begin{equation*}
+    \begin{bmatrix}
+      y_1 & r & 0 & \ldots & 0\\
+      y_2 & 0 & r & \ldots & 0\\
+      \vdots & \vdots & \vdots & \ddots & \vdots\\
+      y_{d-1} & 0 & \ldots & 0 & r \\
+      \left(1 - {\scriptsize\sum_{l=1}^{d-1}}y_l^p\right)^{1/p} &
+        - ry_1^{p-1}\phi & -ry_2^{p-1}\phi & \cdots & -ry_{d-1}\phi
+    \end{bmatrix}
+  \end{equation*}
+  where $\phi = \left(1 - {\scriptsize\sum_{l=1}^{d-1}}y_l^p\right)^{1/p - 1}$
+  \pause
+  \begin{equation*}
+  \lvert J \rvert = r^{d-1}\left[\left(1 - {\textstyle\sum}_{l = 1}^{d-1}y_l^p\right)^{\frac{1}{p}} +
+      {\textstyle\sum}_{l = 1}^{d-1}y_l^p\left(1 - {\textstyle\sum}_{l=1}^{d-1}
+          y_l^p\right)^{\frac{1}{p} - 1}\right]
+  \end{equation*}
+\end{frame} % Unit Sphere - Jacobian
 
 \subsection*{Alternative forms of model comparison}
 \begin{frame}
@@ -1005,7 +886,6 @@
 \end{frame} % KL Divergence (Introduction)
 
 \subsection*{Finite Mixture of Projected Gammas}
-
 \begin{frame}
   \frametitle{Finite Mixture Model}
   \begin{equation*}
@@ -1025,19 +905,81 @@
   \end{equation*}
 \end{frame} % Projected Gamma - Finite Mixture Model
 
+\subsection*{Alternative Geometries}
+\begin{frame}
+  \frametitle{Alternative Geometries}
+  \small
+  \begin{itemize}
+    \item Coordinate system to describe $\mathcal{S}_p^{d-1}$ in $\omega^{d-1}$
+    \item $\mathcal{L}_1$: Log-ratios \citep{aitchison1982}:
+        \begin{equation*}
+            \mathcal{S}_1^{d-1} \rightarrow (-\infty,\infty)^{d-1}\hspace{8cm}~
+        \end{equation*}
+    \item $\mathcal{L}_2$: Spherical Coordinates \citep{nunez2019}: 
+        \begin{equation*}
+            \mathcal{S}_2^{d-1} \rightarrow [0,\pi/2]^{d-1}\hspace{8cm}~
+        \end{equation*}
+        \vspace{-0.5cm}
+      \begin{equation*}
+        \begin{aligned}
+        \theta_l &= \cos^{-1}\left(\frac{y_l}{\lVert \bm{y}_{l:d}\rVert_2}\right)\\
+        &\hspace{0.75cm}\text{for }l = 1,\ldots,d-1
+        \end{aligned}
+        \hspace{1cm}
+        \begin{aligned}
+          y_1 &= \cos\theta_1\\
+          y_l &= \left[{\textstyle\prod}_{k = 1}^{l-1}\sin\theta_k\right]\cos\theta_l\\
+          &\hspace{0.75cm}\text{for }l = 2,\ldots,d-1\\
+          y_d &= {\textstyle\prod}_{k = 1}^{d-1}\sin\theta_k
+        \end{aligned}
+      \end{equation*}
+  \end{itemize}
+\end{frame}
+\begin{frame}
+  \frametitle{Probit-Normal}
+  Let $Q_i = \text{Probit}(2\theta_i / \pi)$, for $i = 1,\ldots,d-1$
+  \begin{equation*}
+    \begin{aligned}
+                Q_i &\sim \mathcal{N}_{d-1}\left(\bm{\mu}_i, \Sigma_i\right)\\
+    \bm{\mu}_i, \Sigma_i &\sim \text{DP}(\eta, G_0)\\
+                    &\hspace{-1cm}G_0 =
+                      \mathcal{N}_{d-1}(\bm{\mu}_i\mid\bm{\mu}_0,\Sigma_0)\times \text{IW}(\Sigma_i\mid\nu,\Psi)
+    \end{aligned}
+    \hspace{1cm}
+    \begin{aligned}
+              \mu_0 &\sim \mathcal{N}_{d-1}\left(\bm{u},\bm{S}\right)\\
+           \Sigma_0 &\sim \text{IW}(\nu_0,\Psi_0)\\
+               \eta &\sim \text{Ga}(\alpha, \beta)
+    \end{aligned}
+  \end{equation*}
+\end{frame}
+
+\subsection*{Negative Definite Kernel}
+\begin{frame}
+    \frametitle{Negative Definite Kernel - Proof}
+    \begin{itemize}
+        \item In the first case, where $\bm{a}$ and $\bm{b}$ $\rightarrow$ Euclidean distance. 
+        \item In the second case, $\bm{a}$ and $\bm{b}$ reside on separate
+  faces.  
+  \begin{itemize}
+      \item $c$ is unique, $\pnorm{\bm{c} - \bm{a}}{2} = \pnorm{\bm{a} - \bm{c}}{2}$ $\rightarrow$ symmetry in the arguments.
+      \item Then for the other property of negative definiteness
+  \begin{equation*}
+    \begin{aligned}
+      \sum_{i = 1}^n\sum_{j = 1}^n \alpha_i\alpha_j g(\bm{x}_1,\bm{x}_2) &= \sum_{i = 1}^n\sum_{j = 1}^n \alpha_i\alpha_j \bigg[\pnorm{\bm{c} - \bm{x}_1}{2} + \pnorm{\bm{x}_2 - \bm{c}}{2}\bigg]\\
+      &= \sum_{i = 1}^n\sum_{j = 1}^n \alpha_i\alpha_j\pnorm{\bm{c} - \bm{x}_1}{2} + \sum_{i = 1}^n\sum_{j = 1}^n \alpha_i\alpha_j\pnorm{\bm{x}_2 - \bm{c}}{2}
+    \end{aligned}
+  \end{equation*}
+  which is less than or equal to $0$ in both terms
+  \end{itemize} 
+  \end{itemize}
+\end{frame}
+
 \subsection*{Simulation - Alternative Model Selection Criteria}
 
 
 \begin{frame}
   \frametitle{Simulation - KL Divergence}
-  \begin{center}
-    \includegraphics[height=\frametextheight]{./images/simulation_knn_kld}
-  \end{center}
-\end{frame}
-
-
-\begin{frame}
-  \frametitle{IVT - Posterior Predictive Loss}
   \begin{center}
     \includegraphics[height=\frametextheight]{./images/simulation_knn_kld}
   \end{center}
@@ -1051,6 +993,50 @@
     \includegraphics[height=\frametextheight]{./images/knn_kld}
   \end{center}
 \end{frame}
+
+\subsection*{Conditional Survival}
+
+\begin{frame}
+  \frametitle{Conditional Survival Function - Proof}
+  {\small
+  \begin{equation*}
+    \label{eqn:condsurv1d}
+    \text{P}\left[Z_l > z_l\mid \bm{Z}_{-(l)} > \bm{z}_{-(l)}\right] =
+      \frac{\text{P}\left[\cap_{k = 1}^d Z_k > z_k\right]}{\text{P}\left[\cap_{k \neq l} Z_k > z_k\right]}.
+  \end{equation*}
+  \pause
+  $R = \pnorm{\bm{Z}}{\infty}$, $\bm{V} = \frac{\bm{Z}}{R}$, such that
+    $\bm{V}\in \mathcal{S}_{\infty}^{d-1}$.  Then $\bm{Z} = R\bm{V}$.
+  \begin{equation*}
+    \text{P}\left(\cap_{k = 1}^d Z_k > z_k\right) = \text{P}\left(\cap_{k = 1}^d RV_k > z_k\right)
+  \end{equation*}
+  \pause
+  Recall, for standard Pareto, $\text{P}(R > r) = 1\wedge\frac{1}{r}$.
+  \begin{equation*}
+    \text{P}\left[\bigcap_{k = 1}^d R > \frac{z_k}{v_k}\right] =
+      \text{P}\left[R  > \bigvee_{k=1}^d\frac{z_k}{V_k}\right] =
+      \text{E}\left[1 \bigwedge \left(\bigvee_{k = 1}^d\frac{z_k}{V_k}\right)^{-1}\right]
+  \end{equation*}
+  $V_k \in [0,1]$; $z_k > 1$ (for the region of interest) $\implies$ $\frac{z_k}{V_k} > 1$
+  }
+\end{frame}
+
+\begin{frame}
+    \frametitle{Conditional Survival Function - Proof Cont.}
+    {\small 
+  \begin{equation*}
+    \text{P}\left[\cap_{k = 1}^d Z_k > z_k\right] = \text{E}\left[\wedge_{k = 1}^d\frac{V_i}{z_i}\right].
+  \end{equation*}
+  \pause
+  And similar for the denominator
+  \begin{equation*}
+    \text{P}\left[Z_l > z_l\mid \bm{Z}_{\neg(l)} > \bm{z}_{\neg(l)}\right] =
+      \frac{\text{E}\left[\wedge_{k = 1}^d \frac{V_k}{z_k}\right]}{\text{E}\left[
+                \bigwedge_{k \neq l}\frac{V_k}{z_k}\right]}
+  \end{equation*}
+  }
+\end{frame}
+
 
 
 \end{document}
