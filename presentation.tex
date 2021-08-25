@@ -301,7 +301,6 @@
   \end{itemize}
 \end{frame} % Unit Sphere - Projection
 
-
 \subsection{Projected Gamma Family}
 \begin{frame}
   \frametitle{Projected Gamma Distribution}
@@ -329,6 +328,7 @@
       \end{equation*}
   \end{itemize}
 \end{frame} % Projected Gamma Distribution
+
 \begin{frame}
   \frametitle{Data augmentation}
   \begin{itemize}
@@ -351,86 +351,27 @@
       \end{equation*}
   \end{itemize}
 \end{frame} % Data Augmentation
+
 \begin{frame}
   \frametitle{Projected Gamma Model}
-  \begin{equation*}
-    \begin{aligned}
-      \bm{ y}\mid\bm{\alpha},\bm{\beta} &\sim \text{PG}(\bm{ y}\mid\bm{\alpha},\bm{\beta})\\
-      \bm{ \alpha},\bm{\beta} &\sim {\textstyle \prod}_{l = 1}^d \text{Ga}(\alpha_l \mid \xi_l,\tau_l)
-              \times {\textstyle \prod}_{l = 2}^d \text{Ga}(\beta_l\mid \zeta_l,\sigma_l).
-    \end{aligned}
-  \end{equation*}
+  \begin{itemize}
+    \item Basic Model
+        \begin{equation*}
+            \begin{aligned}
+                \bm{ y}\mid\bm{\alpha},\bm{\beta} &\sim \text{PG}(\bm{ y}\mid\bm{\alpha},\bm{\beta})\\
+                \bm{ \alpha},\bm{\beta} &\sim {\textstyle \prod}_{l = 1}^d \text{Ga}(\alpha_l \mid \xi_l,\tau_l)
+                    \times {\textstyle \prod}_{l = 2}^d \text{Ga}(\beta_l\mid \zeta_l,\sigma_l).
+            \end{aligned}
+        \end{equation*}
+    \item Finite Mixture of Projected Gammas
+    \item Dirichlet Process Mixture of Projected Gammas
+        \begin{itemize}
+            \item Gamma or Log-normal
+        \end{itemize}
+  \end{itemize}
   \vfill
   {\small Note: Projection of Restricted Gammas \emph{(PRG)} sets $\beta_l := 1$ for all $l$.}
 \end{frame} % Vanilla Model
-\begin{frame}
-  \frametitle{Projected Gamma Model - Inference}
-  \begin{itemize}
-    \item Full conditional for $\beta_l$
-      \begin{equation*}
-        \beta_l\mid \bm{ y}, r, \alpha_l \sim \text{Ga}\left(n\alpha_l + \zeta_l,
-                {\textstyle \sum}_{i = 1}^nr_iy_{il} + \sigma_l\right)
-      \end{equation*}
-    \pause
-    \item Posterior for $\alpha_l$
-      \begin{equation*}
-        f(\alpha_l \mid \bm{ y}, r) \propto
-          \frac{\left({\textstyle \prod}_{i = 1}^nr_iy_{il}\right)^{\alpha_l - 1}}{
-            \Gamma^n(\alpha_l)} \times \alpha_l^{\xi_l - 1}\exp\{-\tau_l\alpha_l\} \times
-            \frac{\Gamma(n\alpha_l + \zeta_l)}{
-            \left({\textstyle\sum}_{i = 1}^n r_iy_{il} + \sigma_l
-                  \right)^{(n * \alpha_l + \zeta_l)}}
-      \end{equation*}
-    \pause
-    \item If $\beta_l = 1$, then
-    \begin{equation*}
-      f(\alpha_l \mid \bm{ y}, r) \propto
-        \frac{\left({\textstyle\prod}_{i = 1}^n r_iy_{il}\right)^{\alpha_l - 1}}{\Gamma^n(\alpha_l)} \times
-        \alpha_l^{\xi_1 - 1}\exp\{-\tau_1\alpha_l\}
-    \end{equation*}
-  \end{itemize}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Dirichlet Process Mixture Model}
-  \begin{equation*}
-    \begin{aligned}
-      \bm{ y}_i &\sim \text{PG}\left(\bm{ y}\mid \bm{ \alpha}_i, \bm{ \beta}_i\right)\\
-      (\alpha_i,\beta_i) &\sim \text{DP}\left(\eta, G_0\right)\\
-      &~\hspace{-1cm}G_0 = {\textstyle\prod}_{l = 1}^d\text{Ga}\left(\alpha_{jl}\mid\xi_{l},\tau_{l}\right)\\
-      &~\hspace{0.5cm}\times{\textstyle\prod}_{l=2}^d\text{Ga}\left(\beta_{jl}\mid\zeta_{l}\tau_{l}\right)
-    \end{aligned}
-    \hspace{1cm}
-    \begin{aligned}
-      \bm{ \xi},\bm{ \tau} &\sim {\textstyle \prod}_{l = 1}^d \text{Ga}(\xi_l\mid a,b)
-              \times \text{Ga}(\tau_l\mid c,d)\\
-      \bm{ \zeta},\bm{\sigma} &\sim {\textstyle\prod}_{l = 2}^d\text{Ga}(\zeta_l \mid a,b)
-              \times \text{Ga}(\sigma_l\mid c,d)\\
-      \bm{ \eta} &\sim \text{Ga}(\eta \mid 2, 0.1).
-    \end{aligned}
-  \end{equation*}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Log-normal Prior for Shape Parameters}
-  \begin{equation*}
-    \begin{aligned}
-      \bm{ y}_i &\sim \text{PG}\left(\bm{ y}\mid \bm{ \alpha}_i, \bm{\beta}_i\right)\\
-      (\bm{\alpha}_i, \bm{\beta}_i) &\sim \text{DP}\left(\eta, G_0\right)\\
-        &~\hspace{-1cm}G_0 = \mathcal{N}\left(\log\bm{ \alpha}_{j}\mid\mu,\Sigma\right)\\
-        &~\hspace{0.5cm}\times
-            {\textstyle\prod}_{l = 2}^d\text{Ga}\left(\beta_{jl}\mid\zeta_l,\sigma_l\right)
-    \end{aligned}
-    \hspace{1cm}
-    \begin{aligned}
-      \mu,\Sigma &\sim \mathcal{N}\left(\mu\mid\mu_0,\Sigma_0\right)
-                                  \times \text{IG}\left(\nu,\Psi\right)\\
-      \bm{ \zeta},\bm{\sigma} &\sim {\textstyle\prod}_{l = 2}^d\text{Ga}(\zeta_l \mid a,b)
-                                \times \text{Ga}(\sigma_l \mid c,d) \\
-      \bm{ \eta} &\sim \text{Ga}(\eta \mid 2, 0.1).
-    \end{aligned}
-  \end{equation*}
-\end{frame}
 
 \begin{frame}
   \frametitle{Choice of Norm}
@@ -873,23 +814,8 @@
   \end{equation*}
 \end{frame} % Unit Sphere - Jacobian
 
-\subsection*{Alternative forms of model comparison}
-\begin{frame}
-  \frametitle{Kullbeck Liebler Divergence}
-  \begin{itemize}
-    \item KL Divergence
-      \begin{equation*}
-        D_{\text{KL}}(A,B) = \int_{x\in \Omega(A)}A(x)\log\left(\frac{A(x)}{B(x)}\right)\text{d}x
-      \end{equation*}
-      requires an estimate of density.
-    \pause
-    \item We have demonstrated the difficulty of establishing density.  Approximate
-      \begin{equation*}
-      D_{\text{KL}}^{(k)}(A,B) = \log\frac{n(B)}{n(A)} + c(A) \left[\rho_A^{(k)}(B)
-                                                      - \rho_A^{(k)}(A)\right]
-      \end{equation*}
-  \end{itemize}
-\end{frame} % KL Divergence (Introduction)
+
+\subsection*{Projected Gamma Models}
 
 \subsection*{Finite Mixture of Projected Gammas}
 \begin{frame}
@@ -910,6 +836,97 @@
     \end{aligned}
   \end{equation*}
 \end{frame} % Projected Gamma - Finite Mixture Model
+
+\begin{frame}
+  \frametitle{Dirichlet Process Mixture Model}
+  \begin{equation*}
+    \begin{aligned}
+      \bm{ y}_i &\sim \sum_{j = 1}^{\infty}\pi_j\text{PG}\left(\bm{ y}\mid \bm{ \alpha}_j, \bm{ \beta}_j\right)\\
+      (\alpha_j,\beta_j) &\sim \text{DP}\left(\eta, G_0\right)\\
+      &~\hspace{-1cm}G_0 = {\textstyle\prod}_{l = 1}^d\text{Ga}\left(\alpha_{jl}\mid\xi_{l},\tau_{l}\right)\\
+      &~\hspace{0.5cm}\times{\textstyle\prod}_{l=2}^d\text{Ga}\left(\beta_{jl}\mid\zeta_{l}\tau_{l}\right)
+    \end{aligned}
+    \hspace{1cm}
+    \begin{aligned}
+      \bm{ \xi},\bm{ \tau} &\sim {\textstyle \prod}_{l = 1}^d \text{Ga}(\xi_l\mid a,b)
+              \times \text{Ga}(\tau_l\mid c,d)\\
+      \bm{ \zeta},\bm{\sigma} &\sim {\textstyle\prod}_{l = 2}^d\text{Ga}(\zeta_l \mid a,b)
+              \times \text{Ga}(\sigma_l\mid c,d)\\
+      \bm{ \eta} &\sim \text{Ga}(\eta \mid 2, 0.1).
+    \end{aligned}
+  \end{equation*}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Log-normal Prior for Shape Parameters}
+  \begin{equation*}
+    \begin{aligned}
+      \bm{ y}_i &\sim \sum_{j = 1}^{\infty}\pi_j\text{PG}\left(\bm{ y}\mid \bm{ \alpha}_j, \bm{\beta}_j\right)\\
+      (\bm{\alpha}_j, \bm{\beta}_j) &\sim \text{DP}\left(\eta, G_0\right)\\
+        &~\hspace{-1cm}G_0 = \mathcal{N}\left(\log\bm{ \alpha}_{j}\mid\mu,\Sigma\right)\\
+        &~\hspace{0.5cm}\times
+            {\textstyle\prod}_{l = 2}^d\text{Ga}\left(\beta_{jl}\mid\zeta_l,\sigma_l\right)
+    \end{aligned}
+    \hspace{1cm}
+    \begin{aligned}
+      \mu,\Sigma &\sim \mathcal{N}\left(\mu\mid\mu_0,\Sigma_0\right)
+                                  \times \text{IG}\left(\nu,\Psi\right)\\
+      \bm{ \zeta},\bm{\sigma} &\sim {\textstyle\prod}_{l = 2}^d\text{Ga}(\zeta_l \mid a,b)
+                                \times \text{Ga}(\sigma_l \mid c,d) \\
+      \bm{ \eta} &\sim \text{Ga}(\eta \mid 2, 0.1).
+    \end{aligned}
+  \end{equation*}
+\end{frame}
+
+\subsection*{Projected Gamma Inference}
+\begin{frame}
+  \frametitle{Projected Gamma Model - Inference}
+  \begin{itemize}
+    \item Full conditional for $\beta_l$
+      \begin{equation*}
+        \beta_l\mid \bm{ y}, r, \alpha_l \sim \text{Ga}\left(n\alpha_l + \zeta_l,
+                {\textstyle \sum}_{i = 1}^nr_iy_{il} + \sigma_l\right)
+      \end{equation*}
+    \pause
+    \item Posterior for $\alpha_l$
+      \begin{equation*}
+        f(\alpha_l \mid \bm{ y}, r) \propto
+          \frac{\left({\textstyle \prod}_{i = 1}^nr_iy_{il}\right)^{\alpha_l - 1}}{
+            \Gamma^n(\alpha_l)} \times \alpha_l^{\xi_l - 1}\exp\{-\tau_l\alpha_l\} \times
+            \frac{\Gamma(n\alpha_l + \zeta_l)}{
+            \left({\textstyle\sum}_{i = 1}^n r_iy_{il} + \sigma_l
+                  \right)^{(n * \alpha_l + \zeta_l)}}
+      \end{equation*}
+    \pause
+    \item If $\beta_l = 1$, then
+    \begin{equation*}
+      f(\alpha_l \mid \bm{ y}, r) \propto
+        \frac{\left({\textstyle\prod}_{i = 1}^n r_iy_{il}\right)^{\alpha_l - 1}}{\Gamma^n(\alpha_l)} \times
+        \alpha_l^{\xi_1 - 1}\exp\{-\tau_1\alpha_l\}
+    \end{equation*}
+  \end{itemize}
+\end{frame}
+
+
+
+\subsection*{Alternative forms of model comparison}
+\begin{frame}
+  \frametitle{Kullbeck Liebler Divergence}
+  \begin{itemize}
+    \item KL Divergence
+      \begin{equation*}
+        D_{\text{KL}}(A,B) = \int_{x\in \Omega(A)}A(x)\log\left(\frac{A(x)}{B(x)}\right)\text{d}x
+      \end{equation*}
+      requires an estimate of density.
+    \pause
+    \item We have demonstrated the difficulty of establishing density.  Approximate
+      \begin{equation*}
+      D_{\text{KL}}^{(k)}(A,B) = \log\frac{n(B)}{n(A)} + c(A) \left[\rho_A^{(k)}(B)
+                                                      - \rho_A^{(k)}(A)\right]
+      \end{equation*}
+  \end{itemize}
+\end{frame} % KL Divergence (Introduction)
+
 
 \subsection*{Alternative Geometries}
 \begin{frame}
